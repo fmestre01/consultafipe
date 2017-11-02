@@ -10,7 +10,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import udacity.com.core.model.Marca;
-import udacity.com.core.model.Veiculo;
+import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.model.VeiculoModeloAno;
 import udacity.com.core.rest.Api;
 import udacity.com.core.rest.ApiClient;
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Api apiService = ApiClient.makeFipeService();
     private List<Marca> marcas;
-    private List<Veiculo> veiculosMarca;
+    private List<VeiculoMarca> veiculosMarca;
     private List<VeiculoModeloAno> veiculosModeloAno;
 
     @Override
@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void veiculosResponse() {
-        Call<List<Veiculo>> call = apiService.getVeiculosMarca("21");
-        call.enqueue(new RemoteCallback<List<Veiculo>>() {
+        Call<List<VeiculoMarca>> call = apiService.getVeiculosMarca("21");
+        call.enqueue(new RemoteCallback<List<VeiculoMarca>>() {
             @Override
-            public void onSuccess(List<Veiculo> response) {
+            public void onSuccess(List<VeiculoMarca> response) {
                 veiculosMarca = response;
                 Log.d("", String.valueOf(response.size()));
             }
