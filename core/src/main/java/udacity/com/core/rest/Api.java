@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import udacity.com.core.model.Marca;
+import udacity.com.core.model.Veiculo;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.model.VeiculoModeloAno;
 
@@ -20,5 +21,5 @@ public interface Api {
     Call<List<VeiculoModeloAno>> getVeiculosModeloAno(@Path("id_marca") String idMarca, @Path("id_veiculo") String idveiculo);
 
     @GET("veiculo/{id_marca}/{id_veiculo}/{codigo_veiculo}.json")
-    Call<List<VeiculoModeloAno>> getVeiculoDetalhe(@Path("id_marca") String idMarca, @Path("id_veiculo") String codigoVeiculo);
+    Call<Veiculo> getVeiculoDetalhe(@Path("id_marca") String idMarca, @Path("id_veiculo") String codigoVeiculo, @Path("codigo_veiculo") String idVeiculo);
 }

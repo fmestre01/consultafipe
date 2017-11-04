@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import udacity.com.core.BaseApplication;
+import udacity.com.core.data.local.VeiculoEntity;
 import udacity.com.core.model.Marca;
+import udacity.com.core.model.Veiculo;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.model.VeiculoModeloAno;
 import udacity.com.core.rest.Api;
@@ -20,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Api apiService = ApiClient.makeFipeService();
     private List<Marca> marcas;
-    private List<VeiculoMarca> veiculosMarca;
-    private List<VeiculoModeloAno> veiculosModeloAno;
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         //marcasResponse();
         //veiculosResponse();
-        veiculosModeloAnoResponse();
+        //veiculosModeloAnoResponse();
+
+        veiculoDetalhe();
     }
 
     private void marcasResponse() {
@@ -57,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new RemoteCallback<List<VeiculoMarca>>() {
             @Override
             public void onSuccess(List<VeiculoMarca> response) {
-                veiculosMarca = response;
                 Log.d("", String.valueOf(response.size()));
             }
 
@@ -78,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new RemoteCallback<List<VeiculoModeloAno>>() {
             @Override
             public void onSuccess(List<VeiculoModeloAno> response) {
-                veiculosModeloAno = response;
                 Log.d("", String.valueOf(response.size()));
             }
 
@@ -92,5 +96,40 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void veiculoDetalhe() {
+        Call<Veiculo> call = apiService.getVeiculoDetalhe("21", "4828", "2013-1");
+        call.enqueue(new RemoteCallback<Veiculo>() {
+            @Override
+            public void onSuccess(Veiculo response) {
+                String jsonResponse = gson.toJson(response);
+                VeiculoEntity veiculoEntity = gson.fromJson(jsonResponse, VeiculoEntity.class);
+
+                Veiculo veiculoExistente = BaseApplication.db.veiculoDao().veiculoPorId(response.getId());
+                if (veiculoExistente != null) {
+                    BaseApplication.db.veiculoDao().updateVeiculo(veiculoEntity);
+                } else {
+                    BaseApplication.db.veiculoDao().insertVeiculo(veiculoEntity);
+                }
+
+                List<VeiculoEntity> veiculoEntities = BaseApplication.db.veiculoDao().todosVeiculos();
+                for (int i = 0; i < veiculoEntities.size(); i++) {
+                    Log.d("", veiculoEntities.get(i).toString());
+                }
+            }
+
+            @Override
+            public void onUnauthorized() {
+                Log.d("", "onUnauthorized");
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                Log.d("", throwable.getCause().getMessage());
+            }
+        });
+
+
     }
 }
