@@ -5,13 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 import udacity.com.core.BaseApplication;
+import udacity.com.core.data.local.MarcaEntity;
 import udacity.com.core.data.local.VeiculoEntity;
 import udacity.com.core.model.Marca;
 import udacity.com.core.model.Veiculo;
@@ -24,7 +34,6 @@ import udacity.com.core.rest.RemoteCallback;
 public class MainActivity extends AppCompatActivity {
 
     private Api apiService = ApiClient.makeFipeService();
-    private List<Marca> marcas;
     private Gson gson = new Gson();
 
     @Override
@@ -32,11 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //marcasResponse();
-        //veiculosResponse();
-        //veiculosModeloAnoResponse();
-
-        veiculoDetalhe();
+        marcasResponse();
     }
 
     private void marcasResponse() {
@@ -44,16 +49,24 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Marca>>() {
             @Override
             public void onResponse(Call<List<Marca>> call, Response<List<Marca>> response) {
-                int code = response.code();
-                marcas = response.body();
-                for (int i = 0; i < marcas.size(); i++) {
-                    Log.d(marcas.get(i).getId(), marcas.get(i).getFipeName());
+                try {
+                    //JSONArray marcasJson = new JSONObject(gson.toJson(response)).getJSONArray("body");
+
+                    MarcaEntity[] mcArray = gson.fromJson(gson.toJson(response), MarcaEntity[].class);
+                    //List<MarcaEntity> mcList = Arrays.asList(mcArray);
+                    List<MarcaEntity> mcList = new ArrayList<>(Arrays.asList(mcArray));
+
+                    Timber.i("" + mcList.size());
+                } catch (Exception e) {
+                    Timber.e(e);
                 }
+
+
             }
 
             @Override
             public void onFailure(Call<List<Marca>> call, Throwable t) {
-
+                Timber.e(t);
             }
         });
     }
@@ -129,7 +142,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("", throwable.getCause().getMessage());
             }
         });
-
-
     }
 }

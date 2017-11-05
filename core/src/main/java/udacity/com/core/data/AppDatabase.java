@@ -5,15 +5,16 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import udacity.com.core.data.local.MarcaEntity;
 import udacity.com.core.data.local.VeiculoEntity;
-import udacity.com.core.model.Veiculo;
 
-@Database(entities = {VeiculoEntity.class}, version = 1)
+@Database(entities = {VeiculoEntity.class, MarcaEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
     public abstract VeiculoDao veiculoDao();
+    public abstract MarcaDao marcaDao();
 
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {

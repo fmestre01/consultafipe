@@ -7,7 +7,7 @@ public class Marca {
     private String name;
 
     @SerializedName("fipe_name")
-    private String fipeName;
+    private String fipe_name;
 
     @SerializedName("order")
     private String order;
@@ -18,12 +18,8 @@ public class Marca {
     @SerializedName("id")
     private String id;
 
-    public Marca(String name, String fipeName, String order, String key, String id) {
-        this.name = name;
-        this.fipeName = fipeName;
-        this.order = order;
-        this.key = key;
-        this.id = id;
+    public Marca(){
+
     }
 
     public String getName() {
@@ -34,12 +30,12 @@ public class Marca {
         this.name = name;
     }
 
-    public String getFipeName() {
-        return fipeName;
+    public String getFipe_name() {
+        return fipe_name;
     }
 
-    public void setFipeName(String fipeName) {
-        this.fipeName = fipeName;
+    public void setFipe_name(String fipe_name) {
+        this.fipe_name = fipe_name;
     }
 
     public String getOrder() {
