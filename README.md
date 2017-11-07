@@ -12,6 +12,4 @@ Model: camada de acesso a dados, como API de banco de dados ou API de servidor r
 Presenter: camada que fornece a "View with data from Model". O presenter também lida com tarefas em background.
 A maioria dos aplicativos modernos do Android usam apenas a arquitetura View-Model. 
 
-Com a abordagem do MVP, é mais fácil entender o papel de cada elemento. 
-
-Você não se tornou um desenvolvedor para perder tempo na manutenção de código chato, mas para criar coisas incríveis!
+Com a abordagem do MVP, é mais fácil entender o papel de cada elemento bem como obter ganhos incríveis com os testes unitários.
