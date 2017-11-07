@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package udacity.com.core.rest;
+package udacity.com.core.api;
 
 import java.net.HttpURLConnection;
 

@@ -1,4 +1,4 @@
-package udacity.com.core.data.local;
+package udacity.com.core.data.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;

@@ -1,4 +1,4 @@
-package udacity.com.core.rest;
+package udacity.com.core.api;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,35 +1,79 @@
 package udacity.com.core.model;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class VeiculoMarca {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    @SerializedName("id")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class VeiculoMarca implements Parcelable {
+
+    @JsonProperty("id")
     private String id;
 
-    @SerializedName("name")
+    @JsonProperty("name")
     private String name;
 
-    @SerializedName("fipe_marca")
-    private String fipeMarca;
+    @JsonProperty("fipe_marca")
+    private String fipe_marca;
 
-    @SerializedName("marca")
+    @JsonProperty("marca")
     private String marca;
 
-    @SerializedName("key")
+    @JsonProperty("key")
     private String key;
 
-    @SerializedName("fipe_name")
-    private String fipeName;
+    @JsonProperty("fipe_name")
+    private String fipe_name;
 
-    public VeiculoMarca(String id, String name, String fipeMarca, String marca, String key, String fipeName) {
+    public VeiculoMarca() {
+    }
+
+    public VeiculoMarca(String id, String name, String fipe_marca, String marca, String key, String fipe_name) {
         this.id = id;
         this.name = name;
-        this.fipeMarca = fipeMarca;
+        this.fipe_marca = fipe_marca;
         this.marca = marca;
         this.key = key;
-        this.fipeName = fipeName;
+        this.fipe_name = fipe_name;
     }
+
+    protected VeiculoMarca(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        fipe_marca = in.readString();
+        marca = in.readString();
+        key = in.readString();
+        fipe_name = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(fipe_marca);
+        dest.writeString(marca);
+        dest.writeString(key);
+        dest.writeString(fipe_name);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<VeiculoMarca> CREATOR = new Creator<VeiculoMarca>() {
+        @Override
+        public VeiculoMarca createFromParcel(Parcel in) {
+            return new VeiculoMarca(in);
+        }
+
+        @Override
+        public VeiculoMarca[] newArray(int size) {
+            return new VeiculoMarca[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -45,14 +89,6 @@ public class VeiculoMarca {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getFipeMarca() {
-        return fipeMarca;
-    }
-
-    public void setFipeMarca(String fipeMarca) {
-        this.fipeMarca = fipeMarca;
     }
 
     public String getMarca() {
@@ -71,11 +107,19 @@ public class VeiculoMarca {
         this.key = key;
     }
 
-    public String getFipeName() {
-        return fipeName;
+    public String getFipe_marca() {
+        return fipe_marca;
     }
 
-    public void setFipeName(String fipeName) {
-        this.fipeName = fipeName;
+    public void setFipe_marca(String fipe_marca) {
+        this.fipe_marca = fipe_marca;
+    }
+
+    public String getFipe_name() {
+        return fipe_name;
+    }
+
+    public void setFipe_name(String fipe_name) {
+        this.fipe_name = fipe_name;
     }
 }

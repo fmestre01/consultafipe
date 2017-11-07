@@ -1,4 +1,4 @@
-package udacity.com.core.data;
+package udacity.com.core.data.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import udacity.com.core.data.local.MarcaEntity;
+import udacity.com.core.data.entity.MarcaEntity;
 
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 

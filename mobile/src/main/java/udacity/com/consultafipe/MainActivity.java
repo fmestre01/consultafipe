@@ -1,47 +1,57 @@
 package udacity.com.consultafipe;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
 import udacity.com.core.BaseApplication;
-import udacity.com.core.data.local.MarcaEntity;
-import udacity.com.core.data.local.VeiculoEntity;
+import udacity.com.core.api.Api;
+import udacity.com.core.api.ApiClient;
+import udacity.com.core.api.RemoteCallback;
+import udacity.com.core.data.entity.MarcaEntity;
+import udacity.com.core.data.entity.VeiculoEntity;
+import udacity.com.core.data.entity.VeiculoMarcaEntity;
 import udacity.com.core.model.Marca;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.model.VeiculoModeloAno;
-import udacity.com.core.rest.Api;
-import udacity.com.core.rest.ApiClient;
-import udacity.com.core.rest.RemoteCallback;
+import udacity.com.core.util.SharedPrefsUtils;
+import util.UtilSnackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private Api apiService = ApiClient.makeFipeService();
     private Gson gson = new Gson();
 
+    @BindView(R.id.textViewExample)
+    TextView textViewExample;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        marcasResponse();
+        ButterKnife.bind(this);
+        veiculosMarcaResponse();
+
+        SharedPrefsUtils.setStringPreference(getApplicationContext(), "TESTE","testesss");
+
+        SharedPrefsUtils.getStringPreference(getApplicationContext(), "TESTE");
     }
 
     private void marcasResponse() {
@@ -50,13 +60,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Marca>> call, Response<List<Marca>> response) {
                 try {
-                    //JSONArray marcasJson = new JSONObject(gson.toJson(response)).getJSONArray("body");
+                    JSONArray marcasJson = new JSONObject(gson.toJson(response)).getJSONArray("body");
 
-                    MarcaEntity[] mcArray = gson.fromJson(gson.toJson(response), MarcaEntity[].class);
-                    //List<MarcaEntity> mcList = Arrays.asList(mcArray);
-                    List<MarcaEntity> mcList = new ArrayList<>(Arrays.asList(mcArray));
+                    for (int i = 0; i < marcasJson.length(); i++) {
+                        MarcaEntity marcaEntity = gson.fromJson(marcasJson.getJSONObject(i).toString(), MarcaEntity.class);
+                        BaseApplication.db.marcaDao().insertMarca(marcaEntity);
+                    }
 
-                    Timber.i("" + mcList.size());
+                    List<MarcaEntity> marcasLocal = BaseApplication.db.marcaDao().todasMarcas();
+                    for (int i = 0; i < marcasLocal.size(); i++) {
+                        Log.i("", marcasLocal.get(i).getName());
+                    }
+
+                    Timber.i("" + marcasJson.length());
                 } catch (Exception e) {
                     Timber.e(e);
                 }
@@ -71,12 +87,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void veiculosResponse() {
+    private void veiculosMarcaResponse() {
         Call<List<VeiculoMarca>> call = apiService.getVeiculosMarca("21");
         call.enqueue(new RemoteCallback<List<VeiculoMarca>>() {
             @Override
             public void onSuccess(List<VeiculoMarca> response) {
-                Log.d("", String.valueOf(response.size()));
+                try {
+                    for (int i = 0; i < response.size(); i++) {
+                        VeiculoMarcaEntity veiculoMarcaEntity = gson.fromJson(response.get(i).toString(), VeiculoMarcaEntity.class);
+                        BaseApplication.db.veiculoDao().insertVeiculosMarca(veiculoMarcaEntity);
+                    }
+
+                    Log.d("", String.valueOf(response.size()));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -86,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailed(Throwable throwable) {
-
+                Log.d("", String.valueOf(throwable.getStackTrace()));
+                UtilSnackbar.showSnakbarTipoUm(textViewExample, "Falha ao consultar veiculos...");
             }
         });
     }

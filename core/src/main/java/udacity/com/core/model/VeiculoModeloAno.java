@@ -1,29 +1,37 @@
 package udacity.com.core.model;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class VeiculoModeloAno {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    @SerializedName("id")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class VeiculoModeloAno implements Parcelable {
+
+    @JsonProperty("id")
     private String id;
 
-    @SerializedName("fipe_marca")
+    @JsonProperty("fipe_marca")
     private String fipeMarca;
 
-    @SerializedName("fipe_codigo")
+    @JsonProperty("fipe_codigo")
     private String fipeCodigo;
 
-    @SerializedName("name")
+    @JsonProperty("name")
     private String name;
 
-    @SerializedName("marca")
+    @JsonProperty("marca")
     private String marca;
 
-    @SerializedName("key")
+    @JsonProperty("key")
     private String key;
 
-    @SerializedName("veiculo")
+    @JsonProperty("veiculo")
     private String veiculo;
+
+    public VeiculoModeloAno() {
+    }
 
     public VeiculoModeloAno(String id, String fipeMarca, String fipeCodigo, String name, String marca, String key, String veiculo) {
         this.id = id;
@@ -34,6 +42,28 @@ public class VeiculoModeloAno {
         this.key = key;
         this.veiculo = veiculo;
     }
+
+    protected VeiculoModeloAno(Parcel in) {
+        id = in.readString();
+        fipeMarca = in.readString();
+        fipeCodigo = in.readString();
+        name = in.readString();
+        marca = in.readString();
+        key = in.readString();
+        veiculo = in.readString();
+    }
+
+    public static final Creator<VeiculoModeloAno> CREATOR = new Creator<VeiculoModeloAno>() {
+        @Override
+        public VeiculoModeloAno createFromParcel(Parcel in) {
+            return new VeiculoModeloAno(in);
+        }
+
+        @Override
+        public VeiculoModeloAno[] newArray(int size) {
+            return new VeiculoModeloAno[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -89,5 +119,21 @@ public class VeiculoModeloAno {
 
     public void setVeiculo(String veiculo) {
         this.veiculo = veiculo;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(fipeMarca);
+        parcel.writeString(fipeCodigo);
+        parcel.writeString(name);
+        parcel.writeString(marca);
+        parcel.writeString(key);
+        parcel.writeString(veiculo);
     }
 }

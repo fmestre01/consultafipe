@@ -1,4 +1,4 @@
-package udacity.com.core.data;
+package udacity.com.core.data.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -9,8 +9,10 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import udacity.com.core.data.local.VeiculoEntity;
+import udacity.com.core.data.entity.VeiculoEntity;
+import udacity.com.core.data.entity.VeiculoMarcaEntity;
 import udacity.com.core.model.Veiculo;
+import udacity.com.core.model.VeiculoMarca;
 
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 
@@ -40,4 +42,10 @@ public interface VeiculoDao {
 
     @Query("DELETE FROM veiculo")
     void deleteTodosVeiculos();
+
+    @Query("SELECT * FROM veiculo WHERE marca=:marca")
+    public List<VeiculoEntity> veiculosPorMarca(String marca);
+
+    @Insert
+    void insertVeiculosMarca(VeiculoMarcaEntity veiculoMarca);
 }
