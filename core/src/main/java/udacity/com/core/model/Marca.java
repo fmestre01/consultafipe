@@ -24,7 +24,7 @@ public class Marca implements Parcelable {
     @JsonProperty("id")
     private String id;
 
-    public Marca(){
+    public Marca() {
     }
 
     protected Marca(Parcel in) {
@@ -123,5 +123,16 @@ public class Marca implements Parcelable {
         result = 31 * result + key.hashCode();
         result = 31 * result + id.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Marca{" +
+                "name='" + name + '\'' +
+                ", fipe_name='" + fipe_name + '\'' +
+                ", order='" + order + '\'' +
+                ", key='" + key + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

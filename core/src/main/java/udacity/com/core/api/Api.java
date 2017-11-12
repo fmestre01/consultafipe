@@ -17,9 +17,9 @@ public interface Api {
     @GET("veiculos/{id_marca}.json")
     Call<List<VeiculoMarca>> getVeiculosMarca(@Path("id_marca") String idMarca);
 
-    @GET("veiculo/{id_marca}/{id_veiculo}.json")
-    Call<List<VeiculoModeloAno>> getVeiculosModeloAno(@Path("id_marca") String idMarca, @Path("id_veiculo") String idveiculo);
+    @GET("veiculo/{id_marca}/{id_modelo_ano}.json")
+    Call<List<VeiculoModeloAno>> getVeiculosModeloAno(@Path("id_marca") String idMarca, @Path("id_modelo_ano") String idModeloAno);
 
-    @GET("veiculo/{id_marca}/{id_veiculo}/{codigo_veiculo}.json")
-    Call<Veiculo> getVeiculoDetalhe(@Path("id_marca") String idMarca, @Path("id_veiculo") String codigoVeiculo, @Path("codigo_veiculo") String idVeiculo);
+    @GET("veiculo/{id_marca}/{id_modelo_ano}/{id_veiculo}.json")
+    Call<Veiculo> getVeiculoDetalhe(@Path("id_marca") String idMarca, @Path("id_modelo_ano") String idModeloAno, @Path("id_veiculo") String idVeiculo);
 }

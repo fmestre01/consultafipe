@@ -59,6 +59,9 @@ dependencies {
     // jsoup
     compile group: 'org.jsoup', name: 'jsoup', version: '1.10.3'
 
+    //calligraphy
+    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+
 }
 repositories {
     mavenCentral()

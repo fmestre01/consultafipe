@@ -1,10 +1,6 @@
-package udacity.com.consultafipe;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -13,11 +9,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import timber.log.Timber;
 import udacity.com.core.BaseApplication;
 import udacity.com.core.api.Api;
@@ -30,59 +23,53 @@ import udacity.com.core.model.Marca;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.model.VeiculoModeloAno;
+import udacity.com.core.util.Constants;
 import udacity.com.core.util.SharedPrefsUtils;
-import util.UtilSnackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private Api apiService = ApiClient.makeFipeService();
     private Gson gson = new Gson();
 
-    @BindView(R.id.textViewExample)
-    TextView textViewExample;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //    setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
         veiculosMarcaResponse();
 
-        SharedPrefsUtils.setStringPreference(getApplicationContext(), "TESTE","testesss");
+        SharedPrefsUtils.setStringPreference(getApplicationContext(), "TESTE", "testesss");
 
         SharedPrefsUtils.getStringPreference(getApplicationContext(), "TESTE");
     }
 
     private void marcasResponse() {
         Call<List<Marca>> call = apiService.getMarcas();
-        call.enqueue(new Callback<List<Marca>>() {
+        call.enqueue(new RemoteCallback<List<Marca>>() {
             @Override
-            public void onResponse(Call<List<Marca>> call, Response<List<Marca>> response) {
+            public void onSuccess(List<Marca> response) {
                 try {
                     JSONArray marcasJson = new JSONObject(gson.toJson(response)).getJSONArray("body");
 
                     for (int i = 0; i < marcasJson.length(); i++) {
                         MarcaEntity marcaEntity = gson.fromJson(marcasJson.getJSONObject(i).toString(), MarcaEntity.class);
                         BaseApplication.db.marcaDao().insertMarca(marcaEntity);
+                        Timber.i(Constants.InfoLog.INFO, marcaEntity);
                     }
-
-                    List<MarcaEntity> marcasLocal = BaseApplication.db.marcaDao().todasMarcas();
-                    for (int i = 0; i < marcasLocal.size(); i++) {
-                        Log.i("", marcasLocal.get(i).getName());
-                    }
-
-                    Timber.i("" + marcasJson.length());
                 } catch (Exception e) {
-                    Timber.e(e);
+                    Timber.e(Constants.InfoLog.ERROR, e.fillInStackTrace());
                 }
+            }
 
+            @Override
+            public void onUnauthorized() {
 
             }
 
             @Override
-            public void onFailure(Call<List<Marca>> call, Throwable t) {
-                Timber.e(t);
+            public void onFailed(Throwable throwable) {
+
             }
         });
     }
@@ -113,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailed(Throwable throwable) {
                 Log.d("", String.valueOf(throwable.getStackTrace()));
-                UtilSnackbar.showSnakbarTipoUm(textViewExample, "Falha ao consultar veiculos...");
+                //UtilSnackbar.showSnakbarTipoUm(textViewExample, "Falha ao consultar veiculos...");
             }
         });
     }
