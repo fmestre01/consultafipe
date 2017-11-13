@@ -8,7 +8,8 @@ import android.arch.persistence.room.PrimaryKey;
 public class VeiculoMarcaEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private long id_auto;
+    private String id;
     private String name;
     private String fipe_marca;
     private String marca;
@@ -17,6 +18,7 @@ public class VeiculoMarcaEntity {
 
     @Ignore
     public VeiculoMarcaEntity() {
+        this.id = "";
         this.name = "";
         this.fipe_marca = "";
         this.marca = "";
@@ -24,7 +26,8 @@ public class VeiculoMarcaEntity {
         this.fipe_name = "";
     }
 
-    public VeiculoMarcaEntity(String name, String fipe_marca, String marca, String key, String fipe_name) {
+    public VeiculoMarcaEntity(String id, String name, String fipe_marca, String marca, String key, String fipe_name) {
+        this.id = id;
         this.name = name;
         this.fipe_marca = fipe_marca;
         this.marca = marca;
@@ -32,11 +35,19 @@ public class VeiculoMarcaEntity {
         this.fipe_name = fipe_name;
     }
 
-    public long getId() {
+    public long getId_auto() {
+        return id_auto;
+    }
+
+    public void setId_auto(long id_auto) {
+        this.id_auto = id_auto;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -39,4 +39,7 @@ public interface MarcaDao {
 
     @Query("DELETE FROM marca")
     void deleteTodasMarcas();
+
+    @Query("SELECT COUNT(*) FROM marca")
+    int count();
 }

@@ -32,7 +32,8 @@ public class VeiculosModeloAnoAdapter extends RecyclerView.Adapter<VeiculosModel
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.veiculoModeloAno = veiculosModeloAno.get(position);
-        holder.nomeVeiculo.setText(veiculosModeloAno.get(position).getVeiculo());
+        holder.veiculo.setText(veiculosModeloAno.get(position).getVeiculo());
+        holder.name.setText(veiculosModeloAno.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,13 +63,15 @@ public class VeiculosModeloAnoAdapter extends RecyclerView.Adapter<VeiculosModel
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView nomeVeiculo;
+        public final TextView name;
+        public final TextView veiculo;
         public VeiculoModeloAno veiculoModeloAno;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            nomeVeiculo = (TextView) view.findViewById(R.id.nameTextView);
+            veiculo = (TextView) view.findViewById(R.id.veiculo);
+            name = (TextView) view.findViewById(R.id.name);
         }
     }
 

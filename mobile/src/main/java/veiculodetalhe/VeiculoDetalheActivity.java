@@ -32,8 +32,20 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     String idModeloAno;
     String idVeiculo;
 
-    @BindView(R.id.nameTextView)
-    TextView nameTextView;
+    @BindView(R.id.marca)
+    TextView marcaTextView;
+
+    @BindView(R.id.veiculo)
+    TextView veiculoTextView;
+
+    @BindView(R.id.combustivel)
+    TextView combustivelTextView;
+
+    @BindView(R.id.referencia)
+    TextView referenciaTextView;
+
+    @BindView(R.id.preco)
+    TextView precoTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +90,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @Override
     public void showError(String errorMessage) {
-        UtilSnackbar.showSnakbarTipoUm(this.nameTextView, Constants.InfoLog.ERROR);
+        UtilSnackbar.showSnakbarTipoUm(this.marcaTextView, Constants.InfoLog.ERROR);
     }
 
     @Override
@@ -96,7 +108,11 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @Override
     public void showVeiculoDetalhe(Veiculo veiculo) {
-        nameTextView.setText(veiculo.getPreco());
+        marcaTextView.setText(veiculo.getMarca());
+        veiculoTextView.setText(veiculo.getVeiculo());
+        combustivelTextView.setText(veiculo.getCombustivel());
+        referenciaTextView.setText(veiculo.getReferencia());
+        precoTextView.setText(veiculo.getPreco());
     }
 
     @Override

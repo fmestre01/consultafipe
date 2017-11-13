@@ -8,7 +8,9 @@ import android.arch.persistence.room.PrimaryKey;
 public class MarcaEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private long id_auto;
+
+    private String id;
     private String name;
     private String fipe_name;
     private String order;
@@ -16,17 +18,35 @@ public class MarcaEntity {
 
     @Ignore
     public MarcaEntity() {
+        this.id = "";
         this.name = "";
         this.fipe_name = "";
         this.order = "";
         this.key = "";
     }
 
-    public MarcaEntity(String name, String fipe_name, String order, String key) {
+    public MarcaEntity(String id, String name, String fipe_name, String order, String key) {
+        this.id = id;
         this.name = name;
         this.fipe_name = fipe_name;
         this.order = order;
         this.key = key;
+    }
+
+    public long getId_auto() {
+        return id_auto;
+    }
+
+    public void setId_auto(long id_auto) {
+        this.id_auto = id_auto;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -59,13 +79,5 @@ public class MarcaEntity {
 
     public void setKey(String key) {
         this.key = key;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }

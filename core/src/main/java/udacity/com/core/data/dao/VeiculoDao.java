@@ -11,8 +11,8 @@ import java.util.List;
 
 import udacity.com.core.data.entity.VeiculoEntity;
 import udacity.com.core.data.entity.VeiculoMarcaEntity;
+import udacity.com.core.data.entity.VeiculoModeloAnoEntity;
 import udacity.com.core.model.Veiculo;
-import udacity.com.core.model.VeiculoMarca;
 
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 
@@ -48,4 +48,10 @@ public interface VeiculoDao {
 
     @Insert
     void insertVeiculosMarca(VeiculoMarcaEntity veiculoMarca);
+
+    @Insert
+    void insertVeiculosModeloAno(VeiculoModeloAnoEntity veiculoModeloAnoEntity);
+
+    @Query("SELECT * FROM veiculo_marca")
+    List<VeiculoMarcaEntity> todosVeiculosMarca();
 }

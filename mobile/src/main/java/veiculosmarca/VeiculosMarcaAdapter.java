@@ -32,7 +32,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.veiculoMarca = veiculoMarcas.get(position);
-        holder.nomeVeiculo.setText(veiculoMarcas.get(position).getName());
+        holder.name.setText(veiculoMarcas.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,13 +62,13 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView nomeVeiculo;
+        public final TextView name;
         public VeiculoMarca veiculoMarca;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            nomeVeiculo = (TextView) view.findViewById(R.id.nameTextView);
+            name = (TextView) view.findViewById(R.id.name);
         }
     }
 

@@ -5,7 +5,7 @@ public class Constants {
     public interface InfoLog {
         String ERROR = "Erro - favor tentar novamente mais tarde";
         String INFO = "info";
-        String UNAUTHORIZED = "unauthorized";
+        String UNAUTHORIZED = "Sem autorização para a transação";
     }
 
     public interface Application {

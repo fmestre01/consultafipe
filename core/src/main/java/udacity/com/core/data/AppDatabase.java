@@ -10,8 +10,9 @@ import udacity.com.core.data.dao.VeiculoDao;
 import udacity.com.core.data.entity.MarcaEntity;
 import udacity.com.core.data.entity.VeiculoEntity;
 import udacity.com.core.data.entity.VeiculoMarcaEntity;
+import udacity.com.core.data.entity.VeiculoModeloAnoEntity;
 
-@Database(entities = {VeiculoEntity.class, MarcaEntity.class, VeiculoMarcaEntity.class}, version = 1)
+@Database(entities = {VeiculoEntity.class, MarcaEntity.class, VeiculoMarcaEntity.class, VeiculoModeloAnoEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
