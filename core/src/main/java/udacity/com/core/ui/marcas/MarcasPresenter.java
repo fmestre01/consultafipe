@@ -43,11 +43,6 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
                     if (!isViewAttached()) return;
                     mView.hideProgress();
 
-                    //for (int i = 0; i < response.size(); i++) {
-                    //String marcaEntity = gson.toJson(response.get(i));
-                    //BaseApplication.db.marcaDao().insertMarca(gson.fromJson(marcaEntity, MarcaEntity.class));
-                    //}
-
                     if (response.isEmpty()) {
                         mView.showError(Constants.ListLog.ERROR);
                         return;

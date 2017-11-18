@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     for (int i = 0; i < response.size(); i++) {
                         VeiculoMarcaEntity veiculoMarcaEntity = gson.fromJson(response.get(i).toString(), VeiculoMarcaEntity.class);
-                        BaseApplication.db.veiculoDao().insertVeiculosMarca(veiculoMarcaEntity);
+                        BaseApplication.db.veiculoMarcaDao().insertVeiculosMarca(veiculoMarcaEntity);
                     }
 
                     Log.d("", String.valueOf(response.size()));

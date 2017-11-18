@@ -7,21 +7,40 @@
 
     <include layout="@layout/layout_content_progress" />
 
-    <TextView
-        android:id="@+id/emptyTextView"
+    <LinearLayout
+        android:id="@+id/layoutEmptyData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="sans-serif-condensed"
-        android:gravity="center"
-        android:text="semm arcas"
-        android:textSize="24sp"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+        <TextView
+            android:id="@+id/emptyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="Ops! clique para tentar de novo..."
+            android:textSize="24sp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
 

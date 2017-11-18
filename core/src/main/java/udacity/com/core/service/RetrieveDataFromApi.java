@@ -34,7 +34,7 @@ public class RetrieveDataFromApi implements ApiService {
     public void initSubProcessService() {
         marcasLocal = BaseApplication.db.marcaDao().todasMarcas();
         marcasLocalSize = marcasLocal.size();
-        veiculosMarcaLocal = BaseApplication.db.veiculoDao().todosVeiculosMarca();
+        veiculosMarcaLocal = BaseApplication.db.veiculoMarcaDao().todosVeiculosMarca();
         veiculosMarcaLocalSize = veiculosMarcaLocal.size();
     }
 
@@ -89,7 +89,7 @@ public class RetrieveDataFromApi implements ApiService {
                         } else {
                             for (int i = 0; i < response.size(); i++) {
                                 String veiculoMarca = gson.toJson(response.get(i));
-                                BaseApplication.db.veiculoDao().insertVeiculosMarca(gson.fromJson(veiculoMarca, VeiculoMarcaEntity.class));
+                                BaseApplication.db.veiculoMarcaDao().insertVeiculosMarca(gson.fromJson(veiculoMarca, VeiculoMarcaEntity.class));
                                 Timber.i(Constants.InfoLog.INFO + "---INSERT VEICULO MARCA---" + response.get(i).getId(), RetrieveDataFromApi.class.getName() + "\n");
                             }
                         }
@@ -129,7 +129,7 @@ public class RetrieveDataFromApi implements ApiService {
                             } else {
                                 for (int i = 0; i < response.size(); i++) {
                                     String veiculoAnoModelo = gson.toJson(response.get(i));
-                                    BaseApplication.db.veiculoDao().insertVeiculosModeloAno(gson.fromJson(veiculoAnoModelo, VeiculoModeloAnoEntity.class));
+                                    BaseApplication.db.veiculoModeloAnoDao().insertVeiculosModeloAno(gson.fromJson(veiculoAnoModelo, VeiculoModeloAnoEntity.class));
                                     Timber.i(Constants.InfoLog.INFO + "---INSERT VEICULO ANO MODELO---" + response.get(i).toString(), RetrieveDataFromApi.class.getName() + "\n");
                                 }
                             }

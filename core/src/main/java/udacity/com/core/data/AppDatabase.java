@@ -7,6 +7,8 @@ import android.content.Context;
 
 import udacity.com.core.data.dao.MarcaDao;
 import udacity.com.core.data.dao.VeiculoDao;
+import udacity.com.core.data.dao.VeiculoMarcaDao;
+import udacity.com.core.data.dao.VeiculoModeloAnoDao;
 import udacity.com.core.data.entity.MarcaEntity;
 import udacity.com.core.data.entity.VeiculoEntity;
 import udacity.com.core.data.entity.VeiculoMarcaEntity;
@@ -20,6 +22,10 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract VeiculoDao veiculoDao();
 
     public abstract MarcaDao marcaDao();
+
+    public abstract VeiculoMarcaDao veiculoMarcaDao();
+
+    public abstract VeiculoModeloAnoDao veiculoModeloAnoDao();
 
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
