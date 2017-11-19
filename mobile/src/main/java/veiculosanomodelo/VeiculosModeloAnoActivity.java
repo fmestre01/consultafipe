@@ -18,7 +18,7 @@ import udacity.com.consultafipe.R;
 import udacity.com.core.model.VeiculoModeloAno;
 import udacity.com.core.ui.veiculosmodeloano.VeiculosModeloAnoContract;
 import udacity.com.core.ui.veiculosmodeloano.VeiculosModeloAnoPresenter;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 import util.UtilSnackbar;
 import veiculodetalhe.VeiculoDetalheActivity;
 
@@ -92,7 +92,7 @@ public class VeiculosModeloAnoActivity extends AppCompatActivity implements Veic
 
     @Override
     public void showError(String errorMessage) {
-        UtilSnackbar.showSnakbarTipoUm(this.mEmptyTextView, Constants.InfoLog.ERROR);
+        UtilSnackbar.showSnakbarTipoUm(this.mEmptyTextView, ConstantsUtils.InfoLog.ERROR);
     }
 
     @Override

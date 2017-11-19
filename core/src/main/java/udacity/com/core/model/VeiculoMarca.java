@@ -9,53 +9,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VeiculoMarca implements Parcelable {
 
-    @JsonProperty("id")
+    @JsonProperty("value")
     private String id;
 
-    @JsonProperty("name")
+    @JsonProperty("label")
     private String name;
-
-    @JsonProperty("fipe_marca")
-    private String fipe_marca;
-
-    @JsonProperty("marca")
-    private String marca;
-
-    @JsonProperty("key")
-    private String key;
-
-    @JsonProperty("fipe_name")
-    private String fipe_name;
 
     public VeiculoMarca() {
     }
 
-    public VeiculoMarca(String id, String name, String fipe_marca, String marca, String key, String fipe_name) {
+    public VeiculoMarca(String id, String name) {
         this.id = id;
         this.name = name;
-        this.fipe_marca = fipe_marca;
-        this.marca = marca;
-        this.key = key;
-        this.fipe_name = fipe_name;
     }
 
     protected VeiculoMarca(Parcel in) {
         id = in.readString();
         name = in.readString();
-        fipe_marca = in.readString();
-        marca = in.readString();
-        key = in.readString();
-        fipe_name = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(name);
-        dest.writeString(fipe_marca);
-        dest.writeString(marca);
-        dest.writeString(key);
-        dest.writeString(fipe_name);
     }
 
     @Override
@@ -89,37 +65,5 @@ public class VeiculoMarca implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getFipe_marca() {
-        return fipe_marca;
-    }
-
-    public void setFipe_marca(String fipe_marca) {
-        this.fipe_marca = fipe_marca;
-    }
-
-    public String getFipe_name() {
-        return fipe_name;
-    }
-
-    public void setFipe_name(String fipe_name) {
-        this.fipe_name = fipe_name;
     }
 }

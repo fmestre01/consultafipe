@@ -23,7 +23,7 @@ import udacity.com.core.model.Marca;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.model.VeiculoModeloAno;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 import udacity.com.core.util.SharedPrefsUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < marcasJson.length(); i++) {
                         MarcaEntity marcaEntity = gson.fromJson(marcasJson.getJSONObject(i).toString(), MarcaEntity.class);
                         BaseApplication.db.marcaDao().insertMarca(marcaEntity);
-                        Timber.i(Constants.InfoLog.INFO, marcaEntity);
+                        Timber.i(ConstantsUtils.InfoLog.INFO, marcaEntity);
                     }
                 } catch (Exception e) {
-                    Timber.e(Constants.InfoLog.ERROR, e.fillInStackTrace());
+                    Timber.e(ConstantsUtils.InfoLog.ERROR, e.fillInStackTrace());
                 }
             }
 

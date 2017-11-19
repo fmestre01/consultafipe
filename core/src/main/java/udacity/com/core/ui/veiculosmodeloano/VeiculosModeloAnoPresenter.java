@@ -26,7 +26,7 @@ import udacity.com.core.BaseApplication;
 import udacity.com.core.api.RemoteCallback;
 import udacity.com.core.model.VeiculoModeloAno;
 import udacity.com.core.ui.base.BasePresenter;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 
 public class VeiculosModeloAnoPresenter extends BasePresenter<VeiculosModeloAnoContract.View> implements VeiculosModeloAnoContract.Presenter {
 
@@ -43,14 +43,14 @@ public class VeiculosModeloAnoPresenter extends BasePresenter<VeiculosModeloAnoC
                     mView.hideProgress();
 
                     if (response.isEmpty()) {
-                        mView.showError(Constants.ListLog.ERROR);
+                        mView.showError(ConstantsUtils.ListLog.ERROR);
                         return;
                     } else {
                         mView.showVeiculosModeloAno(response);
                     }
                 } catch (Exception e) {
                     mView.showError(e.getMessage());
-                    Timber.e(Constants.InfoLog.ERROR, e.getMessage());
+                    Timber.e(ConstantsUtils.InfoLog.ERROR, e.getMessage());
                 }
             }
 
@@ -59,15 +59,15 @@ public class VeiculosModeloAnoPresenter extends BasePresenter<VeiculosModeloAnoC
                 if (!isViewAttached()) return;
                 mView.hideProgress();
                 mView.showUnauthorizedError();
-                Timber.e(Constants.InfoLog.UNAUTHORIZED);
+                Timber.e(ConstantsUtils.InfoLog.UNAUTHORIZED);
             }
 
             @Override
             public void onFailed(Throwable throwable) {
                 if (!isViewAttached()) return;
                 mView.hideProgress();
-                mView.showError(Constants.InfoLog.ERROR + "-" + throwable.getMessage());
-                Timber.e(Constants.InfoLog.ERROR, throwable.fillInStackTrace());
+                mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + throwable.getMessage());
+                Timber.e(ConstantsUtils.InfoLog.ERROR, throwable.fillInStackTrace());
             }
         });
     }

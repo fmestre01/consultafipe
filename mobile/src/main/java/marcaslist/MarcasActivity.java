@@ -17,6 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,7 @@ import udacity.com.consultafipe.R;
 import udacity.com.core.model.Marca;
 import udacity.com.core.ui.marcas.MarcasContract;
 import udacity.com.core.ui.marcas.MarcasPresenter;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 import util.SpacesItemDecoration;
 import util.UtilSnackbar;
 import veiculosmarca.VeiculosMarcaActivity;
@@ -78,12 +81,12 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        marcasPresenter.onMarcasRequested();
+                        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
                     }
                 }
         );
 
-        marcasPresenter.onMarcasRequested();
+        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
     }
 
     @Override
@@ -135,7 +138,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public void showError(String errorMessage) {
-        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, Constants.InfoLog.ERROR);
+        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
         layoutTentarDeNovo.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(false);
     }
@@ -174,7 +177,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
         final List<Marca> filteredModelList = new ArrayList<>();
         for (Marca marca : marcas) {
-            final String text = marca.getFipe_name().toLowerCase();
+            final String text = marca.getName().toLowerCase();
             if (text.contains(query)) {
                 filteredModelList.add(marca);
             }
@@ -207,4 +210,22 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         return super.onCreateOptionsMenu(menu);
     }
 
+    private JSONObject marcaJsonObject() {
+        JSONObject marcaObject = new JSONObject();
+        try {
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA,
+                    ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO,
+                    ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return marcaObject;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        marcasPresenter.clearData();
+    }
 }

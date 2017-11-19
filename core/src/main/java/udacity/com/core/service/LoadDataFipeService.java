@@ -6,7 +6,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import timber.log.Timber;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 
 public class LoadDataFipeService extends Service {
 
@@ -20,7 +20,7 @@ public class LoadDataFipeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Timber.i(Constants.InfoLog.INFO + "----INICIANDO SERVIÇO DE DOWNLOAD ", RetrieveDataFromApi.class.getName() + "----\n");
+        Timber.i(ConstantsUtils.InfoLog.INFO + "----INICIANDO SERVIÇO DE DOWNLOAD ", RetrieveDataFromApi.class.getName() + "----\n");
         retrieveDataFromApi.initSubProcessService();
 
         //if (!retrieveDataFromApi.retrieveAndSaveLocalMarcas()) {

@@ -14,7 +14,7 @@ import udacity.com.consultafipe.R;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalheContract;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalhePresenter;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 import util.UtilSnackbar;
 
 public class VeiculoDetalheActivity extends AppCompatActivity implements VeiculoDetalheContract.View, VeiculoDetalheContract.OnItemClickListener {
@@ -90,7 +90,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @Override
     public void showError(String errorMessage) {
-        UtilSnackbar.showSnakbarTipoUm(this.marcaTextView, Constants.InfoLog.ERROR);
+        UtilSnackbar.showSnakbarTipoUm(this.marcaTextView, ConstantsUtils.InfoLog.ERROR);
     }
 
     @Override

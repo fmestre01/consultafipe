@@ -62,6 +62,10 @@ dependencies {
     //calligraphy
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 
+    //Fast Android Networking Library
+    compile 'com.amitshekhar.android:android-networking:1.0.0'
+    compile 'com.amitshekhar.android:jackson-android-networking:1.0.0'
+
 }
 repositories {
     mavenCentral()

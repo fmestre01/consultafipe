@@ -11,6 +11,7 @@ import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.model.VeiculoModeloAno;
 
 public interface Api {
+
     @GET("marcas.json")
     Call<List<Marca>> getMarcas();
 

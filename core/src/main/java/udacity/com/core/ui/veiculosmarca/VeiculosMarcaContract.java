@@ -1,5 +1,7 @@
 package udacity.com.core.ui.veiculosmarca;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import udacity.com.core.model.VeiculoMarca;
@@ -10,6 +12,10 @@ public interface VeiculosMarcaContract {
     interface Presenter {
 
         void onVeiculosMarcaRequested(String idMarca);
+
+        void onVeiculosMarcaFastNetworkingLibrary(JSONObject veiculoMarcaJsonObject);
+
+        void clearData();
     }
 
     interface View extends RemoteView {

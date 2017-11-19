@@ -14,7 +14,7 @@ import udacity.com.core.data.entity.VeiculoModeloAnoEntity;
 import udacity.com.core.model.Marca;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.model.VeiculoModeloAno;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 
 public class RetrieveDataFromApi implements ApiService {
 
@@ -51,26 +51,26 @@ public class RetrieveDataFromApi implements ApiService {
                         for (int i = 0; i < response.size(); i++) {
                             String marcaEntity = gson.toJson(response.get(i));
                             BaseApplication.db.marcaDao().insertMarca(gson.fromJson(marcaEntity, MarcaEntity.class));
-                            Timber.i(Constants.InfoLog.INFO + "---INSERT MARCA---" + response.get(i).getId(), RetrieveDataFromApi.class.getName() + "\n");
+                            Timber.i(ConstantsUtils.InfoLog.INFO + "---INSERT MARCA---" + response.get(i).getId(), RetrieveDataFromApi.class.getName() + "\n");
                         }
                         marcasLoadSucess = true;
                     }
                 } catch (Exception e) {
                     marcasLoadSucess = false;
-                    Timber.e(Constants.InfoLog.ERROR);
+                    Timber.e(ConstantsUtils.InfoLog.ERROR);
                 }
             }
 
             @Override
             public void onUnauthorized() {
                 marcasLoadSucess = false;
-                Timber.e(Constants.InfoLog.UNAUTHORIZED);
+                Timber.e(ConstantsUtils.InfoLog.UNAUTHORIZED);
             }
 
             @Override
             public void onFailed(Throwable throwable) {
                 marcasLoadSucess = false;
-                Timber.e(Constants.InfoLog.ERROR);
+                Timber.e(ConstantsUtils.InfoLog.ERROR);
             }
         });
         return marcasLoadSucess;
@@ -90,11 +90,11 @@ public class RetrieveDataFromApi implements ApiService {
                             for (int i = 0; i < response.size(); i++) {
                                 String veiculoMarca = gson.toJson(response.get(i));
                                 BaseApplication.db.veiculoMarcaDao().insertVeiculosMarca(gson.fromJson(veiculoMarca, VeiculoMarcaEntity.class));
-                                Timber.i(Constants.InfoLog.INFO + "---INSERT VEICULO MARCA---" + response.get(i).getId(), RetrieveDataFromApi.class.getName() + "\n");
+                                Timber.i(ConstantsUtils.InfoLog.INFO + "---INSERT VEICULO MARCA---" + response.get(i).getId(), RetrieveDataFromApi.class.getName() + "\n");
                             }
                         }
                     } catch (Exception e) {
-                        Timber.e(Constants.InfoLog.ERROR);
+                        Timber.e(ConstantsUtils.InfoLog.ERROR);
                     }
                     veiculosMarcaLoadSucess = true;
                 }
@@ -102,13 +102,13 @@ public class RetrieveDataFromApi implements ApiService {
                 @Override
                 public void onUnauthorized() {
                     veiculosMarcaLoadSucess = false;
-                    Timber.e(Constants.InfoLog.UNAUTHORIZED);
+                    Timber.e(ConstantsUtils.InfoLog.UNAUTHORIZED);
                 }
 
                 @Override
                 public void onFailed(Throwable throwable) {
                     veiculosMarcaLoadSucess = false;
-                    Timber.e(Constants.InfoLog.ERROR);
+                    Timber.e(ConstantsUtils.InfoLog.ERROR);
                 }
             });
         }
@@ -130,11 +130,11 @@ public class RetrieveDataFromApi implements ApiService {
                                 for (int i = 0; i < response.size(); i++) {
                                     String veiculoAnoModelo = gson.toJson(response.get(i));
                                     BaseApplication.db.veiculoModeloAnoDao().insertVeiculosModeloAno(gson.fromJson(veiculoAnoModelo, VeiculoModeloAnoEntity.class));
-                                    Timber.i(Constants.InfoLog.INFO + "---INSERT VEICULO ANO MODELO---" + response.get(i).toString(), RetrieveDataFromApi.class.getName() + "\n");
+                                    Timber.i(ConstantsUtils.InfoLog.INFO + "---INSERT VEICULO ANO MODELO---" + response.get(i).toString(), RetrieveDataFromApi.class.getName() + "\n");
                                 }
                             }
                         } catch (Exception e) {
-                            Timber.e(Constants.InfoLog.ERROR);
+                            Timber.e(ConstantsUtils.InfoLog.ERROR);
                         }
                         veiculosModeloAnoLoadSucess = true;
                     }
@@ -142,13 +142,13 @@ public class RetrieveDataFromApi implements ApiService {
                     @Override
                     public void onUnauthorized() {
                         veiculosModeloAnoLoadSucess = false;
-                        Timber.e(Constants.InfoLog.UNAUTHORIZED);
+                        Timber.e(ConstantsUtils.InfoLog.UNAUTHORIZED);
                     }
 
                     @Override
                     public void onFailed(Throwable throwable) {
                         veiculosModeloAnoLoadSucess = false;
-                        Timber.e(Constants.InfoLog.ERROR);
+                        Timber.e(ConstantsUtils.InfoLog.ERROR);
                     }
                 });
             }

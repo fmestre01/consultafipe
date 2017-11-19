@@ -1,14 +1,15 @@
 package udacity.com.core;
 
 import android.app.Application;
-import android.content.Intent;
+
+import com.androidnetworking.AndroidNetworking;
+import com.jacksonandroidnetworking.JacksonParserFactory;
 
 import timber.log.Timber;
 import udacity.com.core.api.Api;
 import udacity.com.core.api.ApiClient;
 import udacity.com.core.data.AppDatabase;
-import udacity.com.core.service.LoadDataFipeService;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 
 public class BaseApplication extends Application {
 
@@ -22,12 +23,15 @@ public class BaseApplication extends Application {
         db = AppDatabase.getDatabase(getApplicationContext());
         apiService = ApiClient.makeFipeService();
 
+        AndroidNetworking.initialize(this, ApiClient.makeOkHttpClient());
+        AndroidNetworking.setParserFactory(new JacksonParserFactory());
+
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
 
-        startService(new Intent(this, LoadDataFipeService.class));
+        //startService(new Intent(this, LoadDataFipeService.class));
 
-        Timber.tag(BaseApplication.class.getName()).i(Constants.Application.INITAPPLICATION);
+        Timber.tag(BaseApplication.class.getName()).i(ConstantsUtils.Application.INITAPPLICATION);
     }
 }

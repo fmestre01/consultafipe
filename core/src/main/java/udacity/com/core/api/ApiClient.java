@@ -7,7 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import udacity.com.core.BuildConfig;
-import udacity.com.core.util.Constants;
+import udacity.com.core.util.ConstantsUtils;
 
 public class ApiClient {
 
@@ -20,7 +20,7 @@ public class ApiClient {
 
     private static Api makeFipeService(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.Application.BASE_URL)
+                .baseUrl(ConstantsUtils.Application.BASE_URL)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -28,7 +28,7 @@ public class ApiClient {
         return retrofit.create(Api.class);
     }
 
-    private static OkHttpClient makeOkHttpClient() {
+    public static OkHttpClient makeOkHttpClient() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient().newBuilder();
         httpClientBuilder.connectTimeout(HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS);
         httpClientBuilder.readTimeout(HTTP_READ_TIMEOUT, TimeUnit.SECONDS);

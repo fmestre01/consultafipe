@@ -42,8 +42,7 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.marca = marcasList.get(position);
-        holder.nomeMarca.setText(marcasList.get(position).getFipe_name());
-        holder.fipeName.setText("Retorno site: " + marcasList.get(position).getName());
+        holder.nomeMarca.setText(marcasList.get(position).getName());
 
         /*try {
             Glide.with(context)
@@ -96,14 +95,12 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView nomeMarca;
-        public final TextView fipeName;
         public Marca marca;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             nomeMarca = (TextView) view.findViewById(R.id.nomeMarca);
-            fipeName = (TextView) view.findViewById(R.id.fipeName);
         }
     }
 
