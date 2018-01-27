@@ -155,7 +155,6 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
         AndroidNetworking.post(ConstantsUtils.Urls.SITE_FIPE + ConstantsUtils.Urls.OP_KEY_ANO_MODELO)
                 .addHeaders(ConstantsUtils.Urls.HEADER_REFERER, ConstantsUtils.Urls.HEADER_REFERER_VALUE)
                 .addJSONObjectBody(veiculosModeloJsonObject)
-                .setOkHttpClient(ApiClient.makeOkHttpClient())
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override

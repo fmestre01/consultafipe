@@ -40,7 +40,6 @@ public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContrac
         AndroidNetworking.post(ConstantsUtils.Urls.SITE_FIPE + ConstantsUtils.Urls.OP_KEY_VEICULO_DETALHE)
                 .addHeaders(ConstantsUtils.Urls.HEADER_REFERER, ConstantsUtils.Urls.HEADER_REFERER_VALUE)
                 .addJSONObjectBody(veiculoDetalhejsonObject)
-                .setOkHttpClient(ApiClient.makeOkHttpClient())
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
