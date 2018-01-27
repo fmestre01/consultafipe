@@ -4,12 +4,14 @@ import android.app.Application;
 
 import com.androidnetworking.AndroidNetworking;
 import com.jacksonandroidnetworking.JacksonParserFactory;
+import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 import udacity.com.core.api.Api;
 import udacity.com.core.api.ApiClient;
 import udacity.com.core.data.AppDatabase;
 import udacity.com.core.util.ConstantsUtils;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class BaseApplication extends Application {
 
@@ -30,8 +32,15 @@ public class BaseApplication extends Application {
             Timber.plant(new Timber.DebugTree());
         }
 
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/gtw.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
         //startService(new Intent(this, LoadDataFipeService.class));
 
         Timber.tag(BaseApplication.class.getName()).i(ConstantsUtils.Application.INITAPPLICATION);
+
+        LeakCanary.install(this);
     }
 }

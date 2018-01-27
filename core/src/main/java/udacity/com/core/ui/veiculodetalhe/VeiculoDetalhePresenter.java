@@ -16,12 +16,14 @@
 
 package udacity.com.core.ui.veiculodetalhe;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.Gson;
 
-import retrofit2.Call;
+import org.json.JSONObject;
+
 import timber.log.Timber;
-import udacity.com.core.BaseApplication;
-import udacity.com.core.api.RemoteCallback;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.base.BasePresenter;
 import udacity.com.core.util.ConstantsUtils;
@@ -29,44 +31,49 @@ import udacity.com.core.util.ConstantsUtils;
 public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContract.View> implements VeiculoDetalheContract.Presenter {
 
     private Gson gson = new Gson();
+    private Veiculo veiculoDetalhe;
 
-    public void onVeiculoDetalheRequested(String idMarca, String idModeloAno, String idVeiculo) {
+    @Override
+    public void onVeiculoDetalheRequested(JSONObject veiculoDetalhejsonObject) {
         mView.showProgress();
-        Call<Veiculo> call = BaseApplication.apiService.getVeiculoDetalhe(idMarca, idModeloAno, idVeiculo);
-        call.enqueue(new RemoteCallback<Veiculo>() {
-            @Override
-            public void onSuccess(Veiculo response) {
-                try {
-                    if (!isViewAttached()) return;
-                    mView.hideProgress();
+        AndroidNetworking.post(ConstantsUtils.Urls.SITE_FIPE + ConstantsUtils.Urls.OP_KEY_VEICULO_DETALHE)
+                .addHeaders(ConstantsUtils.Urls.HEADER_REFERER, ConstantsUtils.Urls.HEADER_REFERER_VALUE)
+                .addJSONObjectBody(veiculoDetalhejsonObject)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (!isViewAttached()) return;
+                            mView.hideProgress();
 
-                    if (response == null) {
-                        mView.showError(ConstantsUtils.ListLog.ERROR);
-                        return;
-                    } else {
-                        mView.showVeiculoDetalhe(response);
+                            if (response.length() == 0) {
+                                mView.showError(ConstantsUtils.ListLog.ERROR);
+                                return;
+                            } else {
+                                Veiculo v = new Veiculo();
+                                v.setMarca(response.getString("Marca"));
+                                v.setModelo(response.getString("Modelo"));
+                                v.setAnoModelo(response.getString("AnoModelo"));
+                                v.setValor(response.getString("Valor"));
+                                v.setCombustivel(response.getString("Combustivel"));
+                                mView.showVeiculoDetalhe(v);
+                            }
+                        } catch (Exception e) {
+                            if (!isViewAttached()) return;
+                            mView.hideProgress();
+                            mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + e.getMessage());
+                            Timber.e(ConstantsUtils.InfoLog.ERROR, e.fillInStackTrace());
+                        }
                     }
-                } catch (Exception e) {
-                    mView.showError(e.getMessage());
-                    Timber.e(ConstantsUtils.InfoLog.ERROR, e.getMessage());
-                }
-            }
 
-            @Override
-            public void onUnauthorized() {
-                if (!isViewAttached()) return;
-                mView.hideProgress();
-                mView.showUnauthorizedError();
-                Timber.e(ConstantsUtils.InfoLog.UNAUTHORIZED);
-            }
-
-            @Override
-            public void onFailed(Throwable throwable) {
-                if (!isViewAttached()) return;
-                mView.hideProgress();
-                mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + throwable.getMessage());
-                Timber.e(ConstantsUtils.InfoLog.ERROR, throwable.fillInStackTrace());
-            }
-        });
+                    @Override
+                    public void onError(ANError anError) {
+                        if (!isViewAttached()) return;
+                        mView.hideProgress();
+                        mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + anError.getMessage());
+                        Timber.e(ConstantsUtils.InfoLog.ERROR, anError.fillInStackTrace());
+                    }
+                });
     }
 }

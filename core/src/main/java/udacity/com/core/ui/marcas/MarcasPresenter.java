@@ -16,14 +16,20 @@
 
 package udacity.com.core.ui.marcas;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +37,18 @@ import retrofit2.Call;
 import timber.log.Timber;
 import udacity.com.core.BaseApplication;
 import udacity.com.core.api.RemoteCallback;
+import udacity.com.core.model.AnoReferencia;
 import udacity.com.core.model.Marca;
 import udacity.com.core.ui.base.BasePresenter;
+import udacity.com.core.util.AlertUtils;
 import udacity.com.core.util.ConstantsUtils;
+import udacity.com.core.util.ListUtils;
 
 public class MarcasPresenter extends BasePresenter<MarcasContract.View> implements MarcasContract.Presenter {
 
     private Gson gson = new Gson();
     private List<Marca> marcas;
+    private List<AnoReferencia> anosReferencia;
 
     @Override
     public void onMarcasRequested() {
@@ -83,6 +93,7 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
 
     @Override
     public void onMarcasRequestedFastNetworkingLibrary(JSONObject marcaJsonObject) {
+        mView.showProgress();
         AndroidNetworking.post(ConstantsUtils.Urls.SITE_FIPE + ConstantsUtils.Urls.OP_KEY_MARCAS)
                 .addHeaders(ConstantsUtils.Urls.HEADER_REFERER, ConstantsUtils.Urls.HEADER_REFERER_VALUE)
                 .addJSONObjectBody(marcaJsonObject)
@@ -113,8 +124,10 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
                                 mView.showMarcas(marcas);
                             }
                         } catch (Exception e) {
-                            mView.showError(e.getMessage());
-                            Timber.e(ConstantsUtils.InfoLog.ERROR, e.getMessage());
+                            if (!isViewAttached()) return;
+                            mView.hideProgress();
+                            mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + e.getStackTrace());
+                            Timber.e(ConstantsUtils.InfoLog.ERROR, e.fillInStackTrace());
                         }
                     }
 
@@ -122,7 +135,7 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
                     public void onError(ANError anError) {
                         if (!isViewAttached()) return;
                         mView.hideProgress();
-                        mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + anError.getMessage());
+                        mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + anError.getErrorBody());
                         Timber.e(ConstantsUtils.InfoLog.ERROR, anError.fillInStackTrace());
                     }
                 });
@@ -131,5 +144,42 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
     @Override
     public void clearData() {
         marcas = null;
+        anosReferencia = null;
+    }
+
+    @Override
+    public void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<AnoReferencia> anosReferencia, Intent intent) {
+        AlertUtils.alertViewAnoReferencia(context, title, message, icon, layout, anosReferencia, intent);
+    }
+
+    @Override
+    public List<AnoReferencia> onAnosReferenciaRequested(InputStream in) {
+        try {
+            String anoReferenciaJson = ListUtils.readLocalJsonFile(in);
+            JSONObject jo = new JSONObject(anoReferenciaJson);
+            JSONArray arrayAnoReferencia = jo.getJSONArray("anosReferencia");
+
+            anosReferencia = new ArrayList<>();
+
+            for (int i = 0; i < arrayAnoReferencia.length(); i++) {
+                JSONObject object = null;
+                try {
+                    object = arrayAnoReferencia.getJSONObject(i);
+                    String codigo = object.getString("Codigo");
+                    String mes = object.getString("Mes");
+                    AnoReferencia anoReferencia = new AnoReferencia();
+                    anoReferencia.setId(codigo);
+                    anoReferencia.setMes(mes);
+                    anosReferencia.add(anoReferencia);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return anosReferencia;
     }
 }

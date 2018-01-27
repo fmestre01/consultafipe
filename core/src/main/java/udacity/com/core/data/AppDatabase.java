@@ -5,16 +5,24 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import udacity.com.core.data.dao.AnoReferenciaDao;
 import udacity.com.core.data.dao.MarcaDao;
 import udacity.com.core.data.dao.VeiculoDao;
 import udacity.com.core.data.dao.VeiculoMarcaDao;
 import udacity.com.core.data.dao.VeiculoModeloAnoDao;
-import udacity.com.core.data.entity.MarcaEntity;
-import udacity.com.core.data.entity.VeiculoEntity;
-import udacity.com.core.data.entity.VeiculoMarcaEntity;
-import udacity.com.core.data.entity.VeiculoModeloAnoEntity;
+import udacity.com.core.model.AnoReferencia;
+import udacity.com.core.model.Marca;
+import udacity.com.core.model.Veiculo;
+import udacity.com.core.model.VeiculoMarca;
+import udacity.com.core.model.CombustivelModeloAno;
 
-@Database(entities = {VeiculoEntity.class, MarcaEntity.class, VeiculoMarcaEntity.class, VeiculoModeloAnoEntity.class}, version = 1)
+@Database(entities = {
+        Veiculo.class,
+        Marca.class,
+        VeiculoMarca.class,
+        CombustivelModeloAno.class,
+        AnoReferencia.class},
+        version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -26,6 +34,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract VeiculoMarcaDao veiculoMarcaDao();
 
     public abstract VeiculoModeloAnoDao veiculoModeloAnoDao();
+
+    public abstract AnoReferenciaDao anoReferenciaDao();
 
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {

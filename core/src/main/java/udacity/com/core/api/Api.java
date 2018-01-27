@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 import udacity.com.core.model.Marca;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.model.VeiculoMarca;
-import udacity.com.core.model.VeiculoModeloAno;
+import udacity.com.core.model.CombustivelModeloAno;
 
 public interface Api {
 
@@ -19,7 +19,7 @@ public interface Api {
     Call<List<VeiculoMarca>> getVeiculosMarca(@Path("id_marca") String idMarca);
 
     @GET("veiculo/{id_marca}/{id_modelo_ano}.json")
-    Call<List<VeiculoModeloAno>> getVeiculosModeloAno(@Path("id_marca") String idMarca, @Path("id_modelo_ano") String idModeloAno);
+    Call<List<CombustivelModeloAno>> getVeiculosModeloAno(@Path("id_marca") String idMarca, @Path("id_modelo_ano") String idModeloAno);
 
     @GET("veiculo/{id_marca}/{id_modelo_ano}/{id_veiculo}.json")
     Call<Veiculo> getVeiculoDetalhe(@Path("id_marca") String idMarca, @Path("id_modelo_ano") String idModeloAno, @Path("id_veiculo") String idVeiculo);

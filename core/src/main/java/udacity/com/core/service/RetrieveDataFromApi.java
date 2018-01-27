@@ -8,12 +8,9 @@ import retrofit2.Call;
 import timber.log.Timber;
 import udacity.com.core.BaseApplication;
 import udacity.com.core.api.RemoteCallback;
-import udacity.com.core.data.entity.MarcaEntity;
-import udacity.com.core.data.entity.VeiculoMarcaEntity;
-import udacity.com.core.data.entity.VeiculoModeloAnoEntity;
+import udacity.com.core.model.CombustivelModeloAno;
 import udacity.com.core.model.Marca;
 import udacity.com.core.model.VeiculoMarca;
-import udacity.com.core.model.VeiculoModeloAno;
 import udacity.com.core.util.ConstantsUtils;
 
 public class RetrieveDataFromApi implements ApiService {
@@ -23,9 +20,9 @@ public class RetrieveDataFromApi implements ApiService {
     private boolean veiculosMarcaLoadSucess;
     private boolean veiculosModeloAnoLoadSucess;
 
-    private List<MarcaEntity> marcasLocal;
+    private List<Marca> marcasLocal;
     private int marcasLocalSize;
-    private List<VeiculoMarcaEntity> veiculosMarcaLocal;
+    private List<VeiculoMarca> veiculosMarcaLocal;
     private int veiculosMarcaLocalSize;
 
     public RetrieveDataFromApi() {
@@ -50,7 +47,7 @@ public class RetrieveDataFromApi implements ApiService {
                     } else {
                         for (int i = 0; i < response.size(); i++) {
                             String marcaEntity = gson.toJson(response.get(i));
-                            BaseApplication.db.marcaDao().insertMarca(gson.fromJson(marcaEntity, MarcaEntity.class));
+                            BaseApplication.db.marcaDao().insertMarca(gson.fromJson(marcaEntity, Marca.class));
                             Timber.i(ConstantsUtils.InfoLog.INFO + "---INSERT MARCA---" + response.get(i).getId(), RetrieveDataFromApi.class.getName() + "\n");
                         }
                         marcasLoadSucess = true;
@@ -89,7 +86,7 @@ public class RetrieveDataFromApi implements ApiService {
                         } else {
                             for (int i = 0; i < response.size(); i++) {
                                 String veiculoMarca = gson.toJson(response.get(i));
-                                BaseApplication.db.veiculoMarcaDao().insertVeiculosMarca(gson.fromJson(veiculoMarca, VeiculoMarcaEntity.class));
+                                BaseApplication.db.veiculoMarcaDao().insertVeiculosMarca(gson.fromJson(veiculoMarca, VeiculoMarca.class));
                                 Timber.i(ConstantsUtils.InfoLog.INFO + "---INSERT VEICULO MARCA---" + response.get(i).getId(), RetrieveDataFromApi.class.getName() + "\n");
                             }
                         }
@@ -119,17 +116,17 @@ public class RetrieveDataFromApi implements ApiService {
     public boolean retrieveAndSaveLocalVeiculosModeloAno() {
         for (int z = 0; z < marcasLocalSize; z++) {
             for (int i = 0; i < veiculosMarcaLocalSize; i++) {
-                Call<List<VeiculoModeloAno>> call = BaseApplication.apiService.getVeiculosModeloAno(String.valueOf(marcasLocal.get(z).getId()), String.valueOf(veiculosMarcaLocal.get(i).getId()));
-                call.enqueue(new RemoteCallback<List<VeiculoModeloAno>>() {
+                Call<List<CombustivelModeloAno>> call = BaseApplication.apiService.getVeiculosModeloAno(String.valueOf(marcasLocal.get(z).getId()), String.valueOf(veiculosMarcaLocal.get(i).getId()));
+                call.enqueue(new RemoteCallback<List<CombustivelModeloAno>>() {
                     @Override
-                    public void onSuccess(List<VeiculoModeloAno> response) {
+                    public void onSuccess(List<CombustivelModeloAno> response) {
                         try {
                             if (response.isEmpty()) {
                                 return;
                             } else {
                                 for (int i = 0; i < response.size(); i++) {
                                     String veiculoAnoModelo = gson.toJson(response.get(i));
-                                    BaseApplication.db.veiculoModeloAnoDao().insertVeiculosModeloAno(gson.fromJson(veiculoAnoModelo, VeiculoModeloAnoEntity.class));
+                                    BaseApplication.db.veiculoModeloAnoDao().insertVeiculosModeloAno(gson.fromJson(veiculoAnoModelo, CombustivelModeloAno.class));
                                     Timber.i(ConstantsUtils.InfoLog.INFO + "---INSERT VEICULO ANO MODELO---" + response.get(i).toString(), RetrieveDataFromApi.class.getName() + "\n");
                                 }
                             }

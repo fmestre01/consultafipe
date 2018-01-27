@@ -1,8 +1,10 @@
 package marcaslist;
 
 import android.app.SearchManager;
-import android.graphics.Color;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +30,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import udacity.com.consultafipe.R;
+import udacity.com.core.model.AnoReferencia;
 import udacity.com.core.model.Marca;
 import udacity.com.core.ui.marcas.MarcasContract;
 import udacity.com.core.ui.marcas.MarcasPresenter;
 import udacity.com.core.util.ConstantsUtils;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.SpacesItemDecoration;
 import util.UtilSnackbar;
 import veiculosmarca.VeiculosMarcaActivity;
@@ -58,6 +63,9 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     String searchString = "";
     List<Marca> marcasPesquisa = new ArrayList<>();
 
+    List<AnoReferencia> anosReferencia;
+    AnoReferencia anoReferenciaSelected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,21 +85,33 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         marcasPresenter = new MarcasPresenter();
         marcasPresenter.attachView(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            anoReferenciaSelected = extras.getParcelable("selectedAnoReferencia");
+        }
+
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+                        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject(anoReferenciaSelected.getId()));
                     }
                 }
         );
 
-        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+        populaTabelaAnosReferencia();
+
+        if (anoReferenciaSelected == null) {
+            anoReferenciaSelected = anosReferencia.get(0);
+        }
+        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject(anoReferenciaSelected.getId()));
+        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, "Ano Referência: " + anoReferenciaSelected.getMes());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     @Override
@@ -102,7 +122,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public void clickItem(Marca marca) {
-        startActivity(VeiculosMarcaActivity.newVeiculosMarcaActivity(this, marca.getId()));
+        startActivity(VeiculosMarcaActivity.newVeiculosMarcaActivity(this, marca));
     }
 
     @Override
@@ -165,7 +185,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
             marcasAdapter.setFilter(filteredModelList);
             return true;
         } else {
-            Toast.makeText(MarcasActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MarcasActivity.this, getResources().getString(R.string.text_sem_resultados), Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -192,7 +212,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);
 
         MenuItem searchitem = menu.findItem(R.id.action_search);
@@ -203,20 +223,41 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         TextView searchText = (TextView)
                 searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
-        searchText.setTextColor(Color.parseColor("#FFFFFF"));
-        searchText.setHintTextColor(Color.parseColor("#FFFFFF"));
-        searchText.setHint("Digite a marca...");
+        searchText.setTextColor(ContextCompat.getColor(this, R.color.colorSearchView));
+        searchText.setHintTextColor(ContextCompat.getColor(this, R.color.colorSearchView));
+        searchText.setHint(getResources().getString(R.string.text_digite_nome_marca));
         searchView.setOnQueryTextListener(this);
+
+        final MenuItem anoReferenciaItem = menu.findItem(R.id.action_ano_referencia);
+        anoReferenciaItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                marcasPresenter.showAlertDialogPeriodoReferencia(
+                        MarcasActivity.this,
+                        getResources().getString(R.string.text_periodo_referencia),
+                        getResources().getString(R.string.text_selecione),
+                        R.mipmap.ic_launcher_round,
+                        R.layout.alert_ano_referencia_veiculo,
+                        anosReferencia,
+                        MarcasActivity.newMarcasActivity(getApplicationContext(), anoReferenciaSelected.getId()));
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
-    private JSONObject marcaJsonObject() {
+    public static Intent newMarcasActivity(Context context, String codigoAnoReferencia) {
+        Intent intent = new Intent(context, MarcasActivity.class);
+        intent.putExtra("codigoAnoReferencia", codigoAnoReferencia);
+        return intent;
+    }
+
+    private JSONObject marcaJsonObject(String valorTabelaReferencia) {
         JSONObject marcaObject = new JSONObject();
         try {
-            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA,
-                    ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
-            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO,
-                    ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, valorTabelaReferencia);
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -227,5 +268,34 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     protected void onDestroy() {
         super.onDestroy();
         marcasPresenter.clearData();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    private void populaTabelaAnosReferencia() {
+        try {
+            InputStream assetsAnosReferencia = getAssets().open("anosReferencia.json");
+            anosReferencia = marcasPresenter.onAnosReferenciaRequested(assetsAnosReferencia);
+
+            //if (SharedPrefsUtils.getBooleanPreference(this, ConstantsUtils.Data.SAVE_DATA_ANO_REFERENCIA, false)) {
+            /*InputStream assetsAnosReferencia = getAssets().open("anosReferencia.json");
+            anosReferencia = marcasPresenter.onAnosReferenciaRequested(assetsAnosReferencia);
+            int size = anosReferencia.size();
+            if (size > 0) {
+                for (int i = 0; i < size; i++) {
+                    AnoReferencia anoReferencia = new AnoReferencia();
+                    anoReferencia.setId(anosReferencia.get(i).getId());
+                    anoReferencia.setMes(anosReferencia.get(i).getMes());
+                    BaseApplication.db.anoReferenciaDao().insertAnosReferencia(anoReferencia);
+                }
+                SharedPrefsUtils.setBooleanPreference(this, ConstantsUtils.Data.SAVE_DATA_ANO_REFERENCIA, true);
+            }*/
+            //}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

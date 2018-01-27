@@ -1,62 +1,54 @@
 package udacity.com.core.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity(tableName = "veiculo")
 public class Veiculo implements Parcelable {
 
-    @JsonProperty("id")
-    private String id;
-
-    @JsonProperty("ano_modelo")
-    private String ano_modelo;
+    @PrimaryKey
+    private Long auto_id;
 
     @JsonProperty("marca")
     private String marca;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("modelo")
+    private String modelo;
 
-    @JsonProperty("veiculo")
-    private String veiculo;
+    @JsonProperty("anoModelo")
+    private String anoModelo;
 
-    @JsonProperty("preco")
-    private String preco;
+    @JsonProperty("valor")
+    private String valor;
 
     @JsonProperty("combustivel")
     private String combustivel;
 
-    @JsonProperty("referencia")
+    @JsonProperty("mesReferencia")
     private String referencia;
-
-    @JsonProperty("fipe_codigo")
-    private String fipe_codigo;
-
-    @JsonProperty("key")
-    private String key;
-
-    @JsonProperty("time")
-    private String time;
 
     public Veiculo() {
     }
 
     protected Veiculo(Parcel in) {
-        id = in.readString();
-        ano_modelo = in.readString();
+        if (in.readByte() == 0) {
+            auto_id = null;
+        } else {
+            auto_id = in.readLong();
+        }
         marca = in.readString();
-        name = in.readString();
-        veiculo = in.readString();
-        preco = in.readString();
+        modelo = in.readString();
+        anoModelo = in.readString();
+        valor = in.readString();
         combustivel = in.readString();
         referencia = in.readString();
-        fipe_codigo = in.readString();
-        key = in.readString();
-        time = in.readString();
     }
 
     public static final Creator<Veiculo> CREATOR = new Creator<Veiculo>() {
@@ -71,20 +63,12 @@ public class Veiculo implements Parcelable {
         }
     };
 
-    public String getId() {
-        return id;
+    public Long getAuto_id() {
+        return auto_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getAno_modelo() {
-        return ano_modelo;
-    }
-
-    public void setAno_modelo(String ano_modelo) {
-        this.ano_modelo = ano_modelo;
+    public void setAuto_id(Long auto_id) {
+        this.auto_id = auto_id;
     }
 
     public String getMarca() {
@@ -95,28 +79,28 @@ public class Veiculo implements Parcelable {
         this.marca = marca;
     }
 
-    public String getName() {
-        return name;
+    public String getModelo() {
+        return modelo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
     }
 
-    public String getVeiculo() {
-        return veiculo;
+    public String getAnoModelo() {
+        return anoModelo;
     }
 
-    public void setVeiculo(String veiculo) {
-        this.veiculo = veiculo;
+    public void setAnoModelo(String anoModelo) {
+        this.anoModelo = anoModelo;
     }
 
-    public String getPreco() {
-        return preco;
+    public String getValor() {
+        return valor;
     }
 
-    public void setPreco(String preco) {
-        this.preco = preco;
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 
     public String getCombustivel() {
@@ -135,30 +119,6 @@ public class Veiculo implements Parcelable {
         this.referencia = referencia;
     }
 
-    public String getFipe_codigo() {
-        return fipe_codigo;
-    }
-
-    public void setFipe_codigo(String fipe_codigo) {
-        this.fipe_codigo = fipe_codigo;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -166,16 +126,17 @@ public class Veiculo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(ano_modelo);
+        if (auto_id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(auto_id);
+        }
         parcel.writeString(marca);
-        parcel.writeString(name);
-        parcel.writeString(veiculo);
-        parcel.writeString(preco);
+        parcel.writeString(modelo);
+        parcel.writeString(anoModelo);
+        parcel.writeString(valor);
         parcel.writeString(combustivel);
         parcel.writeString(referencia);
-        parcel.writeString(fipe_codigo);
-        parcel.writeString(key);
-        parcel.writeString(time);
     }
 }

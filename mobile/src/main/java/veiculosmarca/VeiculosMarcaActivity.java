@@ -26,16 +26,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import udacity.com.consultafipe.R;
+import udacity.com.core.model.CombustivelModeloAno;
+import udacity.com.core.model.Marca;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.ui.veiculosmarca.VeiculosMarcaContract;
 import udacity.com.core.ui.veiculosmarca.VeiculosMarcaPresenter;
-import udacity.com.core.util.AlertUtils;
 import udacity.com.core.util.ConstantsUtils;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.UtilSnackbar;
+import veiculodetalhe.VeiculoDetalheActivity;
 
 public class VeiculosMarcaActivity extends AppCompatActivity implements VeiculosMarcaContract.View, VeiculosMarcaContract.OnItemClickListener, SearchView.OnQueryTextListener {
 
-    private static final String EXTRA_ID_MARCA = "idMarca";
+    private static final String EXTRA_MARCA = "marca";
 
     private VeiculosMarcaPresenter veiculosMarcaPresenter;
     private VeiculosMarcaAdapter veiculosMarcaAdapter;
@@ -49,10 +52,10 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
     @BindView(R.id.progress)
     ProgressBar progressBar;
 
-    String idMarca;
+    private Marca marca;
+    private VeiculoMarca veiculoMarcaObject;
 
-    String searchString = "";
-    List<VeiculoMarca> veiculosMarcaPesquisa = new ArrayList<>();
+    private List<VeiculoMarca> veiculosMarca = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,36 +64,51 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
         ButterKnife.bind(this);
 
+        if (getIntent().getExtras() != null) {
+            marca = getIntent().getParcelableExtra(EXTRA_MARCA);
+        }
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        veiculosMarcaAdapter = new VeiculosMarcaAdapter(this, getApplicationContext(), veiculosMarcaPesquisa);
+        veiculosMarcaAdapter = new VeiculosMarcaAdapter(this, getApplicationContext(), veiculosMarca, marca.getName());
         recyclerView.setAdapter(veiculosMarcaAdapter);
 
         veiculosMarcaPresenter = new VeiculosMarcaPresenter();
+
         veiculosMarcaPresenter.attachView(this);
-
-        idMarca = getIntent().getExtras().getString(EXTRA_ID_MARCA);
-
         veiculosMarcaPresenter.onVeiculosMarcaFastNetworkingLibrary(marcaJsonObject());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
-
 
     @Override
     public void showVeiculosMarca(List<VeiculoMarca> veiculoMarcaList) {
-        veiculosMarcaPesquisa = veiculoMarcaList;
+        veiculosMarca = veiculoMarcaList;
         veiculosMarcaAdapter.setValues(veiculoMarcaList);
     }
 
     @Override
+    public void showCombustivelAnoMocelo(List<CombustivelModeloAno> combustivelModeloAno) {
+        veiculosMarcaPresenter.showAlertDialogAnoVeiculo(
+                VeiculosMarcaActivity.this,
+                getResources().getString(R.string.text_ano_veiculo),
+                getResources().getString(R.string.text_selecione),
+                R.mipmap.ic_launcher_round,
+                VeiculoDetalheActivity.newVeiculoDetalheActivity(this, marca.getId(),
+                        veiculoMarcaObject.getId()),
+                R.layout.alert_filtro_veiculo,
+                combustivelModeloAno);
+    }
+
+    @Override
     public void clickItem(VeiculoMarca veiculoMarca) {
-        AlertUtils.alertView(this, "Selecione o ano do veículo:", R.mipmap.ic_launcher);
-        //startActivity(VeiculosModeloAnoActivity.newVeiculosModeloAnoActivity(this, idMarca, veiculoMarca.getId()));
+        veiculoMarcaObject = veiculoMarca;
+        veiculosMarcaPresenter.loadCombustivelModelosAnos(combustivelModeloAnoJsonObject(veiculoMarca.getId()));
     }
 
     @Override
@@ -130,20 +148,42 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     }
 
-    public static Intent newVeiculosMarcaActivity(Context context, String idMarca) {
-        Intent intent = new Intent(context, VeiculosMarcaActivity.class);
+    public static Intent newVeiculoDetalheActivity(Context context, String idMarca, String idModelo, String anoModelo, String codigoTipoCombustivel) {
+        Intent intent = new Intent(context, VeiculoDetalheActivity.class);
         intent.putExtra("idMarca", idMarca);
+        intent.putExtra("idModelo", idModelo);
+        intent.putExtra("anoModelo", anoModelo);
+        intent.putExtra("codigoTipoCombustivel", codigoTipoCombustivel);
+        intent.putExtra("tipoVeiculo", "carro");
+        intent.putExtra("tipoConsulta", "tradicional");
+        return intent;
+    }
+
+    public static Intent newVeiculosMarcaActivity(Context context, Marca marca) {
+        Intent intent = new Intent(context, VeiculosMarcaActivity.class);
+        intent.putExtra("marca", marca);
         return intent;
     }
 
     private JSONObject marcaJsonObject() {
         JSONObject marcaJsonObject = new JSONObject();
         try {
-            marcaJsonObject.put("codigoMarca", idMarca);
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA,
-                    ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO,
-                    ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
+            marcaJsonObject.put("codigoMarca", marca.getId());
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return marcaJsonObject;
+    }
+
+    private JSONObject combustivelModeloAnoJsonObject(String codigoModelo) {
+        JSONObject marcaJsonObject = new JSONObject();
+        try {
+            marcaJsonObject.put("codigoMarca", marca.getId());
+            marcaJsonObject.put("codigoModelo", codigoModelo);
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -170,7 +210,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
         searchText.setTextColor(Color.parseColor("#FFFFFF"));
         searchText.setHintTextColor(Color.parseColor("#FFFFFF"));
-        searchText.setHint("Digite o nome do veículo...");
+        searchText.setHint(getResources().getString(R.string.text_digite_nome_veiculo));
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
     }
@@ -182,12 +222,12 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        final List<VeiculoMarca> filteredModelList = filter(veiculosMarcaPesquisa, newText);
+        final List<VeiculoMarca> filteredModelList = filter(veiculosMarca, newText);
         if (filteredModelList.size() > 0) {
             veiculosMarcaAdapter.setFilter(filteredModelList);
             return true;
         } else {
-            Toast.makeText(VeiculosMarcaActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(VeiculosMarcaActivity.this, getResources().getString(R.string.text_sem_resultados), Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -195,7 +235,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
     private List<VeiculoMarca> filter(List<VeiculoMarca> veiculosMarca, String query) {
 
         query = query.toLowerCase();
-        this.searchString = query;
+        String searchString = query;
 
         final List<VeiculoMarca> filteredModelList = new ArrayList<>();
         for (VeiculoMarca veiculoMarca : veiculosMarca) {
@@ -204,7 +244,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
                 filteredModelList.add(veiculoMarca);
             }
         }
-        veiculosMarcaAdapter = new VeiculosMarcaAdapter(this, getApplicationContext(), filteredModelList);
+        veiculosMarcaAdapter = new VeiculosMarcaAdapter(this, getApplicationContext(), filteredModelList, marca.getName());
         recyclerView.setLayoutManager(new LinearLayoutManager(VeiculosMarcaActivity.this));
         recyclerView.setAdapter(veiculosMarcaAdapter);
         veiculosMarcaAdapter.notifyDataSetChanged();
@@ -212,5 +252,14 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
         return filteredModelList;
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
 }

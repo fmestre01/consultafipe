@@ -4,9 +4,17 @@
 
     <item
         android:id="@+id/action_search"
-        android:icon="@mipmap/find"
+        android:icon="@mipmap/ic_search_white_24dp"
         android:title="Search"
+        android:tooltipText="Pesquisar..."
         app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/action_ano_referencia"
+        android:icon="@mipmap/ic_date_range_white_24dp"
+        android:tooltipText="Ano Referência"
+        android:title="Search"
         app:showAsAction="always|collapseActionView" />
 
 </menu>

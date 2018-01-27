@@ -1,14 +1,15 @@
 package udacity.com.core.ui.veiculodetalhe;
 
+import org.json.JSONObject;
+
 import udacity.com.core.model.Veiculo;
-import udacity.com.core.model.VeiculoModeloAno;
 import udacity.com.core.ui.base.RemoteView;
 
 public interface VeiculoDetalheContract {
 
     interface Presenter {
 
-        void onVeiculoDetalheRequested(String idMarca, String idModeloAno, String idVeiculo);
+        void onVeiculoDetalheRequested(JSONObject veiculoDetalhejsonObject);
     }
 
     interface View extends RemoteView {

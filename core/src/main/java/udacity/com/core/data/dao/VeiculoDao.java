@@ -9,7 +9,6 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import udacity.com.core.data.entity.VeiculoEntity;
 import udacity.com.core.model.Veiculo;
 
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
@@ -17,30 +16,30 @@ import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 @Dao
 public interface VeiculoDao {
 
-    @Query("SELECT * FROM veiculo ORDER BY name ASC")
-    LiveData<List<VeiculoEntity>> veiculosByNomeAsc();
+    @Query("SELECT * FROM veiculo ORDER BY modelo ASC")
+    LiveData<List<Veiculo>> veiculosByNomeAsc();
 
     @Query("SELECT * FROM veiculo")
-    List<VeiculoEntity> todosVeiculos();
+    List<Veiculo> todosVeiculos();
 
-    @Query("SELECT * FROM veiculo WHERE id=:id")
+    @Query("SELECT * FROM veiculo WHERE auto_id=:id")
     Veiculo veiculoPorId(String id);
 
     @Insert(onConflict = IGNORE)
-    long insertVeiculo(VeiculoEntity veiculoEntity);
+    long insertVeiculo(Veiculo Veiculo);
 
     @Update
-    int updateVeiculo(VeiculoEntity veiculoEntity);
+    int updateVeiculo(Veiculo Veiculo);
 
     @Update
-    void updateVeiculo(List<VeiculoEntity> veiculos);
+    void updateVeiculo(List<Veiculo> veiculos);
 
     @Delete
-    void deleteVeiculo(VeiculoEntity veiculoEntity);
+    void deleteVeiculo(Veiculo Veiculo);
 
     @Query("DELETE FROM veiculo")
     void deleteTodosVeiculos();
 
     @Query("SELECT * FROM veiculo WHERE marca=:marca")
-    public List<VeiculoEntity> veiculosPorMarca(String marca);
+    public List<Veiculo> veiculosPorMarca(String marca);
 }

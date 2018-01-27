@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import udacity.com.core.data.entity.MarcaEntity;
+import udacity.com.core.model.Marca;
 
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 
@@ -17,25 +17,25 @@ import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 public interface MarcaDao {
 
     @Query("SELECT * FROM marca ORDER BY name ASC")
-    LiveData<List<MarcaEntity>> marcasByNomeAsc();
+    LiveData<List<Marca>> marcasByNomeAsc();
 
     @Query("SELECT * FROM marca")
-    List<MarcaEntity> todasMarcas();
+    List<Marca> todasMarcas();
 
     @Query("SELECT * FROM marca WHERE id=:id")
-    MarcaEntity marcaPorId(String id);
+    Marca marcaPorId(String id);
 
     @Insert(onConflict = IGNORE)
-    long insertMarca(MarcaEntity marcaEntity);
+    long insertMarca(Marca Marca);
 
     @Update
-    int updateMarca(MarcaEntity marcaEntity);
+    int updateMarca(Marca Marca);
 
     @Update
-    void updateMarca(List<MarcaEntity> marcasEntity);
+    void updateMarca(List<Marca> marcasEntity);
 
     @Delete
-    void deleteMarca(MarcaEntity marcaEntity);
+    void deleteMarca(Marca Marca);
 
     @Query("DELETE FROM marca")
     void deleteTodasMarcas();

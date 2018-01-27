@@ -6,14 +6,14 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import udacity.com.core.data.entity.VeiculoMarcaEntity;
+import udacity.com.core.model.VeiculoMarca;
 
 @Dao
 public interface VeiculoMarcaDao {
 
     @Insert
-    void insertVeiculosMarca(VeiculoMarcaEntity veiculoMarca);
+    void insertVeiculosMarca(VeiculoMarca veiculoMarca);
 
     @Query("SELECT * FROM veiculo_marca")
-    List<VeiculoMarcaEntity> todosVeiculosMarca();
+    List<VeiculoMarca> todosVeiculosMarca();
 }

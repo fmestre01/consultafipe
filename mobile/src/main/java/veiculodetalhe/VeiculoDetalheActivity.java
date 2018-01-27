@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import udacity.com.consultafipe.R;
@@ -20,17 +23,12 @@ import util.UtilSnackbar;
 public class VeiculoDetalheActivity extends AppCompatActivity implements VeiculoDetalheContract.View, VeiculoDetalheContract.OnItemClickListener {
 
     private static final String EXTRA_ID_MARCA = "idMarca";
-    private static final String EXTRA_ID_MODELO_ANO = "idModeloAno";
-    private static final String EXTRA_ID_VEICULO = "idVeiculo";
+    private static final String EXTRA_ID_MODELO = "idModelo";
 
     private VeiculoDetalhePresenter veiculoDetalhePresenter;
 
     @BindView(R.id.progress)
     ProgressBar progressBar;
-
-    String idMarca;
-    String idModeloAno;
-    String idVeiculo;
 
     @BindView(R.id.marca)
     TextView marcaTextView;
@@ -47,6 +45,13 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     @BindView(R.id.preco)
     TextView precoTextView;
 
+    private static String idMarca;
+    private static String idModelo;
+    private static String anoModelo;
+    private static String codigoTipoCombustivel;
+    private static String tipoVeiculo;
+    private static String tipoConsulta;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +62,19 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         veiculoDetalhePresenter = new VeiculoDetalhePresenter();
         veiculoDetalhePresenter.attachView(this);
 
-        idMarca = getIntent().getExtras().getString(EXTRA_ID_MARCA);
-        idModeloAno = getIntent().getExtras().getString(EXTRA_ID_MODELO_ANO);
-        idVeiculo = getIntent().getExtras().getString(EXTRA_ID_VEICULO);
+        if (getIntent().getExtras() != null) {
+            idMarca = getIntent().getExtras().getString("idMarca");
+            idModelo = getIntent().getExtras().getString("idModelo");
+            anoModelo = getIntent().getExtras().getString("anoModelo");
+            tipoConsulta = getIntent().getExtras().getString("tipoConsulta");
+            tipoVeiculo = getIntent().getExtras().getString("tipoVeiculo");
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        veiculoDetalhePresenter.onVeiculoDetalheRequested(idMarca, idModeloAno, idVeiculo);
+        veiculoDetalhePresenter.onVeiculoDetalheRequested(veiculoDetalheJsonObject());
     }
 
     @Override
@@ -98,21 +107,42 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     }
 
-    public static Intent newVeiculoDetalheActivity(Context context, String idMarca, String idModeloAno, String idVeiculo) {
+    public static Intent newVeiculoDetalheActivity(Context context, String idMarca, String idModelo) {
         Intent intent = new Intent(context, VeiculoDetalheActivity.class);
         intent.putExtra("idMarca", idMarca);
-        intent.putExtra("idModeloAno", idModeloAno);
-        intent.putExtra("idVeiculo", idVeiculo);
+        intent.putExtra("idModelo", idModelo);
+        intent.putExtra("tipoVeiculo", "carro");
+        intent.putExtra("tipoConsulta", "tradicional");
+        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
+        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
         return intent;
+    }
+
+    private JSONObject veiculoDetalheJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("codigoMarca", idMarca);
+            jsonObject.put("codigoModelo", idModelo);
+            jsonObject.put("codigoTipoCombustivel", anoModelo.substring(5));
+            jsonObject.put("codigoTipoVeiculo", "1");
+            jsonObject.put("anoModelo", anoModelo.substring(0, 4));
+            jsonObject.put("modeloCodigoExterno", "");
+            jsonObject.put("tipoVeiculo", "carro");
+            jsonObject.put("tipoConsulta", "tradicional");
+            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
     @Override
     public void showVeiculoDetalhe(Veiculo veiculo) {
         marcaTextView.setText(veiculo.getMarca());
-        veiculoTextView.setText(veiculo.getVeiculo());
+        veiculoTextView.setText(veiculo.getModelo());
         combustivelTextView.setText(veiculo.getCombustivel());
         referenciaTextView.setText(veiculo.getReferencia());
-        precoTextView.setText(veiculo.getPreco());
+        precoTextView.setText(veiculo.getValor());
     }
 
     @Override
