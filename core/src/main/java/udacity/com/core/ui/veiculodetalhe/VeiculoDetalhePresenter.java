@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import timber.log.Timber;
+import udacity.com.core.api.ApiClient;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.base.BasePresenter;
 import udacity.com.core.util.ConstantsUtils;
@@ -39,6 +40,7 @@ public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContrac
         AndroidNetworking.post(ConstantsUtils.Urls.SITE_FIPE + ConstantsUtils.Urls.OP_KEY_VEICULO_DETALHE)
                 .addHeaders(ConstantsUtils.Urls.HEADER_REFERER, ConstantsUtils.Urls.HEADER_REFERER_VALUE)
                 .addJSONObjectBody(veiculoDetalhejsonObject)
+                .setOkHttpClient(ApiClient.makeOkHttpClient())
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override

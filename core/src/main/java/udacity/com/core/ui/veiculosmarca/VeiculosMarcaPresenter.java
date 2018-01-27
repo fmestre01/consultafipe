@@ -33,6 +33,7 @@ import java.util.List;
 import retrofit2.Call;
 import timber.log.Timber;
 import udacity.com.core.BaseApplication;
+import udacity.com.core.api.ApiClient;
 import udacity.com.core.api.RemoteCallback;
 import udacity.com.core.model.CombustivelModeloAno;
 import udacity.com.core.model.VeiculoMarca;
@@ -154,6 +155,7 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
         AndroidNetworking.post(ConstantsUtils.Urls.SITE_FIPE + ConstantsUtils.Urls.OP_KEY_ANO_MODELO)
                 .addHeaders(ConstantsUtils.Urls.HEADER_REFERER, ConstantsUtils.Urls.HEADER_REFERER_VALUE)
                 .addJSONObjectBody(veiculosModeloJsonObject)
+                .setOkHttpClient(ApiClient.makeOkHttpClient())
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
