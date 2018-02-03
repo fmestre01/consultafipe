@@ -30,11 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
 import timber.log.Timber;
-import udacity.com.core.BaseApplication;
-import udacity.com.core.api.ApiClient;
-import udacity.com.core.api.RemoteCallback;
 import udacity.com.core.model.CombustivelModeloAno;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.ui.base.BasePresenter;
@@ -45,46 +41,6 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
 
     private List<VeiculoMarca> veiculosMarca;
     private List<CombustivelModeloAno> combustiveisModeloAno;
-
-    public void onVeiculosMarcaRequested(String idMarca) {
-        mView.showProgress();
-        Call<List<VeiculoMarca>> call = BaseApplication.apiService.getVeiculosMarca(idMarca);
-        call.enqueue(new RemoteCallback<List<VeiculoMarca>>() {
-            @Override
-            public void onSuccess(List<VeiculoMarca> response) {
-                try {
-                    if (!isViewAttached()) return;
-                    mView.hideProgress();
-
-                    if (response.isEmpty()) {
-                        mView.showError(ConstantsUtils.ListLog.ERROR);
-                        return;
-                    } else {
-                        mView.showVeiculosMarca(response);
-                    }
-                } catch (Exception e) {
-                    mView.showError(e.getMessage());
-                    Timber.e(ConstantsUtils.InfoLog.ERROR, e.getMessage());
-                }
-            }
-
-            @Override
-            public void onUnauthorized() {
-                if (!isViewAttached()) return;
-                mView.hideProgress();
-                mView.showUnauthorizedError();
-                Timber.e(ConstantsUtils.InfoLog.UNAUTHORIZED);
-            }
-
-            @Override
-            public void onFailed(Throwable throwable) {
-                if (!isViewAttached()) return;
-                mView.hideProgress();
-                mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + throwable.getMessage());
-                Timber.e(ConstantsUtils.InfoLog.ERROR, throwable.fillInStackTrace());
-            }
-        });
-    }
 
     @Override
     public void showAlertDialogAnoVeiculo(Context context, String title, String message, int icon, Intent intent, int layout, List<CombustivelModeloAno> anos) {
@@ -183,7 +139,7 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
                         } catch (Exception e) {
                             if (!isViewAttached()) return;
                             mView.hideProgress();
-                            mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + e.getStackTrace());
+                            mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + e.getMessage());
                             Timber.e(ConstantsUtils.InfoLog.ERROR, e.fillInStackTrace());
                         }
                     }
@@ -192,7 +148,7 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
                     public void onError(ANError anError) {
                         if (!isViewAttached()) return;
                         mView.hideProgress();
-                        mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + anError.getErrorBody());
+                        mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + anError.getResponse().message());
                         Timber.e(ConstantsUtils.InfoLog.ERROR, anError.fillInStackTrace());
                     }
                 });

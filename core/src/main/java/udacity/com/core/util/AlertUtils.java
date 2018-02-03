@@ -18,12 +18,13 @@ import udacity.com.core.model.CombustivelModeloAno;
 public class AlertUtils {
 
     private static AnoReferencia selectedAnoReferencia = null;
-    private static String anoSelected;
+    private static String anoModelo = null;
 
-    public static void alertViewAnoVeiculo(final Context context, String title, String message, int icon, final Intent intent, int layout, List<CombustivelModeloAno> anos) {
+    public static void alertViewAnoVeiculo(final Context context, String title, String message, int icon, final Intent intent, int layout, final List<CombustivelModeloAno> anos) {
         List<String> label;
-        final List<String> value;
+        List<String> value;
         String[] stringArr;
+        anoModelo = null;
 
         LayoutInflater factory = LayoutInflater.from(context);
 
@@ -34,6 +35,12 @@ public class AlertUtils {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
+
+                        if (anoModelo != null) {
+                            intent.putExtra("anoModelo", anoModelo);
+                        } else {
+                            intent.putExtra("anoModelo", anos.get(0).getId());
+                        }
                         context.startActivity(intent);
                     }
                 }).setNegativeButton(context.getResources().getString(R.string.text_cancelar),
@@ -54,6 +61,7 @@ public class AlertUtils {
         stringArr = label.toArray(new String[anos.size()]);
         if (stringArr.length > 0) {
             android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
+            numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
             numberPicker.setMinValue(0);
             numberPicker.setMaxValue(stringArr.length - 1);
             numberPicker.setWrapSelectorWheel(true);
@@ -62,13 +70,11 @@ public class AlertUtils {
             numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                    anoSelected = finalValue.get(i);
+                    anoModelo = finalValue.get(i1);
                 }
             });
-            if (anoSelected == null) {
-                anoSelected = finalValue.get(0);
-            }
-            intent.putExtra("anoModelo", anoSelected);
+            intent.putExtra("anoModelo", anoModelo);
+
             alert.setView(numberPicker);
         }
         alert.show();
@@ -107,6 +113,7 @@ public class AlertUtils {
 
         stringArr = label.toArray(new String[anosReferencia.size()]);
         android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(stringArr.length - 1);
         numberPicker.setWrapSelectorWheel(true);
@@ -115,7 +122,53 @@ public class AlertUtils {
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                selectedAnoReferencia = anosReferencia.get(i);
+                selectedAnoReferencia = anosReferencia.get(i1);
+            }
+        });
+        alert.setView(numberPicker);
+        alert.show();
+    }
+
+    private static void setDefaultAnoReferencia(String anoReferencia, Context context) {
+        SharedPrefsUtils.setStringPreference(context, ConstantsUtils.Data.SAVED_ANO_REFERENCIA, anoReferencia);
+    }
+
+    private static String getDefaultAnoReferencia(Context context) {
+        return SharedPrefsUtils.getStringPreference(context, ConstantsUtils.Data.SAVED_ANO_REFERENCIA);
+    }
+
+    public static void alertViewTipoVeiculo(final Context context, String title, String message, int icon, int layout, final Intent intent) {
+        LayoutInflater factory = LayoutInflater.from(context);
+
+        final View view = factory.inflate(layout, null);
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setIcon(icon).setTitle(title).setMessage(message).setView(view).setPositiveButton(context.getResources().getString(R.string.text_ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
+                        intent.putExtra("selectedTipoVeiculo", selectedAnoReferencia);
+                        context.startActivity(intent);
+                    }
+                }).setNegativeButton(context.getResources().getString(R.string.text_cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
+                    }
+                });
+
+        android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(TipoVeiculoEnum.getValues().size() - 1);
+        numberPicker.setWrapSelectorWheel(true);
+        String[] array = TipoVeiculoEnum.getValues().toArray(new String[TipoVeiculoEnum.getValues().size()]);
+        numberPicker.setDisplayedValues(array);
+
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                //selectedAnoReferencia = anosReferencia.get(i1);
             }
         });
         alert.setView(numberPicker);

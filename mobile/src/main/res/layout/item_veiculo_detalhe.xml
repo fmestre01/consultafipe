@@ -6,7 +6,11 @@
     android:orientation="horizontal"
     android:padding="16dp">
 
-    <include layout="@layout/layout_content_progress" />
+    <include
+        layout="@layout/layout_content_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <LinearLayout
         android:layout_width="0dp"

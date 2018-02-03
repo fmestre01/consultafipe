@@ -19,20 +19,15 @@ package udacity.com.core.ui.veiculodetalhe;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
 import timber.log.Timber;
-import udacity.com.core.api.ApiClient;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.base.BasePresenter;
 import udacity.com.core.util.ConstantsUtils;
 
 public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContract.View> implements VeiculoDetalheContract.Presenter {
-
-    private Gson gson = new Gson();
-    private Veiculo veiculoDetalhe;
 
     @Override
     public void onVeiculoDetalheRequested(JSONObject veiculoDetalhejsonObject) {

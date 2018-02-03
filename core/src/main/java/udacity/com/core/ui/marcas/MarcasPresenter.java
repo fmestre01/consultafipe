@@ -22,7 +22,6 @@ import android.content.Intent;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,11 +32,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
 import timber.log.Timber;
-import udacity.com.core.BaseApplication;
-import udacity.com.core.api.ApiClient;
-import udacity.com.core.api.RemoteCallback;
 import udacity.com.core.model.AnoReferencia;
 import udacity.com.core.model.Marca;
 import udacity.com.core.ui.base.BasePresenter;
@@ -47,50 +42,8 @@ import udacity.com.core.util.ListUtils;
 
 public class MarcasPresenter extends BasePresenter<MarcasContract.View> implements MarcasContract.Presenter {
 
-    private Gson gson = new Gson();
     private List<Marca> marcas;
     private List<AnoReferencia> anosReferencia;
-
-    @Override
-    public void onMarcasRequested() {
-        mView.showProgress();
-        Call<List<Marca>> call = BaseApplication.apiService.getMarcas();
-        call.enqueue(new RemoteCallback<List<Marca>>() {
-            @Override
-            public void onSuccess(List<Marca> response) {
-                try {
-                    if (!isViewAttached()) return;
-                    mView.hideProgress();
-
-                    if (response.isEmpty()) {
-                        mView.showError(ConstantsUtils.ListLog.ERROR);
-                        return;
-                    } else {
-                        mView.showMarcas(response);
-                    }
-                } catch (Exception e) {
-                    mView.showError(e.getMessage());
-                    Timber.e(ConstantsUtils.InfoLog.ERROR, e.getMessage());
-                }
-            }
-
-            @Override
-            public void onUnauthorized() {
-                if (!isViewAttached()) return;
-                mView.hideProgress();
-                mView.showUnauthorizedError();
-                Timber.e(ConstantsUtils.InfoLog.UNAUTHORIZED);
-            }
-
-            @Override
-            public void onFailed(Throwable throwable) {
-                if (!isViewAttached()) return;
-                mView.hideProgress();
-                mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + throwable.getMessage());
-                Timber.e(ConstantsUtils.InfoLog.ERROR, throwable.fillInStackTrace());
-            }
-        });
-    }
 
     @Override
     public void onMarcasRequestedFastNetworkingLibrary(JSONObject marcaJsonObject) {
@@ -151,6 +104,11 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
     @Override
     public void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<AnoReferencia> anosReferencia, Intent intent) {
         AlertUtils.alertViewAnoReferencia(context, title, message, icon, layout, anosReferencia, intent);
+    }
+
+    @Override
+    public void showAlertDialogTipoVeiculo(Context context, String title, String message, int icon, int layout, Intent intent) {
+        AlertUtils.alertViewTipoVeiculo(context, title, message, icon, layout, intent);
     }
 
     @Override

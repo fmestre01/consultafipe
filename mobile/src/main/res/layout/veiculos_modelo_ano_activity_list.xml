@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     tools:context="veiculosmarca.VeiculosMarcaActivity">
 
-    <include layout="@layout/layout_content_progress" />
+    <include
+        layout="@layout/layout_content_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <TextView
         android:id="@+id/emptyTextView"

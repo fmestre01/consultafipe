@@ -14,7 +14,14 @@
         android:id="@+id/action_ano_referencia"
         android:icon="@mipmap/ic_date_range_white_24dp"
         android:tooltipText="Ano Referência"
-        android:title="Search"
+        android:title="Ano"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/action_tipo_veiculo"
+        android:icon="@mipmap/ic_drive_eta_white_24dp"
+        android:tooltipText="Tipo veículo"
+        android:title="Tipo Veículo"
         app:showAsAction="always|collapseActionView" />
 
 </menu>

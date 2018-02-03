@@ -35,11 +35,10 @@ public class ConstantsUtils {
         //Carros e utilitários pequenos
         String CODIGO_TABELA_REFERENCIA = "codigoTabelaReferencia";
         String CODIGO_TIPO_VEICULO = "codigoTipoVeiculo";
-        String VALOR_TABELA_REFERENCIA = "221";
-        String VALOR_TIPO_VEICULO = "1";
+        String VALOR_TIPO_VEICULO_CARROS_UTILITARIOS = "1";
     }
 
     public interface Data{
-        String SAVE_DATA_ANO_REFERENCIA = "ano_referencia_local";
+        String SAVED_ANO_REFERENCIA = "ano_referencia_local";
     }
 }

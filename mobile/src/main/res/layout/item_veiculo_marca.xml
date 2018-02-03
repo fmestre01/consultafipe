@@ -1,17 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
-    <include layout="@layout/layout_content_progress" />
+    <include
+        layout="@layout/layout_content_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        card_view:cardElevation="2dp"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardElevation="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,10 +36,10 @@
 
                 <TextView
                     android:id="@+id/name"
+                    fontPath="fonts/gtw.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    fontPath="fonts/gtw.ttf"
                     android:hint="AMAROK Hig.ULTIMATE CD 2.0 4x4 Dies. Aut"
                     android:textColor="#000"
                     android:textSize="18sp"
@@ -43,12 +47,12 @@
 
                 <TextView
                     android:id="@+id/marcaVeiculo"
+                    fontPath="fonts/gtw.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="VW - VolksWagem"
-                    fontPath="fonts/gtw.ttf"
                     android:textColor="#555"
-                    tools:ignore="MissingPrefix"/>
+                    tools:ignore="MissingPrefix" />
             </LinearLayout>
 
             <LinearLayout
@@ -57,12 +61,12 @@
 
                 <Button
                     android:id="@+id/btnSelAnoVeiculo"
+                    fontPath="fonts/gtw.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Selecionar ano"
-                    fontPath="fonts/gtw.ttf"
-                    tools:ignore="MissingPrefix"
-                    android:theme="@style/PrimaryFlatButton" />
+                    android:theme="@style/PrimaryFlatButton"
+                    tools:ignore="MissingPrefix" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

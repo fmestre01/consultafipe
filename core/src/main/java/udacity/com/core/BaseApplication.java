@@ -7,23 +7,23 @@ import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
-import udacity.com.core.api.Api;
 import udacity.com.core.api.ApiClient;
 import udacity.com.core.data.AppDatabase;
+import udacity.com.core.model.AnoReferencia;
 import udacity.com.core.util.ConstantsUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class BaseApplication extends Application {
 
     public static AppDatabase db;
-    public static Api apiService;
+    public static AnoReferencia codigoTabelaReferencia;
+    public static String codigoTipoVeiculo;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         db = AppDatabase.getDatabase(getApplicationContext());
-        apiService = ApiClient.makeFipeService();
 
         AndroidNetworking.initialize(this, ApiClient.makeOkHttpClient());
         AndroidNetworking.setParserFactory(new JacksonParserFactory());
@@ -36,8 +36,6 @@ public class BaseApplication extends Application {
                 .setDefaultFontPath("fonts/gtw.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
-
-        //startService(new Intent(this, LoadDataFipeService.class));
 
         Timber.tag(BaseApplication.class.getName()).i(ConstantsUtils.Application.INITAPPLICATION);
 

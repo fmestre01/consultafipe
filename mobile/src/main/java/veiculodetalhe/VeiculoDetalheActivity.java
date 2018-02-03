@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import udacity.com.consultafipe.R;
+import udacity.com.core.BaseApplication;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalheContract;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalhePresenter;
@@ -113,8 +114,8 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         intent.putExtra("idModelo", idModelo);
         intent.putExtra("tipoVeiculo", "carro");
         intent.putExtra("tipoConsulta", "tradicional");
-        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
-        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
+        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
+        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
         return intent;
     }
 
@@ -124,12 +125,12 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
             jsonObject.put("codigoMarca", idMarca);
             jsonObject.put("codigoModelo", idModelo);
             jsonObject.put("codigoTipoCombustivel", anoModelo.substring(5));
-            jsonObject.put("codigoTipoVeiculo", "1");
             jsonObject.put("anoModelo", anoModelo.substring(0, 4));
             jsonObject.put("modeloCodigoExterno", "");
             jsonObject.put("tipoVeiculo", "carro");
             jsonObject.put("tipoConsulta", "tradicional");
-            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
+            jsonObject.put("codigoTipoVeiculo", BaseApplication.codigoTipoVeiculo);
+            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }

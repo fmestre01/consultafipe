@@ -2,6 +2,7 @@
     <string name="app_name">Consulta Fipe</string>
     <string name="transaction_header">transactionHeader</string>
     <string name="text_periodo_referencia">Período de referência</string>
+    <string name="text_tipo_veiculo">Tipo de veículo</string>
     <string name="text_ok">ok</string>
     <string name="text_cancelar">Cancelar</string>
     <string name="text_ano_veiculo">Ano veículo</string>
@@ -9,5 +10,5 @@
     <string name="text_digite_nome_veiculo">Qual veículo ?</string>
     <string name="text_digite_nome_marca">Qual marca ?</string>
     <string name="text_sem_resultados">Sem resultados</string>
-    <string name="text_erro">Ops! clique para tentar de novo...</string>
+    <string name="text_erro">Ops! algo estranho aconteceu, clique para tentar de novo...</string>
 </resources>

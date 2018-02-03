@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import udacity.com.consultafipe.R;
+import udacity.com.core.BaseApplication;
 import udacity.com.core.model.AnoReferencia;
 import udacity.com.core.model.Marca;
 import udacity.com.core.ui.marcas.MarcasContract;
@@ -60,11 +61,12 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     @BindView(R.id.layoutEmptyData)
     LinearLayout layoutTentarDeNovo;
 
-    String searchString = "";
-    List<Marca> marcasPesquisa = new ArrayList<>();
+    private String searchString = "";
+    private List<Marca> marcasPesquisa = new ArrayList<>();
 
-    List<AnoReferencia> anosReferencia;
-    AnoReferencia anoReferenciaSelected;
+    private List<AnoReferencia> anosReferencia;
+    private AnoReferencia anoReferenciaSelected;
+    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,27 +87,28 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         marcasPresenter = new MarcasPresenter();
         marcasPresenter.attachView(this);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            anoReferenciaSelected = extras.getParcelable("selectedAnoReferencia");
-        }
-
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject(anoReferenciaSelected.getId()));
+                        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
                     }
                 }
         );
 
         populaTabelaAnosReferencia();
 
-        if (anoReferenciaSelected == null) {
-            anoReferenciaSelected = anosReferencia.get(0);
+        //primeiro acesso
+        if (BaseApplication.codigoTipoVeiculo == null && BaseApplication.codigoTabelaReferencia == null) {
+            BaseApplication.codigoTabelaReferencia = anosReferencia.get(0);
+            BaseApplication.codigoTipoVeiculo = "3";
+        } else if (getIntent().getExtras() != null) {
+            extras = getIntent().getExtras();
+            BaseApplication.codigoTabelaReferencia = extras.getParcelable("selectedAnoReferencia");
         }
-        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject(anoReferenciaSelected.getId()));
-        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, "Ano Referência: " + anoReferenciaSelected.getMes());
+
+        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, "Ano Referência: " + BaseApplication.codigoTabelaReferencia.getMes());
     }
 
     @Override
@@ -161,6 +164,12 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
         layoutTentarDeNovo.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(false);
+        layoutTentarDeNovo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+            }
+        });
     }
 
     @Override
@@ -170,7 +179,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @OnClick(R.id.layoutEmptyData)
     public void tentarDeNovo() {
-        marcasPresenter.onMarcasRequested();
+
     }
 
     @Override
@@ -229,6 +238,12 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         searchView.setOnQueryTextListener(this);
 
         final MenuItem anoReferenciaItem = menu.findItem(R.id.action_ano_referencia);
+
+        if (extras != null) {
+            anoReferenciaSelected = extras.getParcelable("selectedAnoReferencia");
+            BaseApplication.codigoTabelaReferencia = anoReferenciaSelected;
+        }
+
         anoReferenciaItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -239,7 +254,23 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                         R.mipmap.ic_launcher_round,
                         R.layout.alert_ano_referencia_veiculo,
                         anosReferencia,
-                        MarcasActivity.newMarcasActivity(getApplicationContext(), anoReferenciaSelected.getId()));
+                        MarcasActivity.newMarcasActivity(getApplicationContext()));
+                return false;
+            }
+        });
+
+        final MenuItem tipoVeiculoItem = menu.findItem(R.id.action_tipo_veiculo);
+
+        tipoVeiculoItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                marcasPresenter.showAlertDialogTipoVeiculo(
+                        MarcasActivity.this,
+                        getResources().getString(R.string.text_tipo_veiculo),
+                        getResources().getString(R.string.text_selecione),
+                        R.mipmap.ic_launcher_round,
+                        R.layout.alert_ano_referencia_veiculo,
+                        MarcasActivity.newMarcasActivity(getApplicationContext()));
                 return false;
             }
         });
@@ -247,17 +278,18 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         return super.onCreateOptionsMenu(menu);
     }
 
-    public static Intent newMarcasActivity(Context context, String codigoAnoReferencia) {
+    public static Intent newMarcasActivity(Context context) {
         Intent intent = new Intent(context, MarcasActivity.class);
-        intent.putExtra("codigoAnoReferencia", codigoAnoReferencia);
+        intent.putExtra("codigoTabelaReferencia", BaseApplication.codigoTabelaReferencia);
+        intent.putExtra("codigoTipoVeiculo", BaseApplication.codigoTipoVeiculo);
         return intent;
     }
 
-    private JSONObject marcaJsonObject(String valorTabelaReferencia) {
+    private JSONObject marcaJsonObject() {
         JSONObject marcaObject = new JSONObject();
         try {
-            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, valorTabelaReferencia);
-            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -279,21 +311,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         try {
             InputStream assetsAnosReferencia = getAssets().open("anosReferencia.json");
             anosReferencia = marcasPresenter.onAnosReferenciaRequested(assetsAnosReferencia);
-
-            //if (SharedPrefsUtils.getBooleanPreference(this, ConstantsUtils.Data.SAVE_DATA_ANO_REFERENCIA, false)) {
-            /*InputStream assetsAnosReferencia = getAssets().open("anosReferencia.json");
-            anosReferencia = marcasPresenter.onAnosReferenciaRequested(assetsAnosReferencia);
-            int size = anosReferencia.size();
-            if (size > 0) {
-                for (int i = 0; i < size; i++) {
-                    AnoReferencia anoReferencia = new AnoReferencia();
-                    anoReferencia.setId(anosReferencia.get(i).getId());
-                    anoReferencia.setMes(anosReferencia.get(i).getMes());
-                    BaseApplication.db.anoReferenciaDao().insertAnosReferencia(anoReferencia);
-                }
-                SharedPrefsUtils.setBooleanPreference(this, ConstantsUtils.Data.SAVE_DATA_ANO_REFERENCIA, true);
-            }*/
-            //}
         } catch (Exception e) {
             e.printStackTrace();
         }

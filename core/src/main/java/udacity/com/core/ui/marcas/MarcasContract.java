@@ -16,13 +16,13 @@ public interface MarcasContract {
 
     interface Presenter {
 
-        void onMarcasRequested();
-
         void onMarcasRequestedFastNetworkingLibrary(JSONObject marcaJsonObject);
 
         void clearData();
 
         void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<AnoReferencia> anosReferencia, Intent intent);
+
+        void showAlertDialogTipoVeiculo(Context context, String title, String message, int icon, int layout, Intent intent);
 
         List<AnoReferencia> onAnosReferenciaRequested(InputStream in);
     }

@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.RenderProcessGoneDetail;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import udacity.com.consultafipe.R;
+import udacity.com.core.BaseApplication;
 import udacity.com.core.model.CombustivelModeloAno;
 import udacity.com.core.model.Marca;
 import udacity.com.core.model.VeiculoMarca;
@@ -148,17 +151,6 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     }
 
-    public static Intent newVeiculoDetalheActivity(Context context, String idMarca, String idModelo, String anoModelo, String codigoTipoCombustivel) {
-        Intent intent = new Intent(context, VeiculoDetalheActivity.class);
-        intent.putExtra("idMarca", idMarca);
-        intent.putExtra("idModelo", idModelo);
-        intent.putExtra("anoModelo", anoModelo);
-        intent.putExtra("codigoTipoCombustivel", codigoTipoCombustivel);
-        intent.putExtra("tipoVeiculo", "carro");
-        intent.putExtra("tipoConsulta", "tradicional");
-        return intent;
-    }
-
     public static Intent newVeiculosMarcaActivity(Context context, Marca marca) {
         Intent intent = new Intent(context, VeiculosMarcaActivity.class);
         intent.putExtra("marca", marca);
@@ -169,8 +161,8 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
         JSONObject marcaJsonObject = new JSONObject();
         try {
             marcaJsonObject.put("codigoMarca", marca.getId());
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -178,16 +170,16 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
     }
 
     private JSONObject combustivelModeloAnoJsonObject(String codigoModelo) {
-        JSONObject marcaJsonObject = new JSONObject();
+        JSONObject combustivelModeloAnoJsonObject = new JSONObject();
         try {
-            marcaJsonObject.put("codigoMarca", marca.getId());
-            marcaJsonObject.put("codigoModelo", codigoModelo);
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, ConstantsUtils.RequestParameters.VALOR_TABELA_REFERENCIA);
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, ConstantsUtils.RequestParameters.VALOR_TIPO_VEICULO);
+            combustivelModeloAnoJsonObject.put("codigoMarca", marca.getId());
+            combustivelModeloAnoJsonObject.put("codigoModelo", codigoModelo);
+            combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
+            combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return marcaJsonObject;
+        return combustivelModeloAnoJsonObject;
     }
 
     @Override
@@ -199,6 +191,12 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);
+
+        final MenuItem anoReferenciaItem = menu.findItem(R.id.action_ano_referencia);
+        anoReferenciaItem.setVisible(false);
+
+        final MenuItem tipoVeiculoItem = menu.findItem(R.id.action_tipo_veiculo);
+        tipoVeiculoItem.setVisible(false);
 
         MenuItem searchitem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
