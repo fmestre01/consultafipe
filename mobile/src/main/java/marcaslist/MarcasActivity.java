@@ -36,6 +36,7 @@ import udacity.com.core.model.Marca;
 import udacity.com.core.ui.marcas.MarcasContract;
 import udacity.com.core.ui.marcas.MarcasPresenter;
 import udacity.com.core.util.ConstantsUtils;
+import udacity.com.core.util.TipoVeiculoEnum;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.SpacesItemDecoration;
 import util.UtilSnackbar;
@@ -101,14 +102,14 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
         //primeiro acesso
         if (BaseApplication.codigoTabelaReferencia == null) {
-            BaseApplication.codigoTabelaReferencia = anosReferencia.get(0).getId();
+            BaseApplication.codigoTabelaReferencia = anosReferencia.get(0);
         }
         if (BaseApplication.codigoTipoVeiculo == null) {
             BaseApplication.codigoTipoVeiculo = ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS;
         }
 
         marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
-        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, "Ano Referência: " + BaseApplication.codigoTabelaReferencia);
+        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, TipoVeiculoEnum.valueOf(BaseApplication.codigoTipoVeiculo) + " - " + "Ano Referência: " + BaseApplication.codigoTabelaReferencia.getMes());
     }
 
     @Override
@@ -242,7 +243,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         if (extras != null) {
             if (extras.getParcelable("selectedAnoReferencia") != null) {
                 anoReferenciaSelected = extras.getParcelable("selectedAnoReferencia");
-                BaseApplication.codigoTabelaReferencia = anoReferenciaSelected.getId();
+                BaseApplication.codigoTabelaReferencia = anoReferenciaSelected;
             }
         }
 
@@ -288,7 +289,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     private JSONObject marcaJsonObject() {
         JSONObject marcaObject = new JSONObject();
         try {
-            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia);
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
             marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();

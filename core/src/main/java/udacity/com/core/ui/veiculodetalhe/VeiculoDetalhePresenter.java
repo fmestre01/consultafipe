@@ -17,6 +17,7 @@
 package udacity.com.core.ui.veiculodetalhe;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
@@ -35,6 +36,7 @@ public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContrac
         AndroidNetworking.post(ConstantsUtils.Urls.SITE_FIPE + ConstantsUtils.Urls.OP_KEY_VEICULO_DETALHE)
                 .addHeaders(ConstantsUtils.Urls.HEADER_REFERER, ConstantsUtils.Urls.HEADER_REFERER_VALUE)
                 .addJSONObjectBody(veiculoDetalhejsonObject)
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override

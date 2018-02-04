@@ -35,4 +35,8 @@ public enum TipoVeiculoEnum {
     public static List<String> getValues() {
         return Collections.unmodifiableList(VALUES);
     }
+
+    public static String valueOf(int position) {
+        return IDS.get(position);
+    }
 }

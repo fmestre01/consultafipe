@@ -161,7 +161,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
         JSONObject marcaJsonObject = new JSONObject();
         try {
             marcaJsonObject.put("codigoMarca", marca.getId());
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia);
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
             marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -174,7 +174,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
         try {
             combustivelModeloAnoJsonObject.put("codigoMarca", marca.getId());
             combustivelModeloAnoJsonObject.put("codigoModelo", codigoModelo);
-            combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia);
+            combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
             combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();

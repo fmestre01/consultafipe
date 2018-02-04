@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
@@ -111,6 +112,7 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
         AndroidNetworking.post(ConstantsUtils.Urls.SITE_FIPE + ConstantsUtils.Urls.OP_KEY_ANO_MODELO)
                 .addHeaders(ConstantsUtils.Urls.HEADER_REFERER, ConstantsUtils.Urls.HEADER_REFERER_VALUE)
                 .addJSONObjectBody(veiculosModeloJsonObject)
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override

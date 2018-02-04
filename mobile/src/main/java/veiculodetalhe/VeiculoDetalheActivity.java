@@ -130,7 +130,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
             jsonObject.put("tipoVeiculo", "carro");
             jsonObject.put("tipoConsulta", "tradicional");
             jsonObject.put("codigoTipoVeiculo", BaseApplication.codigoTipoVeiculo);
-            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia);
+            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -18,8 +18,6 @@ import udacity.com.core.model.CombustivelModeloAno;
 
 public class AlertUtils {
 
-    private static AnoReferencia selectedAnoReferencia;
-    private static String selectedTipoVeiculo ;
     private static String anoModelo;
 
     public static void alertViewAnoVeiculo(final Context context, String title, String message, int icon, final Intent intent, int layout, final List<CombustivelModeloAno> anos) {
@@ -85,7 +83,7 @@ public class AlertUtils {
         List<String> label;
         List<String> value;
         String[] stringArr;
-
+        final AnoReferencia selectedAnoReferencia = null;
         LayoutInflater factory = LayoutInflater.from(context);
 
         final View view = factory.inflate(layout, null);
@@ -123,7 +121,7 @@ public class AlertUtils {
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                BaseApplication.codigoTabelaReferencia = anosReferencia.get(i1).getId();
+                BaseApplication.codigoTabelaReferencia = anosReferencia.get(i1);
             }
         });
         alert.setView(numberPicker);
@@ -140,7 +138,9 @@ public class AlertUtils {
 
     public static void alertViewTipoVeiculo(final Context context, String title, String message, int icon, int layout, final Intent intent) {
         LayoutInflater factory = LayoutInflater.from(context);
+
         BaseApplication.codigoTipoVeiculo = null;
+        final String selectedTipoVeiculo = null;
         final View view = factory.inflate(layout, null);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(context);
