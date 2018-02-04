@@ -114,7 +114,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         intent.putExtra("idModelo", idModelo);
         intent.putExtra("tipoVeiculo", "carro");
         intent.putExtra("tipoConsulta", "tradicional");
-        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
+        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia);
         intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
         return intent;
     }
@@ -130,7 +130,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
             jsonObject.put("tipoVeiculo", "carro");
             jsonObject.put("tipoConsulta", "tradicional");
             jsonObject.put("codigoTipoVeiculo", BaseApplication.codigoTipoVeiculo);
-            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
+            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia);
         } catch (JSONException e) {
             e.printStackTrace();
         }

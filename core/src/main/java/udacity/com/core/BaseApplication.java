@@ -16,7 +16,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class BaseApplication extends Application {
 
     public static AppDatabase db;
-    public static AnoReferencia codigoTabelaReferencia;
+    public static String codigoTabelaReferencia;
     public static String codigoTipoVeiculo;
 
     @Override

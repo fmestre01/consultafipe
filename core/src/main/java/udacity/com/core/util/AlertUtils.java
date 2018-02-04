@@ -18,9 +18,9 @@ import udacity.com.core.model.CombustivelModeloAno;
 
 public class AlertUtils {
 
-    private static AnoReferencia selectedAnoReferencia = null;
-    private static String selectedTipoVeiculo;
-    private static String anoModelo = null;
+    private static AnoReferencia selectedAnoReferencia;
+    private static String selectedTipoVeiculo ;
+    private static String anoModelo;
 
     public static void alertViewAnoVeiculo(final Context context, String title, String message, int icon, final Intent intent, int layout, final List<CombustivelModeloAno> anos) {
         List<String> label;
@@ -123,7 +123,7 @@ public class AlertUtils {
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                BaseApplication.codigoTabelaReferencia = anosReferencia.get(i1);
+                BaseApplication.codigoTabelaReferencia = anosReferencia.get(i1).getId();
             }
         });
         alert.setView(numberPicker);
