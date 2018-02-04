@@ -97,14 +97,14 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         );
 
         populaTabelaAnosReferencia();
+        extras = getIntent().getExtras();
 
         //primeiro acesso
-        if (BaseApplication.codigoTipoVeiculo == null && BaseApplication.codigoTabelaReferencia == null) {
+        if (BaseApplication.codigoTabelaReferencia == null) {
             BaseApplication.codigoTabelaReferencia = anosReferencia.get(0);
-            BaseApplication.codigoTipoVeiculo = "3";
-        } else if (getIntent().getExtras() != null) {
-            extras = getIntent().getExtras();
-            BaseApplication.codigoTabelaReferencia = extras.getParcelable("selectedAnoReferencia");
+        }
+        if (BaseApplication.codigoTipoVeiculo == null) {
+            BaseApplication.codigoTipoVeiculo = ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS;
         }
 
         marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
@@ -252,7 +252,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                         getResources().getString(R.string.text_periodo_referencia),
                         getResources().getString(R.string.text_selecione),
                         R.mipmap.ic_launcher_round,
-                        R.layout.alert_ano_referencia_veiculo,
+                        R.layout.alert_view_generic,
                         anosReferencia,
                         MarcasActivity.newMarcasActivity(getApplicationContext()));
                 return false;
@@ -269,7 +269,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                         getResources().getString(R.string.text_tipo_veiculo),
                         getResources().getString(R.string.text_selecione),
                         R.mipmap.ic_launcher_round,
-                        R.layout.alert_ano_referencia_veiculo,
+                        R.layout.alert_view_generic,
                         MarcasActivity.newMarcasActivity(getApplicationContext()));
                 return false;
             }
@@ -280,8 +280,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     public static Intent newMarcasActivity(Context context) {
         Intent intent = new Intent(context, MarcasActivity.class);
-        intent.putExtra("codigoTabelaReferencia", BaseApplication.codigoTabelaReferencia);
-        intent.putExtra("codigoTipoVeiculo", BaseApplication.codigoTipoVeiculo);
         return intent;
     }
 

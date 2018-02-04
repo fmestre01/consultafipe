@@ -27,18 +27,18 @@ public class ConstantsUtils {
         String OP_KEY_VEICULOS_MARCA = "ConsultarModelos";
         String OP_KEY_VEICULO_DETALHE = "ConsultarValorComTodosParametros";
         String OP_KEY_ANO_MODELO = "ConsultarAnoModelo";
-
-        String CODIGO_TIPO_VEICULO = "1";
     }
 
     public interface RequestParameters {
-        //Carros e utilitários pequenos
         String CODIGO_TABELA_REFERENCIA = "codigoTabelaReferencia";
         String CODIGO_TIPO_VEICULO = "codigoTipoVeiculo";
-        String VALOR_TIPO_VEICULO_CARROS_UTILITARIOS = "1";
     }
 
-    public interface Data{
+    public interface Data {
         String SAVED_ANO_REFERENCIA = "ano_referencia_local";
+    }
+
+    public interface TipoVeiculo {
+        String CODIGO_CARROS_UTILITARIOS_PEQUENOS = "1";
     }
 }
