@@ -36,7 +36,6 @@ import udacity.com.core.model.Marca;
 import udacity.com.core.ui.marcas.MarcasContract;
 import udacity.com.core.ui.marcas.MarcasPresenter;
 import udacity.com.core.util.ConstantsUtils;
-import udacity.com.core.util.TipoVeiculoEnum;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.SpacesItemDecoration;
 import util.UtilSnackbar;
@@ -82,9 +81,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
-        marcasAdapter = new MarcasAdapter(this, getApplicationContext(), marcasPesquisa);
-        recyclerView.setAdapter(marcasAdapter);
-
         marcasPresenter = new MarcasPresenter();
         marcasPresenter.attachView(this);
 
@@ -108,8 +104,17 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
             BaseApplication.codigoTipoVeiculo = ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS;
         }
 
+        marcasAdapter = new MarcasAdapter(this, getApplicationContext(), marcasPesquisa,
+                selectTipoVeiculoName(BaseApplication.codigoTipoVeiculo),
+                BaseApplication.codigoTabelaReferencia.getMes());
+        recyclerView.setAdapter(marcasAdapter);
+
         marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
-        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, TipoVeiculoEnum.valueOf(BaseApplication.codigoTipoVeiculo) + " - " + "Ano Referência: " + BaseApplication.codigoTabelaReferencia.getMes());
+        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView,
+                selectTipoVeiculoName(BaseApplication.codigoTipoVeiculo) +
+                        " - " +
+                        "ano Referência: " +
+                        BaseApplication.codigoTabelaReferencia.getMes());
     }
 
     @Override
@@ -212,7 +217,11 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                 filteredModelList.add(marca);
             }
         }
-        marcasAdapter = new MarcasAdapter(this, getApplicationContext(), filteredModelList);
+        marcasAdapter = new MarcasAdapter(this,
+                getApplicationContext(),
+                filteredModelList,
+                selectTipoVeiculoName(BaseApplication.codigoTipoVeiculo),
+                BaseApplication.codigoTabelaReferencia.getMes());
         recyclerView.setLayoutManager(new LinearLayoutManager(MarcasActivity.this));
         recyclerView.setAdapter(marcasAdapter);
         marcasAdapter.notifyDataSetChanged();
@@ -315,5 +324,17 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String selectTipoVeiculoName(String tipoVeiculoCod) {
+        switch (tipoVeiculoCod) {
+            case ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS:
+                return ConstantsUtils.TipoVeiculo.DESC_CARROS_UTILITARIOS_PEQUENOS;
+            case ConstantsUtils.TipoVeiculo.CODIGO_MOTOS:
+                return ConstantsUtils.TipoVeiculo.DESC_CODIGO_MOTOS;
+            case ConstantsUtils.TipoVeiculo.CODIGO_CAMINHOES_MICRO_ONIBUS:
+                return ConstantsUtils.TipoVeiculo.DESC_CODIGO_CAMINHOES_MICRO_ONIBUS;
+        }
+        return "";
     }
 }

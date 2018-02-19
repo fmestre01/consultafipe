@@ -99,7 +99,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
             mView = view;
             name = (TextView) view.findViewById(R.id.name);
             marca = (TextView) view.findViewById(R.id.marcaVeiculo);
-            btnSelVeiculoMarca = (Button) view.findViewById(R.id.btnSelAnoVeiculo);
+            //btnSelVeiculoMarca = (Button) view.findViewById(R.id.btnSelAnoVeiculo);
         }
     }
 

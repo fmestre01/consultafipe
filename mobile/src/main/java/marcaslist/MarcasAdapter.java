@@ -25,12 +25,16 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
     private Context context;
     String searchString = "";
     List<Marca> marcasPesquisa = new ArrayList<>();
+    private String tipoVeiculo;
+    private String anoReferencia;
 
-    public MarcasAdapter(MarcasContract.OnItemClickListener onItemClickListener, Context context, List<Marca> marcasPesquisa) {
+    public MarcasAdapter(MarcasContract.OnItemClickListener onItemClickListener, Context context, List<Marca> marcasPesquisa, String tipoVeiculo, String anoReferencia) {
         marcasList = new ArrayList<>();
         mOnItemClickListener = onItemClickListener;
         this.context = context;
         this.marcasList = marcasPesquisa;
+        this.tipoVeiculo = tipoVeiculo;
+        this.anoReferencia = anoReferencia;
     }
 
     @Override
@@ -43,6 +47,8 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.marca = marcasList.get(position);
         holder.nomeMarca.setText(marcasList.get(position).getName());
+        holder.tipoVeiculo.setText(tipoVeiculo);
+        holder.anoReferencia.setText(anoReferencia);
 
         /*try {
             Glide.with(context)
@@ -96,11 +102,15 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
         public final View mView;
         public final TextView nomeMarca;
         public Marca marca;
+        public final TextView tipoVeiculo;
+        public final TextView anoReferencia;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            nomeMarca = (TextView) view.findViewById(R.id.nomeMarca);
+            nomeMarca = view.findViewById(R.id.nomeMarca);
+            tipoVeiculo = view.findViewById(R.id.tipoVeiculo);
+            anoReferencia = view.findViewById(R.id.anoReferencia);
         }
     }
 

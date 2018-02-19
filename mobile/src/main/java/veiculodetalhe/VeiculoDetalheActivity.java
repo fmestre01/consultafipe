@@ -19,6 +19,7 @@ import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalheContract;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalhePresenter;
 import udacity.com.core.util.ConstantsUtils;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.UtilSnackbar;
 
 public class VeiculoDetalheActivity extends AppCompatActivity implements VeiculoDetalheContract.View, VeiculoDetalheContract.OnItemClickListener {
@@ -154,5 +155,10 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     @Override
     public void clickLongItem(Veiculo veiculo) {
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

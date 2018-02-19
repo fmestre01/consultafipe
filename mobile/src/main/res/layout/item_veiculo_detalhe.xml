@@ -1,7 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="horizontal"
     android:padding="16dp">
@@ -12,64 +12,123 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/marca"
+        fontPath="fonts/gtw.ttf"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:layout_marginBottom="10dp"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix"
+        tools:text="Fiat" />
+
+    <TextView
+        android:id="@+id/veiculo"
+        fontPath="fonts/gtw.ttf"
+        android:layout_below="@id/marca"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textAllCaps="true"
+        android:textColor="#555"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix"
+        tools:text="Palio 1.0 ECONOMY Fire Flex 8V 4p" />
+
+    <TextView
+        android:layout_below="@id/veiculo"
+        android:id="@+id/combustivel"
+        fontPath="fonts/gtw.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="#555"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix"
+        tools:text="Gasolina" />
+
+    <TextView
+        android:id="@+id/referencia"
+        fontPath="fonts/gtw.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/combustivel"
+        android:textColor="#555"
+        android:textSize="12sp"
+        android:text="Agosto de 2015"
+        tools:ignore="MissingPrefix"
+        tools:text="agosto de 2015" />
+
+    <TextView
+        android:id="@+id/labelPreco"
+        fontPath="fonts/gtw.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_above="@+id/veiculo"
+        android:layout_alignLeft="@+id/preco"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignStart="@+id/preco"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/marca"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:textAllCaps="true"
-            android:textSize="14sp"
-            tools:text="Fiat" />
-
-        <TextView
-            android:id="@+id/veiculo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:textAllCaps="true"
-            android:textSize="14sp"
-            tools:text="Palio 1.0 ECONOMY Fire Flex 8V 4p" />
-
-        <TextView
-            android:id="@+id/combustivel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textSize="14sp"
-            tools:text="Gasolina" />
-
-        <TextView
-            android:id="@+id/referencia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            tools:text="agosto de 2015" />
-
-    </LinearLayout>
-
+        android:gravity="center"
+        android:text="Preço"
+        android:textColor="#555"
+        android:textSize="16sp"
+        tools:ignore="MissingPrefix"
+        tools:text="Preço" />
 
     <TextView
         android:id="@+id/preco"
+        fontPath="fonts/gtw.ttf"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/labelPreco"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:fontFamily="sans-serif-medium"
         android:gravity="center"
+        android:textColor="#555"
         android:textSize="16sp"
+        tools:ignore="MissingPrefix"
         tools:text="R$ 23.055,00" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/referencia"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnCompartilhar"
+            fontPath="fonts/gtw.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/veiculo"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="compartilhar"
+            android:theme="@style/PrimaryFlatButton"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/btnFavorito"
+            fontPath="fonts/gtw.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/veiculo"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="add favorito"
+            android:theme="@style/PrimaryFlatButton"
+            tools:ignore="MissingPrefix" />
+    </LinearLayout>
+
+</RelativeLayout>

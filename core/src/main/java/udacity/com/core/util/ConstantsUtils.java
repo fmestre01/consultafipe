@@ -40,5 +40,10 @@ public class ConstantsUtils {
 
     public interface TipoVeiculo {
         String CODIGO_CARROS_UTILITARIOS_PEQUENOS = "1";
+        String CODIGO_MOTOS = "2";
+        String CODIGO_CAMINHOES_MICRO_ONIBUS = "3";
+        String DESC_CARROS_UTILITARIOS_PEQUENOS = "Carros e utilitários pequenos";
+        String DESC_CODIGO_MOTOS = "Motos";
+        String DESC_CODIGO_CAMINHOES_MICRO_ONIBUS = "Caminhões e micro-ônibus";
     }
 }
