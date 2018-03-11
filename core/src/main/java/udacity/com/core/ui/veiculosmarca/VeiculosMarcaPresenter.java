@@ -124,10 +124,13 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
                                 String id = object.getString("Value");
                                 String name = object.getString("Label");
 
-                                CombustivelModeloAno combustivelModeloAno = new CombustivelModeloAno();
-                                combustivelModeloAno.setId(id);
-                                combustivelModeloAno.setName(name);
-                                combustiveisModeloAno.add(combustivelModeloAno);
+                                //bug on site fipe returns undefined id
+                                if(!name.substring(0, 4).equals("3200")) {
+                                    CombustivelModeloAno combustivelModeloAno = new CombustivelModeloAno();
+                                    combustivelModeloAno.setId(id);
+                                    combustivelModeloAno.setName(name);
+                                    combustiveisModeloAno.add(combustivelModeloAno);
+                                }
                             }
                             if (!isViewAttached()) return;
                             mView.hideProgress();

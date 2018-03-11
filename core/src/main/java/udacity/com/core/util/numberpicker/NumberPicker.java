@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import udacity.com.core.R;
-import udacity.com.core.model.AnoReferencia;
+import udacity.com.core.model.TabelaReferencia;
 
 public class NumberPicker extends LinearLayout {
 
@@ -37,17 +37,17 @@ public class NumberPicker extends LinearLayout {
     private int mTextColorSelected;
     private boolean mAnimateTextSize, mTextFadeColor;
     private OnValueChangeListener mOnValueChangeListener;
-    private List<AnoReferencia> values;
+    private List<TabelaReferencia> values;
 
-    public NumberPicker(Context context, List<AnoReferencia> values) {
+    public NumberPicker(Context context, List<TabelaReferencia> values) {
         this(context, null, values);
     }
 
-    public NumberPicker(Context context, AttributeSet attrs, List<AnoReferencia> values) {
+    public NumberPicker(Context context, AttributeSet attrs, List<TabelaReferencia> values) {
         this(context, attrs, 0, values);
     }
 
-    public NumberPicker(Context context, AttributeSet attrs, int defStyleAttr, List<AnoReferencia> values) {
+    public NumberPicker(Context context, AttributeSet attrs, int defStyleAttr, List<TabelaReferencia> values) {
         super(context, attrs, defStyleAttr);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.np_ValuePicker, defStyleAttr, 0);
@@ -114,7 +114,7 @@ public class NumberPicker extends LinearLayout {
         this.mOnValueChangeListener = mOnValueChangeListener;
     }
 
-    public void updateValues(List<AnoReferencia> values) {
+    public void updateValues(List<TabelaReferencia> values) {
         this.mValuePickerAdapter = new ValuePickerAdapter(getContext(), values);
         this.mRecyclerView.setAdapter(this.mValuePickerAdapter);
         this.mValuePickerAdapter.setSelectedIndex(0);
@@ -212,9 +212,9 @@ public class NumberPicker extends LinearLayout {
         static final int POSITION_NONE = -1;
 
         private int selectedItemIndex = POSITION_NONE;
-        private List<AnoReferencia> values = new ArrayList<>();
+        private List<TabelaReferencia> values = new ArrayList<>();
 
-        ValuePickerAdapter(Context context, List<AnoReferencia> values) {
+        ValuePickerAdapter(Context context, List<TabelaReferencia> values) {
             this.mContext = context;
             int size = values.size();
             for (int i = 0; i < size; i++) {

@@ -27,6 +27,7 @@ public class ConstantsUtils {
         String OP_KEY_VEICULOS_MARCA = "ConsultarModelos";
         String OP_KEY_VEICULO_DETALHE = "ConsultarValorComTodosParametros";
         String OP_KEY_ANO_MODELO = "ConsultarAnoModelo";
+        String OP_KEY_TABELA_REFERENCIA = "ConsultarTabelaDeReferencia";
     }
 
     public interface RequestParameters {
@@ -45,5 +46,18 @@ public class ConstantsUtils {
         String DESC_CARROS_UTILITARIOS_PEQUENOS = "Carros e utilitários pequenos";
         String DESC_CODIGO_MOTOS = "Motos";
         String DESC_CODIGO_CAMINHOES_MICRO_ONIBUS = "Caminhões e micro-ônibus";
+    }
+
+    public interface TrackEvent {
+        String TRACK_CONSULTA_FIPE = "CONSULTA_FIPE";
+        String TRACK_SCREEN_ACTION = "ACTION";
+        String SCREEN_MARCA = "MARCA";
+        String SCREEN_VEICULOS_MARCA = "VEICULOS_MARCA";
+        String SCREEN_VEICULOS_DETALHE = "VEICULOS_DETALHE";
+
+    }
+
+    public interface AdMob {
+        String KEY = "ca-app-pub-7012787268546106~8197623604";
     }
 }

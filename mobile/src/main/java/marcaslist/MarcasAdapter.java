@@ -110,7 +110,7 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
             mView = view;
             nomeMarca = view.findViewById(R.id.nomeMarca);
             tipoVeiculo = view.findViewById(R.id.tipoVeiculo);
-            anoReferencia = view.findViewById(R.id.anoReferencia);
+            anoReferencia = view.findViewById(R.id.tabelaReferencia);
         }
     }
 

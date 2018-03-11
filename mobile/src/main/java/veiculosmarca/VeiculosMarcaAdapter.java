@@ -93,13 +93,15 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
         public final TextView marca;
         public VeiculoMarca veiculoMarca;
         Button btnSelVeiculoMarca;
+        Button btnSelTodosVeiculos;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            name = (TextView) view.findViewById(R.id.name);
-            marca = (TextView) view.findViewById(R.id.marcaVeiculo);
-            //btnSelVeiculoMarca = (Button) view.findViewById(R.id.btnSelAnoVeiculo);
+            name = view.findViewById(R.id.name);
+            marca = view.findViewById(R.id.marcaVeiculo);
+            btnSelVeiculoMarca = view.findViewById(R.id.btnSelAnoVeiculo);
+            btnSelTodosVeiculos = view.findViewById(R.id.btnSelTodosAnos);
         }
     }
 

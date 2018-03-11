@@ -13,13 +13,14 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
         android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardElevation="2dp">
+        card_view:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <!--<ImageView
@@ -36,7 +37,6 @@
 
                 <TextView
                     android:id="@+id/name"
-                    fontPath="fonts/gtw.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -47,31 +47,38 @@
 
                 <TextView
                     android:id="@+id/marcaVeiculo"
-                    fontPath="fonts/gtw.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
                     android:hint="VW - VolksWagem"
                     android:textColor="#555"
                     tools:ignore="MissingPrefix" />
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/avisoSelecaoAno"
-                    fontPath="fonts/gtw.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Selecionar o ano"
                     android:textColor="#555"
-                    tools:ignore="MissingPrefix" />
+                    tools:ignore="MissingPrefix" />-->
             </LinearLayout>
 
-            <!--
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnSelAnoVeiculo"
+                    fontPath="fonts/gtw.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Todos os anos"
+                    android:theme="@style/PrimaryFlatButton"
+                    tools:ignore="MissingPrefix" />
+
+                <Button
+                    android:id="@+id/btnSelTodosAnos"
                     fontPath="fonts/gtw.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,7 +86,7 @@
                     android:theme="@style/PrimaryFlatButton"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
-            -->
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

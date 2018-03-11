@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.List;
 
-import udacity.com.core.model.AnoReferencia;
+import udacity.com.core.model.TabelaReferencia;
 import udacity.com.core.model.Marca;
 import udacity.com.core.ui.base.RemoteView;
 
@@ -20,16 +20,20 @@ public interface MarcasContract {
 
         void clearData();
 
-        void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<AnoReferencia> anosReferencia, Intent intent);
+        void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<TabelaReferencia> anosReferencia, Intent intent);
 
         void showAlertDialogTipoVeiculo(Context context, String title, String message, int icon, int layout, Intent intent);
 
-        List<AnoReferencia> onAnosReferenciaRequested(InputStream in);
+        void onTabelaReferenciaLoadFromFile(InputStream in);
+
+        void onTabelaReferenciaRequestedFastNetworkingLibrary();
     }
 
     interface View extends RemoteView {
 
         void showMarcas(List<Marca> marcaList);
+
+        void showTabelaReferencia(List<TabelaReferencia> tabelaReferenciaList);
     }
 
     interface OnItemClickListener {

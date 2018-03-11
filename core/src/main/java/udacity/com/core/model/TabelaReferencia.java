@@ -1,47 +1,48 @@
 package udacity.com.core.model;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Entity(tableName = "ano_referencia")
-public class AnoReferencia implements Parcelable {
+@Entity(tableName = "tabela_referencia")
+public class TabelaReferencia implements Parcelable {
 
     @PrimaryKey
-    private Long auto_id;
-
+    @NonNull
     @JsonProperty("codigo")
     private String id;
 
     @JsonProperty("mes")
     private String mes;
 
-    protected AnoReferencia(Parcel in) {
+    protected TabelaReferencia(Parcel in) {
         id = in.readString();
         mes = in.readString();
     }
 
     @Ignore
-    public AnoReferencia() {
-        this.id = "";
-        this.mes = "";
+    public TabelaReferencia(String id, String mes) {
+        this.id = id;
+        this.mes = mes;
     }
 
-    public static final Creator<AnoReferencia> CREATOR = new Creator<AnoReferencia>() {
+    public static final Creator<TabelaReferencia> CREATOR = new Creator<TabelaReferencia>() {
         @Override
-        public AnoReferencia createFromParcel(Parcel in) {
-            return new AnoReferencia(in);
+        public TabelaReferencia createFromParcel(Parcel in) {
+            return new TabelaReferencia(in);
         }
 
         @Override
-        public AnoReferencia[] newArray(int size) {
-            return new AnoReferencia[size];
+        public TabelaReferencia[] newArray(int size) {
+            return new TabelaReferencia[size];
         }
     };
 
@@ -54,19 +55,6 @@ public class AnoReferencia implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(id);
         parcel.writeString(mes);
-    }
-
-    public AnoReferencia(String id, String mes) {
-        this.id = id;
-        this.mes = mes;
-    }
-
-    public Long getAuto_id() {
-        return auto_id;
-    }
-
-    public void setAuto_id(Long auto_id) {
-        this.auto_id = auto_id;
     }
 
     public String getId() {
@@ -84,4 +72,9 @@ public class AnoReferencia implements Parcelable {
     public void setMes(String mes) {
         this.mes = mes;
     }
+
+    public TabelaReferencia() {
+
+    }
+
 }

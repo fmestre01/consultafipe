@@ -30,12 +30,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import udacity.com.consultafipe.R;
-import udacity.com.core.BaseApplication;
-import udacity.com.core.model.AnoReferencia;
+import udacity.com.core.Application;
 import udacity.com.core.model.Marca;
+import udacity.com.core.model.TabelaReferencia;
 import udacity.com.core.ui.marcas.MarcasContract;
 import udacity.com.core.ui.marcas.MarcasPresenter;
 import udacity.com.core.util.ConstantsUtils;
+import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.SpacesItemDecoration;
 import util.UtilSnackbar;
@@ -64,14 +65,19 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     private String searchString = "";
     private List<Marca> marcasPesquisa = new ArrayList<>();
 
-    private List<AnoReferencia> anosReferencia;
-    private AnoReferencia anoReferenciaSelected;
+    private List<TabelaReferencia> tabelaReferenciaAnos;
+    private TabelaReferencia tabelaReferenciaSelected;
     private Bundle extras;
+
+    private int sizeMarcasList;
+    private static final int FIRST_POSITION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.marcas_activity_list);
+
+        TrackUtils.trackEvent(ConstantsUtils.TrackEvent.SCREEN_MARCA);
 
         ButterKnife.bind(this);
 
@@ -84,6 +90,19 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         marcasPresenter = new MarcasPresenter();
         marcasPresenter.attachView(this);
 
+        configureFirstAcess();
+
+        marcasAdapter = new MarcasAdapter(this, getApplicationContext(), marcasPesquisa,
+                selectTipoVeiculoName(Application.codigoTipoVeiculo),
+                Application.codigoTabelaReferencia.getMes());
+        recyclerView.setAdapter(marcasAdapter);
+
+        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+
+        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView,
+                selectTipoVeiculoName(Application.codigoTipoVeiculo) + " " +
+                        Application.codigoTabelaReferencia.getMes());
+
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -93,28 +112,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                 }
         );
 
-        populaTabelaAnosReferencia();
         extras = getIntent().getExtras();
 
-        //primeiro acesso
-        if (BaseApplication.codigoTabelaReferencia == null) {
-            BaseApplication.codigoTabelaReferencia = anosReferencia.get(0);
-        }
-        if (BaseApplication.codigoTipoVeiculo == null) {
-            BaseApplication.codigoTipoVeiculo = ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS;
-        }
-
-        marcasAdapter = new MarcasAdapter(this, getApplicationContext(), marcasPesquisa,
-                selectTipoVeiculoName(BaseApplication.codigoTipoVeiculo),
-                BaseApplication.codigoTabelaReferencia.getMes());
-        recyclerView.setAdapter(marcasAdapter);
-
-        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
-        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView,
-                selectTipoVeiculoName(BaseApplication.codigoTipoVeiculo) +
-                        " - " +
-                        "ano Referência: " +
-                        BaseApplication.codigoTabelaReferencia.getMes());
     }
 
     @Override
@@ -130,13 +129,25 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     }
 
     @Override
+    public void showTabelaReferencia(List<TabelaReferencia> tabelaReferenciaList) {
+        tabelaReferenciaAnos = tabelaReferenciaList;
+
+        int size = tabelaReferenciaAnos.size();
+        if (Application.db.tabelaReferenciaDao().allTabelaReferencia().size() != size) {
+            for (int i = 0; i < size; i++) {
+                Application.db.tabelaReferenciaDao().insertTabelaReferencia(tabelaReferenciaAnos.get(FIRST_POSITION));
+            }
+        }
+    }
+
+    @Override
     public void clickItem(Marca marca) {
         startActivity(VeiculosMarcaActivity.newVeiculosMarcaActivity(this, marca));
     }
 
     @Override
     public void clickLongItem(Marca marca) {
-
+        UtilSnackbar.showSnakbarTipoUm(this.recyclerView, "Em breve...");
     }
 
     @Override
@@ -185,7 +196,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @OnClick(R.id.layoutEmptyData)
     public void tentarDeNovo() {
-
+        layoutTentarDeNovo.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -220,8 +231,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         marcasAdapter = new MarcasAdapter(this,
                 getApplicationContext(),
                 filteredModelList,
-                selectTipoVeiculoName(BaseApplication.codigoTipoVeiculo),
-                BaseApplication.codigoTabelaReferencia.getMes());
+                selectTipoVeiculoName(Application.codigoTipoVeiculo),
+                Application.codigoTabelaReferencia.getMes());
         recyclerView.setLayoutManager(new LinearLayoutManager(MarcasActivity.this));
         recyclerView.setAdapter(marcasAdapter);
         marcasAdapter.notifyDataSetChanged();
@@ -251,8 +262,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
         if (extras != null) {
             if (extras.getParcelable("selectedAnoReferencia") != null) {
-                anoReferenciaSelected = extras.getParcelable("selectedAnoReferencia");
-                BaseApplication.codigoTabelaReferencia = anoReferenciaSelected;
+                tabelaReferenciaSelected = extras.getParcelable("selectedAnoReferencia");
+                Application.codigoTabelaReferencia = tabelaReferenciaSelected;
             }
         }
 
@@ -263,9 +274,9 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                         MarcasActivity.this,
                         getResources().getString(R.string.text_periodo_referencia),
                         getResources().getString(R.string.text_selecione),
-                        R.mipmap.ic_launcher_round,
+                        R.mipmap.consulta_fipe_logo,
                         R.layout.alert_view_generic,
-                        anosReferencia,
+                        tabelaReferenciaAnos,
                         MarcasActivity.newMarcasActivity(getApplicationContext()));
                 return false;
             }
@@ -280,7 +291,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                         MarcasActivity.this,
                         getResources().getString(R.string.text_tipo_veiculo),
                         getResources().getString(R.string.text_selecione),
-                        R.mipmap.ic_launcher_round,
+                        R.mipmap.consulta_fipe_logo,
                         R.layout.alert_view_generic,
                         MarcasActivity.newMarcasActivity(getApplicationContext()));
                 return false;
@@ -298,8 +309,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     private JSONObject marcaJsonObject() {
         JSONObject marcaObject = new JSONObject();
         try {
-            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
-            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, Application.codigoTabelaReferencia.getId());
+            marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, Application.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -317,10 +328,10 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    private void populaTabelaAnosReferencia() {
+    private void populaTabelaReferenciaAnosLocal() {
         try {
             InputStream assetsAnosReferencia = getAssets().open("anosReferencia.json");
-            anosReferencia = marcasPresenter.onAnosReferenciaRequested(assetsAnosReferencia);
+            marcasPresenter.onTabelaReferenciaLoadFromFile(assetsAnosReferencia);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -336,5 +347,22 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                 return ConstantsUtils.TipoVeiculo.DESC_CODIGO_CAMINHOES_MICRO_ONIBUS;
         }
         return "";
+    }
+
+    private void configureFirstAcess() {
+        populaTabelaReferenciaAnosLocal();
+
+        sizeMarcasList = Application.db.tabelaReferenciaDao().allTabelaReferencia().size();
+
+        //first access
+        if (Application.codigoTabelaReferencia == null && Application.codigoTipoVeiculo == null) {
+            Application.codigoTabelaReferencia = Application.db.tabelaReferenciaDao().allTabelaReferencia().get(0);
+            Application.codigoTipoVeiculo = ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

@@ -5,12 +5,12 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import udacity.com.core.data.dao.AnoReferenciaDao;
+import udacity.com.core.data.dao.TabelaReferenciaDao;
 import udacity.com.core.data.dao.MarcaDao;
 import udacity.com.core.data.dao.VeiculoDao;
 import udacity.com.core.data.dao.VeiculoMarcaDao;
 import udacity.com.core.data.dao.VeiculoModeloAnoDao;
-import udacity.com.core.model.AnoReferencia;
+import udacity.com.core.model.TabelaReferencia;
 import udacity.com.core.model.Marca;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.model.VeiculoMarca;
@@ -21,7 +21,7 @@ import udacity.com.core.model.CombustivelModeloAno;
         Marca.class,
         VeiculoMarca.class,
         CombustivelModeloAno.class,
-        AnoReferencia.class},
+        TabelaReferencia.class},
         version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -35,7 +35,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract VeiculoModeloAnoDao veiculoModeloAnoDao();
 
-    public abstract AnoReferenciaDao anoReferenciaDao();
+    public abstract TabelaReferenciaDao tabelaReferenciaDao();
 
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {

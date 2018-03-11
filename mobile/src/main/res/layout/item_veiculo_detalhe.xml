@@ -1,9 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <include
@@ -14,25 +14,25 @@
 
     <TextView
         android:id="@+id/marca"
-        fontPath="fonts/gtw.ttf"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:textAllCaps="true"
         android:textColor="#000"
-        android:layout_marginBottom="10dp"
         android:textSize="14sp"
         tools:ignore="MissingPrefix"
         tools:text="Fiat" />
 
     <TextView
         android:id="@+id/veiculo"
-        fontPath="fonts/gtw.ttf"
-        android:layout_below="@id/marca"
-        android:layout_width="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/marca"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
+        android:gravity="center"
         android:textAllCaps="true"
         android:textColor="#555"
         android:textSize="14sp"
@@ -40,13 +40,13 @@
         tools:text="Palio 1.0 ECONOMY Fire Flex 8V 4p" />
 
     <TextView
-        android:layout_below="@id/veiculo"
         android:id="@+id/combustivel"
-        fontPath="fonts/gtw.ttf"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_below="@id/veiculo"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
+        android:gravity="center"
         android:maxLines="2"
         android:textColor="#555"
         android:textSize="14sp"
@@ -54,78 +54,66 @@
         tools:text="Gasolina" />
 
     <TextView
-        android:id="@+id/referencia"
-        fontPath="fonts/gtw.ttf"
-        android:layout_width="wrap_content"
+        android:id="@+id/anoModelo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/combustivel"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Ano: 1998"
         android:textColor="#555"
         android:textSize="12sp"
-        android:text="Agosto de 2015"
         tools:ignore="MissingPrefix"
-        tools:text="agosto de 2015" />
+        tools:text="1998" />
 
     <TextView
         android:id="@+id/labelPreco"
-        fontPath="fonts/gtw.ttf"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_above="@+id/veiculo"
-        android:layout_alignLeft="@+id/preco"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignStart="@+id/preco"
-        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/anoModelo"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="Preço"
         android:textColor="#555"
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Preço"
         tools:ignore="MissingPrefix"
         tools:text="Preço" />
 
     <TextView
         android:id="@+id/preco"
-        fontPath="fonts/gtw.ttf"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/labelPreco"
-        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:textColor="#555"
         android:textSize="16sp"
+        android:textStyle="bold"
         tools:ignore="MissingPrefix"
         tools:text="R$ 23.055,00" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/referencia"
+        android:layout_below="@+id/preco"
         android:gravity="center">
 
         <Button
             android:id="@+id/btnCompartilhar"
-            fontPath="fonts/gtw.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/veiculo"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
             android:text="compartilhar"
             android:theme="@style/PrimaryFlatButton"
             tools:ignore="MissingPrefix" />
 
         <Button
             android:id="@+id/btnFavorito"
-            fontPath="fonts/gtw.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/veiculo"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
             android:text="add favorito"
             android:theme="@style/PrimaryFlatButton"
             tools:ignore="MissingPrefix" />

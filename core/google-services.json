@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "224862015318",
+    "firebase_url": "https://consulta-fipe-22022018.firebaseio.com",
+    "project_id": "consulta-fipe-22022018",
+    "storage_bucket": "consulta-fipe-22022018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224862015318:android:5b5b194ed8c469ef",
+        "android_client_info": {
+          "package_name": "udacity.com.core"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224862015318-v7t6m0vbvimd5fc1pbkqip4uf96egp0g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs6ZT6a25tKIWUG7NPjkG-CXk5ztnqZ94"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

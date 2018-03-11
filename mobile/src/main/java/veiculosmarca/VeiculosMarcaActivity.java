@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +13,11 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.RenderProcessGoneDetail;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.InterstitialAd;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,13 +28,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import udacity.com.consultafipe.R;
-import udacity.com.core.BaseApplication;
+import udacity.com.core.Application;
 import udacity.com.core.model.CombustivelModeloAno;
 import udacity.com.core.model.Marca;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.ui.veiculosmarca.VeiculosMarcaContract;
 import udacity.com.core.ui.veiculosmarca.VeiculosMarcaPresenter;
 import udacity.com.core.util.ConstantsUtils;
+import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.UtilSnackbar;
 import veiculodetalhe.VeiculoDetalheActivity;
@@ -60,10 +61,14 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     private List<VeiculoMarca> veiculosMarca = new ArrayList<>();
 
+    private InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.veiculos_marca_activity_list);
+
+        TrackUtils.trackEvent(ConstantsUtils.TrackEvent.SCREEN_VEICULOS_MARCA);
 
         ButterKnife.bind(this);
 
@@ -116,7 +121,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     @Override
     public void clickLongItem(VeiculoMarca veiculoMarca) {
-
+        UtilSnackbar.showSnakbarTipoUm(this.recyclerView, "Em breve...");
     }
 
     @Override
@@ -161,8 +166,8 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
         JSONObject marcaJsonObject = new JSONObject();
         try {
             marcaJsonObject.put("codigoMarca", marca.getId());
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
-            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, Application.codigoTabelaReferencia.getId());
+            marcaJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, Application.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -174,8 +179,8 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
         try {
             combustivelModeloAnoJsonObject.put("codigoMarca", marca.getId());
             combustivelModeloAnoJsonObject.put("codigoModelo", codigoModelo);
-            combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
-            combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
+            combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, Application.codigoTabelaReferencia.getId());
+            combustivelModeloAnoJsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, Application.codigoTipoVeiculo);
         } catch (JSONException e) {
             e.printStackTrace();
         }

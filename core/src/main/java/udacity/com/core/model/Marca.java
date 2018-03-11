@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,8 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Marca implements Parcelable {
 
     @PrimaryKey
-    private Long auto_id;
-
+    @NonNull
     @JsonProperty("value")
     private String id;
 
@@ -40,14 +40,6 @@ public class Marca implements Parcelable {
             return new Marca[size];
         }
     };
-
-    public Long getAuto_id() {
-        return auto_id;
-    }
-
-    public void setAuto_id(Long auto_id) {
-        this.auto_id = auto_id;
-    }
 
     public String getName() {
         return name;

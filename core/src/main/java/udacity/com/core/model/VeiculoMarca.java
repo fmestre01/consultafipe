@@ -5,6 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,8 +18,7 @@ import java.util.List;
 public class VeiculoMarca implements Parcelable {
 
     @PrimaryKey
-    private Long auto_id;
-
+    @NonNull
     @JsonProperty("value")
     private String id;
 
@@ -33,11 +33,6 @@ public class VeiculoMarca implements Parcelable {
 
 
     protected VeiculoMarca(Parcel in) {
-        if (in.readByte() == 0) {
-            auto_id = null;
-        } else {
-            auto_id = in.readLong();
-        }
         id = in.readString();
         name = in.readString();
         combustivelModeloAnos = in.createTypedArrayList(CombustivelModeloAno.CREATOR);
@@ -45,12 +40,6 @@ public class VeiculoMarca implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (auto_id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(auto_id);
-        }
         dest.writeString(id);
         dest.writeString(name);
         dest.writeTypedList(combustivelModeloAnos);
@@ -72,14 +61,6 @@ public class VeiculoMarca implements Parcelable {
             return new VeiculoMarca[size];
         }
     };
-
-    public Long getAuto_id() {
-        return auto_id;
-    }
-
-    public void setAuto_id(Long auto_id) {
-        this.auto_id = auto_id;
-    }
 
     public String getId() {
         return id;

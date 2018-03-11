@@ -11,14 +11,15 @@ import android.widget.NumberPicker;
 import java.util.ArrayList;
 import java.util.List;
 
-import udacity.com.core.BaseApplication;
+import udacity.com.core.Application;
 import udacity.com.core.R;
-import udacity.com.core.model.AnoReferencia;
 import udacity.com.core.model.CombustivelModeloAno;
+import udacity.com.core.model.TabelaReferencia;
 
 public class AlertUtils {
 
     private static String anoModelo;
+    private static TabelaReferencia selectedTabelaReferencia;
 
     public static void alertViewAnoVeiculo(final Context context, String title, String message, int icon, final Intent intent, int layout, final List<CombustivelModeloAno> anos) {
         List<String> label;
@@ -79,11 +80,11 @@ public class AlertUtils {
         alert.show();
     }
 
-    public static void alertViewAnoReferencia(final Context context, String title, String message, int icon, int layout, final List<AnoReferencia> anosReferencia, final Intent intent) {
+    public static void alertViewAnoReferencia(final Context context, String title, String message, int icon, int layout, final List<TabelaReferencia> anosReferencia, final Intent intent) {
         List<String> label;
         List<String> value;
         String[] stringArr;
-        final AnoReferencia selectedAnoReferencia = null;
+
         LayoutInflater factory = LayoutInflater.from(context);
 
         final View view = factory.inflate(layout, null);
@@ -93,7 +94,7 @@ public class AlertUtils {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
-                        intent.putExtra("selectedAnoReferencia", selectedAnoReferencia);
+                        intent.putExtra("selectedTabelaReferencia", selectedTabelaReferencia);
                         context.startActivity(intent);
                     }
                 }).setNegativeButton(context.getResources().getString(R.string.text_cancelar),
@@ -121,7 +122,7 @@ public class AlertUtils {
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                BaseApplication.codigoTabelaReferencia = anosReferencia.get(i1);
+                Application.codigoTabelaReferencia = anosReferencia.get(i1);
             }
         });
         alert.setView(numberPicker);
@@ -139,7 +140,7 @@ public class AlertUtils {
     public static void alertViewTipoVeiculo(final Context context, String title, String message, int icon, int layout, final Intent intent) {
         LayoutInflater factory = LayoutInflater.from(context);
 
-        BaseApplication.codigoTipoVeiculo = null;
+        Application.codigoTipoVeiculo = null;
         final String selectedTipoVeiculo = null;
         final View view = factory.inflate(layout, null);
 
@@ -169,7 +170,7 @@ public class AlertUtils {
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                BaseApplication.codigoTipoVeiculo = String.valueOf(i1 + 1);
+                Application.codigoTipoVeiculo = String.valueOf(i1 + 1);
             }
         });
         alert.setView(numberPicker);

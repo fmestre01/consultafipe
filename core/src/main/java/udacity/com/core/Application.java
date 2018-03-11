@@ -1,27 +1,30 @@
 package udacity.com.core;
 
-import android.app.Application;
-
 import com.androidnetworking.AndroidNetworking;
+import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 import udacity.com.core.api.ApiClient;
 import udacity.com.core.data.AppDatabase;
-import udacity.com.core.model.AnoReferencia;
+import udacity.com.core.model.TabelaReferencia;
 import udacity.com.core.util.ConstantsUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class BaseApplication extends Application {
+public class Application extends android.app.Application {
 
     public static AppDatabase db;
-    public static AnoReferencia codigoTabelaReferencia;
+    public static TabelaReferencia codigoTabelaReferencia;
     public static String codigoTipoVeiculo;
+    public static FirebaseAnalytics firebaseAnalytics;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         db = AppDatabase.getDatabase(getApplicationContext());
 
@@ -33,11 +36,11 @@ public class BaseApplication extends Application {
         }
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/gtw.ttf")
+                .setDefaultFontPath("fonts/Roboto-Bold.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 
-        Timber.tag(BaseApplication.class.getName()).i(ConstantsUtils.Application.INITAPPLICATION);
+        Timber.tag(Application.class.getName()).i(ConstantsUtils.Application.INITAPPLICATION);
 
         LeakCanary.install(this);
     }

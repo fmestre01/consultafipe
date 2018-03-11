@@ -1,9 +1,11 @@
 package udacity.com.core.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,19 +15,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CombustivelModeloAno implements Parcelable {
 
     @PrimaryKey
-    private Long auto_id;
-
+    @NonNull
     @JsonProperty("value")
     private String id;
-
-    @Override
-    public String toString() {
-        return "CombustivelModeloAno{" +
-                "auto_id=" + auto_id +
-                ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
 
     @JsonProperty("label")
     private String name;
@@ -33,24 +25,21 @@ public class CombustivelModeloAno implements Parcelable {
     public CombustivelModeloAno() {
     }
 
+    @Override
+    public String toString() {
+        return "CombustivelModeloAno{" +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     protected CombustivelModeloAno(Parcel in) {
-        if (in.readByte() == 0) {
-            auto_id = null;
-        } else {
-            auto_id = in.readLong();
-        }
         id = in.readString();
         name = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (auto_id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(auto_id);
-        }
         dest.writeString(id);
         dest.writeString(name);
     }
@@ -72,14 +61,6 @@ public class CombustivelModeloAno implements Parcelable {
         }
     };
 
-    public Long getAuto_id() {
-        return auto_id;
-    }
-
-    public void setAuto_id(Long auto_id) {
-        this.auto_id = auto_id;
-    }
-
     public String getId() {
         return id;
     }
@@ -96,8 +77,8 @@ public class CombustivelModeloAno implements Parcelable {
         this.name = name;
     }
 
-    public CombustivelModeloAno(Long auto_id, String id, String name) {
-        this.auto_id = auto_id;
+    @Ignore
+    public CombustivelModeloAno(String id, String name) {
         this.id = id;
         this.name = name;
     }

@@ -8,24 +8,25 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.InterstitialAd;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import udacity.com.consultafipe.R;
-import udacity.com.core.BaseApplication;
+import udacity.com.core.Application;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalheContract;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalhePresenter;
 import udacity.com.core.util.ConstantsUtils;
+import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.UtilSnackbar;
 
 public class VeiculoDetalheActivity extends AppCompatActivity implements VeiculoDetalheContract.View, VeiculoDetalheContract.OnItemClickListener {
-
-    private static final String EXTRA_ID_MARCA = "idMarca";
-    private static final String EXTRA_ID_MODELO = "idModelo";
 
     private VeiculoDetalhePresenter veiculoDetalhePresenter;
 
@@ -41,8 +42,8 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     @BindView(R.id.combustivel)
     TextView combustivelTextView;
 
-    @BindView(R.id.referencia)
-    TextView referenciaTextView;
+    @BindView(R.id.anoModelo)
+    TextView anoModeloTextView;
 
     @BindView(R.id.preco)
     TextView precoTextView;
@@ -54,10 +55,14 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     private static String tipoVeiculo;
     private static String tipoConsulta;
 
+    private InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_veiculo_detalhe);
+
+        TrackUtils.trackEvent(ConstantsUtils.TrackEvent.SCREEN_VEICULOS_DETALHE);
 
         ButterKnife.bind(this);
 
@@ -71,6 +76,9 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
             tipoConsulta = getIntent().getExtras().getString("tipoConsulta");
             tipoVeiculo = getIntent().getExtras().getString("tipoVeiculo");
         }
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.key_admob));
     }
 
     @Override
@@ -115,8 +123,8 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         intent.putExtra("idModelo", idModelo);
         intent.putExtra("tipoVeiculo", "carro");
         intent.putExtra("tipoConsulta", "tradicional");
-        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia);
-        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, BaseApplication.codigoTipoVeiculo);
+        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, Application.codigoTabelaReferencia);
+        intent.putExtra(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO, Application.codigoTipoVeiculo);
         return intent;
     }
 
@@ -130,8 +138,8 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
             jsonObject.put("modeloCodigoExterno", "");
             jsonObject.put("tipoVeiculo", "carro");
             jsonObject.put("tipoConsulta", "tradicional");
-            jsonObject.put("codigoTipoVeiculo", BaseApplication.codigoTipoVeiculo);
-            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, BaseApplication.codigoTabelaReferencia.getId());
+            jsonObject.put("codigoTipoVeiculo", Application.codigoTipoVeiculo);
+            jsonObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA, Application.codigoTabelaReferencia.getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -143,7 +151,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         marcaTextView.setText(veiculo.getMarca());
         veiculoTextView.setText(veiculo.getModelo());
         combustivelTextView.setText(veiculo.getCombustivel());
-        referenciaTextView.setText(veiculo.getReferencia());
+        anoModeloTextView.setText(veiculo.getAnoModelo());
         precoTextView.setText(veiculo.getValor());
     }
 
@@ -160,5 +168,15 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @OnClick(R.id.btnCompartilhar)
+    void clickShare() {
+        UtilSnackbar.showSnakbarTipoUm(this.marcaTextView, "Em breve...");
+    }
+
+    @OnClick(R.id.btnFavorito)
+    void addFavorite() {
+        UtilSnackbar.showSnakbarTipoUm(this.marcaTextView, "Em breve...");
     }
 }
