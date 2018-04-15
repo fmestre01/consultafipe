@@ -80,7 +80,7 @@ public class AlertUtils {
         alert.show();
     }
 
-    public static void alertViewAnoReferencia(final Context context, String title, String message, int icon, int layout, final List<TabelaReferencia> anosReferencia, final Intent intent) {
+    public static void alertViewAnoReferencia(final Context context, String title, String message, int icon, int layout, final List<TabelaReferencia> anosReferencia, final Intent intent, boolean cancelable) {
         List<String> label;
         List<String> value;
         String[] stringArr;
@@ -103,30 +103,34 @@ public class AlertUtils {
                                         int whichButton) {
                     }
                 });
+
+        alert.setCancelable(cancelable);
         label = new ArrayList<>();
         value = new ArrayList<>();
 
-        for (int i = 0; i < anosReferencia.size(); i++) {
-            label.add(anosReferencia.get(i).getMes());
-            value.add(anosReferencia.get(i).getId());
-        }
-
-        stringArr = label.toArray(new String[anosReferencia.size()]);
-        android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
-        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(stringArr.length - 1);
-        numberPicker.setWrapSelectorWheel(true);
-        numberPicker.setDisplayedValues(stringArr);
-
-        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                Application.codigoTabelaReferencia = anosReferencia.get(i1);
+        if (anosReferencia != null) {
+            for (int i = 0; i < anosReferencia.size(); i++) {
+                label.add(anosReferencia.get(i).getMes());
+                value.add(anosReferencia.get(i).getId());
             }
-        });
-        alert.setView(numberPicker);
-        alert.show();
+
+            stringArr = label.toArray(new String[anosReferencia.size()]);
+            android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
+            numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+            numberPicker.setMinValue(0);
+            numberPicker.setMaxValue(stringArr.length - 1);
+            numberPicker.setWrapSelectorWheel(true);
+            numberPicker.setDisplayedValues(stringArr);
+
+            numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                    Application.codigoTabelaReferencia = anosReferencia.get(i1);
+                }
+            });
+            alert.setView(numberPicker);
+            alert.show();
+        }
     }
 
     private static void setDefaultAnoReferencia(String anoReferencia, Context context) {

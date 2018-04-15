@@ -22,6 +22,7 @@ import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalheContract;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalhePresenter;
 import udacity.com.core.util.ConstantsUtils;
+import udacity.com.core.util.ConsultaFipeUtil;
 import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import util.UtilSnackbar;
@@ -38,6 +39,9 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @BindView(R.id.veiculo)
     TextView veiculoTextView;
+
+    @BindView(R.id.tipoVeiculo)
+    TextView tipoVeiculoTextView;
 
     @BindView(R.id.combustivel)
     TextView combustivelTextView;
@@ -133,8 +137,15 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         try {
             jsonObject.put("codigoMarca", idMarca);
             jsonObject.put("codigoModelo", idModelo);
-            jsonObject.put("codigoTipoCombustivel", anoModelo.substring(5));
-            jsonObject.put("anoModelo", anoModelo.substring(0, 4));
+
+            if (ConsultaFipeUtil.isVeiculoNovo(anoModelo)) {
+                jsonObject.put("codigoTipoCombustivel", anoModelo.substring(6, 7));
+                jsonObject.put("anoModelo", anoModelo.substring(0, 4) + "0");
+            } else {
+                jsonObject.put("codigoTipoCombustivel", anoModelo.substring(5));
+                jsonObject.put("anoModelo", anoModelo.substring(0, 4));
+            }
+
             jsonObject.put("modeloCodigoExterno", "");
             jsonObject.put("tipoVeiculo", "carro");
             jsonObject.put("tipoConsulta", "tradicional");
@@ -153,6 +164,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         combustivelTextView.setText(veiculo.getCombustivel());
         anoModeloTextView.setText(veiculo.getAnoModelo());
         precoTextView.setText(veiculo.getValor());
+        tipoVeiculoTextView.setText(util.ConsultaFipeUtil.selectTipoVeiculoName(Application.codigoTipoVeiculo));
     }
 
     @Override

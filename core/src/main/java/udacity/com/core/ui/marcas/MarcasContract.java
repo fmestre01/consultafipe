@@ -20,7 +20,7 @@ public interface MarcasContract {
 
         void clearData();
 
-        void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<TabelaReferencia> anosReferencia, Intent intent);
+        void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<TabelaReferencia> anosReferencia, Intent intent, boolean cancelable);
 
         void showAlertDialogTipoVeiculo(Context context, String title, String message, int icon, int layout, Intent intent);
 

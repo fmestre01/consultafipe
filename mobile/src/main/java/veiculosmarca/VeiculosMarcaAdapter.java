@@ -16,8 +16,10 @@ import java.util.List;
 import java.util.Locale;
 
 import udacity.com.consultafipe.R;
+import udacity.com.core.Application;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.ui.veiculosmarca.VeiculosMarcaContract;
+import util.ConsultaFipeUtil;
 
 public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdapter.ViewHolder> {
 
@@ -47,6 +49,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
         holder.veiculoMarca = veiculoMarcas.get(position);
         holder.name.setText(veiculoMarcas.get(position).getName());
         holder.marca.setText(marcaVeiculo);
+        holder.tipoVeiculo.setText(ConsultaFipeUtil.selectTipoVeiculoName(Application.codigoTipoVeiculo));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +94,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
         public final View mView;
         public final TextView name;
         public final TextView marca;
+        public final TextView tipoVeiculo;
         public VeiculoMarca veiculoMarca;
         Button btnSelVeiculoMarca;
         Button btnSelTodosVeiculos;
@@ -100,6 +104,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
             mView = view;
             name = view.findViewById(R.id.name);
             marca = view.findViewById(R.id.marcaVeiculo);
+            tipoVeiculo = view.findViewById(R.id.tipoVeiculo);
             btnSelVeiculoMarca = view.findViewById(R.id.btnSelAnoVeiculo);
             btnSelTodosVeiculos = view.findViewById(R.id.btnSelTodosAnos);
         }

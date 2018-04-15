@@ -1,9 +1,5 @@
 package udacity.com.core.model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -12,10 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Entity(tableName = "tabela_referencia")
 public class TabelaReferencia implements Parcelable {
 
-    @PrimaryKey
     @NonNull
     @JsonProperty("codigo")
     private String id;
@@ -26,12 +20,6 @@ public class TabelaReferencia implements Parcelable {
     protected TabelaReferencia(Parcel in) {
         id = in.readString();
         mes = in.readString();
-    }
-
-    @Ignore
-    public TabelaReferencia(String id, String mes) {
-        this.id = id;
-        this.mes = mes;
     }
 
     public static final Creator<TabelaReferencia> CREATOR = new Creator<TabelaReferencia>() {
@@ -76,5 +64,4 @@ public class TabelaReferencia implements Parcelable {
     public TabelaReferencia() {
 
     }
-
 }

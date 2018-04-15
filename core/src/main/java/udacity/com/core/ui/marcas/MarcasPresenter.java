@@ -104,8 +104,8 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
     }
 
     @Override
-    public void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<TabelaReferencia> anosReferencia, Intent intent) {
-        AlertUtils.alertViewAnoReferencia(context, title, message, icon, layout, anosReferencia, intent);
+    public void showAlertDialogPeriodoReferencia(Context context, String title, String message, int icon, int layout, List<TabelaReferencia> anosReferencia, Intent intent, boolean cancelable) {
+        AlertUtils.alertViewAnoReferencia(context, title, message, icon, layout, anosReferencia, intent, cancelable);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package udacity.com.core.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -10,10 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Entity(tableName = "marca")
 public class Marca implements Parcelable {
 
-    @PrimaryKey
     @NonNull
     @JsonProperty("value")
     private String id;
@@ -84,13 +80,5 @@ public class Marca implements Parcelable {
         int result = name.hashCode();
         result = 31 * result + id.hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Marca{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                '}';
     }
 }

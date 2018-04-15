@@ -1,20 +1,13 @@
 package udacity.com.core.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Entity(tableName = "veiculo")
 public class Veiculo implements Parcelable {
-
-    @PrimaryKey
-    private Long auto_id;
 
     @JsonProperty("marca")
     private String marca;
@@ -38,11 +31,6 @@ public class Veiculo implements Parcelable {
     }
 
     protected Veiculo(Parcel in) {
-        if (in.readByte() == 0) {
-            auto_id = null;
-        } else {
-            auto_id = in.readLong();
-        }
         marca = in.readString();
         modelo = in.readString();
         anoModelo = in.readString();
@@ -62,14 +50,6 @@ public class Veiculo implements Parcelable {
             return new Veiculo[size];
         }
     };
-
-    public Long getAuto_id() {
-        return auto_id;
-    }
-
-    public void setAuto_id(Long auto_id) {
-        this.auto_id = auto_id;
-    }
 
     public String getMarca() {
         return marca;
@@ -126,12 +106,6 @@ public class Veiculo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        if (auto_id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(auto_id);
-        }
         parcel.writeString(marca);
         parcel.writeString(modelo);
         parcel.writeString(anoModelo);

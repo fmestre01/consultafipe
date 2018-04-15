@@ -12,6 +12,8 @@ public class ConstantsUtils {
     public interface Application {
         String INITAPPLICATION = "initApplication";
         String BASE_URL = "http://fipeapi.appspot.com/api/1/carros/";
+        String CONSULTA_FIPE = "Consulta Fipe";
+        String VEICULOS = "Veículos";
     }
 
     public interface ListLog {
@@ -46,6 +48,8 @@ public class ConstantsUtils {
         String DESC_CARROS_UTILITARIOS_PEQUENOS = "Carros e utilitários pequenos";
         String DESC_CODIGO_MOTOS = "Motos";
         String DESC_CODIGO_CAMINHOES_MICRO_ONIBUS = "Caminhões e micro-ônibus";
+        String ZERO_KM = "3200";
+        String VEICULO_ZERO_KM = "Zero km";
     }
 
     public interface TrackEvent {
@@ -60,4 +64,10 @@ public class ConstantsUtils {
     public interface AdMob {
         String KEY = "ca-app-pub-7012787268546106~8197623604";
     }
+
+    public interface Api {
+        int HTTP_READ_TIMEOUT = 10000;
+        int HTTP_CONNECT_TIMEOUT = 6000;
+    }
+
 }

@@ -25,4 +25,7 @@
     <dimen name="item_comic_image_height">120dp</dimen>
     <dimen name="comic_title_padding">2dp</dimen>
     <dimen name="margin_cardview">1dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_header_padding">8dp</dimen>
 </resources>

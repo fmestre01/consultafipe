@@ -37,6 +37,7 @@ import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.ui.base.BasePresenter;
 import udacity.com.core.util.AlertUtils;
 import udacity.com.core.util.ConstantsUtils;
+import udacity.com.core.util.ConsultaFipeUtil;
 
 public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.View> implements VeiculosMarcaContract.Presenter {
 
@@ -124,13 +125,14 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
                                 String id = object.getString("Value");
                                 String name = object.getString("Label");
 
-                                //bug on site fipe returns undefined id
-                                if(!name.substring(0, 4).equals("3200")) {
-                                    CombustivelModeloAno combustivelModeloAno = new CombustivelModeloAno();
-                                    combustivelModeloAno.setId(id);
+                                CombustivelModeloAno combustivelModeloAno = new CombustivelModeloAno();
+                                combustivelModeloAno.setId(id);
+                                if (ConsultaFipeUtil.isVeiculoNovo(name)) {
+                                    combustivelModeloAno.setName(ConstantsUtils.TipoVeiculo.VEICULO_ZERO_KM);
+                                } else {
                                     combustivelModeloAno.setName(name);
-                                    combustiveisModeloAno.add(combustivelModeloAno);
                                 }
+                                combustiveisModeloAno.add(combustivelModeloAno);
                             }
                             if (!isViewAttached()) return;
                             mView.hideProgress();

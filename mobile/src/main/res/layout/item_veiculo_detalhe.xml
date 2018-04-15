@@ -13,10 +13,25 @@
         android:layout_centerInParent="true" />
 
     <TextView
+        android:id="@+id/tipoVeiculo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix"
+        tools:text="Veículos e utilitários pequenos" />
+
+
+    <TextView
         android:id="@+id/marca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_below="@id/tipoVeiculo"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:textAllCaps="true"

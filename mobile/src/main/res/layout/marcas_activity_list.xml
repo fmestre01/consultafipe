@@ -33,8 +33,7 @@
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="@string/text_erro"
-            android:textSize="24sp"
-            android:visibility="gone" />
+            android:textSize="24sp" />
 
     </LinearLayout>
 

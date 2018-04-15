@@ -28,6 +28,13 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
     private String tipoVeiculo;
     private String anoReferencia;
 
+    public MarcasAdapter(MarcasContract.OnItemClickListener onItemClickListener, Context context, List<Marca> marcasPesquisa) {
+        marcasList = new ArrayList<>();
+        mOnItemClickListener = onItemClickListener;
+        this.context = context;
+        this.marcasList = marcasPesquisa;
+    }
+
     public MarcasAdapter(MarcasContract.OnItemClickListener onItemClickListener, Context context, List<Marca> marcasPesquisa, String tipoVeiculo, String anoReferencia) {
         marcasList = new ArrayList<>();
         mOnItemClickListener = onItemClickListener;
@@ -90,7 +97,7 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return marcasList.size();
+        return marcasList == null ? 0 : marcasList.size();
     }
 
     public void setValues(List<Marca> values) {
