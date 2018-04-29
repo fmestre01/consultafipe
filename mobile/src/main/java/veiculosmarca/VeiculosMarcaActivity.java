@@ -37,7 +37,7 @@ import udacity.com.core.ui.veiculosmarca.VeiculosMarcaPresenter;
 import udacity.com.core.util.ConstantsUtils;
 import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import util.UtilSnackbar;
+import util.SnackbarUtils;
 import veiculodetalhe.VeiculoDetalheActivity;
 
 public class VeiculosMarcaActivity extends AppCompatActivity implements VeiculosMarcaContract.View, VeiculosMarcaContract.OnItemClickListener, SearchView.OnQueryTextListener {
@@ -101,7 +101,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
     }
 
     @Override
-    public void showCombustivelAnoMocelo(List<CombustivelModeloAno> combustivelModeloAno) {
+    public void showCombustivelAnoModelo(List<CombustivelModeloAno> combustivelModeloAno) {
         veiculosMarcaPresenter.showAlertDialogAnoVeiculo(
                 VeiculosMarcaActivity.this,
                 getResources().getString(R.string.text_ano_veiculo),
@@ -121,7 +121,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     @Override
     public void clickLongItem(VeiculoMarca veiculoMarca) {
-        UtilSnackbar.showSnakbarTipoUm(this.recyclerView, "Em breve...");
+        SnackbarUtils.showSnakbarTipoUm(this.recyclerView, "Em breve...");
     }
 
     @Override
@@ -148,7 +148,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     @Override
     public void showError(String errorMessage) {
-        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
+        SnackbarUtils.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
     }
 
     @Override

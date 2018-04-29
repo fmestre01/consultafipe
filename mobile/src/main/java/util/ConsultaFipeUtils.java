@@ -2,7 +2,7 @@ package util;
 
 import udacity.com.core.util.ConstantsUtils;
 
-public class ConsultaFipeUtil {
+public class ConsultaFipeUtils {
 
     public static String selectTipoVeiculoName(String tipoVeiculoCod) {
         switch (tipoVeiculoCod) {

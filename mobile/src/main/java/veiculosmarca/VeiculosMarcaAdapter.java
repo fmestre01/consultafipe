@@ -19,7 +19,7 @@ import udacity.com.consultafipe.R;
 import udacity.com.core.Application;
 import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.ui.veiculosmarca.VeiculosMarcaContract;
-import util.ConsultaFipeUtil;
+import util.ConsultaFipeUtils;
 
 public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdapter.ViewHolder> {
 
@@ -49,7 +49,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
         holder.veiculoMarca = veiculoMarcas.get(position);
         holder.name.setText(veiculoMarcas.get(position).getName());
         holder.marca.setText(marcaVeiculo);
-        holder.tipoVeiculo.setText(ConsultaFipeUtil.selectTipoVeiculoName(Application.codigoTipoVeiculo));
+        holder.tipoVeiculo.setText(ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

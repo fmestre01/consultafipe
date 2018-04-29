@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-public class UtilSnackbar {
+public class SnackbarUtils {
 
     /************************************ ShowSnackbar with message, KeepItDisplayedOnScreen for few seconds*****************************/
     public static void showSnakbarTipoUm(View rootView, String mMessage) {

@@ -9,7 +9,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -64,6 +64,9 @@ dependencies {
 
     //Add mob
     api 'com.google.firebase:firebase-ads:11.8.0'
+
+    //Firebase Database
+    compile 'com.google.firebase:firebase-database:11.8.0'
 }
 repositories {
     mavenCentral()

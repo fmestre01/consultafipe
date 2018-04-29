@@ -32,6 +32,7 @@ public class AlertUtils {
         final View view = factory.inflate(layout, null);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setCancelable(false);
         alert.setIcon(icon).setTitle(title).setMessage(message).setView(view).setPositiveButton(context.getResources().getString(R.string.text_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
@@ -90,6 +91,7 @@ public class AlertUtils {
         final View view = factory.inflate(layout, null);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setCancelable(false);
         alert.setIcon(icon).setTitle(title).setMessage(message).setView(view).setPositiveButton(context.getResources().getString(R.string.text_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
@@ -133,14 +135,6 @@ public class AlertUtils {
         }
     }
 
-    private static void setDefaultAnoReferencia(String anoReferencia, Context context) {
-        SharedPrefsUtils.setStringPreference(context, ConstantsUtils.Data.SAVED_ANO_REFERENCIA, anoReferencia);
-    }
-
-    private static String getDefaultAnoReferencia(Context context) {
-        return SharedPrefsUtils.getStringPreference(context, ConstantsUtils.Data.SAVED_ANO_REFERENCIA);
-    }
-
     public static void alertViewTipoVeiculo(final Context context, String title, String message, int icon, int layout, final Intent intent) {
         LayoutInflater factory = LayoutInflater.from(context);
 
@@ -149,6 +143,7 @@ public class AlertUtils {
         final View view = factory.inflate(layout, null);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setCancelable(false);
         alert.setIcon(icon).setTitle(title).setMessage(message).setView(view).setPositiveButton(context.getResources().getString(R.string.text_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,

@@ -27,7 +27,7 @@ public interface VeiculosMarcaContract {
 
         void showVeiculosMarca(List<VeiculoMarca> veiculoMarcaList);
 
-        void showCombustivelAnoMocelo(List<CombustivelModeloAno> combustivelModeloAno);
+        void showCombustivelAnoModelo(List<CombustivelModeloAno> combustivelModeloAno);
     }
 
     interface OnItemClickListener {

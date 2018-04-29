@@ -66,8 +66,16 @@ public class ConstantsUtils {
     }
 
     public interface Api {
-        int HTTP_READ_TIMEOUT = 10000;
-        int HTTP_CONNECT_TIMEOUT = 6000;
+        int HTTP_READ_TIMEOUT = 10;
+        int HTTP_CONNECT_TIMEOUT = 6;
+    }
+
+    public interface TimeoutSystem {
+        long CLICK_TIMEOUT_LAST_CLICK = 2000;
+    }
+
+    public interface Firebase {
+        String USUARIOS_FIREBASE = "usuarios";
     }
 
 }

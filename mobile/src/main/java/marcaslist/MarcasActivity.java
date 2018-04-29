@@ -19,6 +19,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,15 +40,19 @@ import udacity.com.core.ui.marcas.MarcasPresenter;
 import udacity.com.core.util.ConstantsUtils;
 import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import util.ConsultaFipeUtil;
-import util.SpacesItemDecoration;
-import util.UtilSnackbar;
+import util.ConsultaFipeUtils;
+import util.DeviceUtils;
+import util.SnackbarUtils;
+import util.SpacesItemDecorationUtils;
 import veiculosmarca.VeiculosMarcaActivity;
 
 public class MarcasActivity extends AppCompatActivity implements MarcasContract.View, MarcasContract.OnItemClickListener, SearchView.OnQueryTextListener {
 
     private MarcasPresenter marcasPresenter;
     private MarcasAdapter marcasAdapter;
+
+    private DatabaseReference firebaseDatabase;
+    private FirebaseDatabase firebaseInstance;
 
     @BindView(R.id.emptyTextView)
     TextView emptyTextView;
@@ -74,6 +81,11 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.marcas_activity_list);
 
+        firebaseInstance = FirebaseDatabase.getInstance();
+        firebaseDatabase = firebaseInstance.getReference("usuarios");
+
+        DeviceUtils.insertNewUsuarioFirebase(firebaseDatabase);
+
         TrackUtils.trackEvent(ConstantsUtils.TrackEvent.SCREEN_MARCA);
 
         ButterKnife.bind(this);
@@ -82,7 +94,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        recyclerView.addItemDecoration(new SpacesItemDecorationUtils(spacingInPixels));
 
         marcasPresenter = new MarcasPresenter();
         marcasPresenter.attachView(this);
@@ -92,7 +104,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
             marcasPresenter.onTabelaReferenciaRequestedFastNetworkingLibrary();
         } else {
             marcasAdapter = new MarcasAdapter(this, getApplicationContext(), marcas,
-                    ConsultaFipeUtil.selectTipoVeiculoName(Application.codigoTipoVeiculo),
+                    ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo),
                     Application.codigoTabelaReferencia.getMes());
             marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
         }
@@ -109,6 +121,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         );
 
         extras = getIntent().getExtras();
+
     }
 
     @Override
@@ -139,13 +152,19 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        marcasAdapter.setCanStart(true);
+    }
+
+    @Override
     public void clickItem(Marca marca) {
         startActivity(VeiculosMarcaActivity.newVeiculosMarcaActivity(this, marca));
     }
 
     @Override
     public void clickLongItem(Marca marca) {
-        UtilSnackbar.showSnakbarTipoUm(this.recyclerView, "Em breve...");
+        SnackbarUtils.showSnakbarTipoUm(this.recyclerView, "Em breve...");
     }
 
     @Override
@@ -175,7 +194,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public void showError(String errorMessage) {
-        UtilSnackbar.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
+        SnackbarUtils.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
         layoutTentarDeNovo.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(false);
         layoutTentarDeNovo.setOnClickListener(new View.OnClickListener() {

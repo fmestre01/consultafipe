@@ -25,7 +25,8 @@ import udacity.com.core.util.ConstantsUtils;
 import udacity.com.core.util.ConsultaFipeUtil;
 import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import util.UtilSnackbar;
+import util.ConsultaFipeUtils;
+import util.SnackbarUtils;
 
 public class VeiculoDetalheActivity extends AppCompatActivity implements VeiculoDetalheContract.View, VeiculoDetalheContract.OnItemClickListener {
 
@@ -113,7 +114,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @Override
     public void showError(String errorMessage) {
-        UtilSnackbar.showSnakbarTipoUm(this.marcaTextView, ConstantsUtils.InfoLog.ERROR);
+        SnackbarUtils.showSnakbarTipoUm(this.marcaTextView, ConstantsUtils.InfoLog.ERROR);
     }
 
     @Override
@@ -164,7 +165,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         combustivelTextView.setText(veiculo.getCombustivel());
         anoModeloTextView.setText(veiculo.getAnoModelo());
         precoTextView.setText(veiculo.getValor());
-        tipoVeiculoTextView.setText(util.ConsultaFipeUtil.selectTipoVeiculoName(Application.codigoTipoVeiculo));
+        tipoVeiculoTextView.setText(ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo));
     }
 
     @Override
@@ -184,11 +185,11 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @OnClick(R.id.btnCompartilhar)
     void clickShare() {
-        UtilSnackbar.showSnakbarTipoUm(this.marcaTextView, "Em breve...");
+        SnackbarUtils.showSnakbarTipoUm(this.marcaTextView, "Em breve...");
     }
 
     @OnClick(R.id.btnFavorito)
     void addFavorite() {
-        UtilSnackbar.showSnakbarTipoUm(this.marcaTextView, "Em breve...");
+        SnackbarUtils.showSnakbarTipoUm(this.marcaTextView, "Em breve...");
     }
 }

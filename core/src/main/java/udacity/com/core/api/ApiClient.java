@@ -11,9 +11,9 @@ public class ApiClient {
 
     public static OkHttpClient makeOkHttpClient() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient().newBuilder();
-        httpClientBuilder.connectTimeout(ConstantsUtils.Api.HTTP_CONNECT_TIMEOUT, TimeUnit.MILLISECONDS);
-        httpClientBuilder.readTimeout(ConstantsUtils.Api.HTTP_READ_TIMEOUT, TimeUnit.MILLISECONDS);
-        httpClientBuilder.writeTimeout(ConstantsUtils.Api.HTTP_READ_TIMEOUT, TimeUnit.MILLISECONDS);
+        httpClientBuilder.connectTimeout(ConstantsUtils.Api.HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS);
+        httpClientBuilder.readTimeout(ConstantsUtils.Api.HTTP_READ_TIMEOUT, TimeUnit.SECONDS);
+        httpClientBuilder.writeTimeout(ConstantsUtils.Api.HTTP_READ_TIMEOUT, TimeUnit.SECONDS);
         httpClientBuilder.addInterceptor(makeLoggingInterceptor());
         return httpClientBuilder.build();
     }

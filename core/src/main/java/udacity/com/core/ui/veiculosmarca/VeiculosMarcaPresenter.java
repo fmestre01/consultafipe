@@ -141,7 +141,7 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
                                 mView.showError(ConstantsUtils.ListLog.ERROR);
                                 return;
                             } else {
-                                mView.showCombustivelAnoMocelo(combustiveisModeloAno);
+                                mView.showCombustivelAnoModelo(combustiveisModeloAno);
                             }
                         } catch (Exception e) {
                             if (!isViewAttached()) return;

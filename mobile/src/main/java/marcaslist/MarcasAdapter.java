@@ -27,6 +27,7 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
     List<Marca> marcasPesquisa = new ArrayList<>();
     private String tipoVeiculo;
     private String anoReferencia;
+    private boolean canStart = true;
 
     public MarcasAdapter(MarcasContract.OnItemClickListener onItemClickListener, Context context, List<Marca> marcasPesquisa) {
         marcasList = new ArrayList<>();
@@ -69,7 +70,12 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemClickListener.clickItem(holder.marca);
+                if(canStart) {
+                    canStart = false; // do canStart false
+                    // Whatever you want to do and not have run twice due to double tap
+                    mOnItemClickListener.clickItem(holder.marca);
+                }
+
             }
         });
 
@@ -129,5 +135,9 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
         marcas = new ArrayList<>();
         marcas.addAll(marcas);
         notifyDataSetChanged();
+    }
+
+    public void setCanStart(boolean can){
+        canStart = can;
     }
 }

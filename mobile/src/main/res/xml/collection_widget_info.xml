@@ -3,7 +3,7 @@
     android:initialKeyguardLayout="@layout/consulta_fipe_widget"
     android:initialLayout="@layout/consulta_fipe_widget"
     android:minHeight="50dp"
-    android:minWidth="50dp"
+    android:minWidth="200dp"
     android:previewImage="@mipmap/consulta_fipe_logo"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
