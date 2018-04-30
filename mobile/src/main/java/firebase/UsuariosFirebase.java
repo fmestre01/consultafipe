@@ -18,13 +18,17 @@ public class UsuariosFirebase {
     public String tags;
     public String type;
     public String user;
+    public String fingerPrint;
+    public String version;
 
     public UsuariosFirebase() {
     }
 
-    public UsuariosFirebase(String board, String brand, String cpuAbi, String device,
-                            String display, String host, String id, String manufacturer,
-                            String model, String product, String tags, String type, String user) {
+    public UsuariosFirebase(String board, String brand, String cpuAbi,
+                            String device, String display, String host,
+                            String id, String manufacturer, String model,
+                            String product, String tags, String type,
+                            String user, String fingerPrint, String version) {
         this.board = board;
         this.brand = brand;
         this.cpuAbi = cpuAbi;
@@ -38,5 +42,7 @@ public class UsuariosFirebase {
         this.tags = tags;
         this.type = type;
         this.user = user;
+        this.fingerPrint = fingerPrint;
+        this.version = version;
     }
 }

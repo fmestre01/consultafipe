@@ -1,5 +1,5 @@
 package udacity.com.core.util;
 
-public interface PreventFastClick {
+public interface PreventFastClickUtils {
     void preventFastClick();
 }

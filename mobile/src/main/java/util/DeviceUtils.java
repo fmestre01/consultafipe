@@ -23,7 +23,9 @@ public class DeviceUtils {
                 Build.PRODUCT,
                 Build.TAGS,
                 Build.TYPE,
-                Build.USER);
+                Build.USER,
+                Build.FINGERPRINT,
+                Build.VERSION.CODENAME);
         firebaseDatabase.child(ConstantsUtils.Firebase.USUARIOS_FIREBASE).setValue(usuarioFirebase);
     }
 }

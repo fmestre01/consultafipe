@@ -82,7 +82,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         setContentView(R.layout.marcas_activity_list);
 
         firebaseInstance = FirebaseDatabase.getInstance();
-        firebaseDatabase = firebaseInstance.getReference("usuarios");
+        firebaseDatabase = firebaseInstance.getReference(ConstantsUtils.Firebase.USUARIOS_FIREBASE);
 
         DeviceUtils.insertNewUsuarioFirebase(firebaseDatabase);
 
@@ -106,7 +106,11 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
             marcasAdapter = new MarcasAdapter(this, getApplicationContext(), marcas,
                     ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo),
                     Application.codigoTabelaReferencia.getMes());
-            marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+
+            if (Application.codigoTabelaReferencia != null) {
+                marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+            }
+
         }
 
         recyclerView.setAdapter(marcasAdapter);
@@ -164,7 +168,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public void clickLongItem(Marca marca) {
-        SnackbarUtils.showSnakbarTipoUm(this.recyclerView, "Em breve...");
+        SnackbarUtils.showSnakbarTipoUm(this.recyclerView, ConstantsUtils.InfoLog.SOON);
     }
 
     @Override

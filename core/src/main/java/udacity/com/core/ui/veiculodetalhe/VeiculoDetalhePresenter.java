@@ -27,7 +27,7 @@ import timber.log.Timber;
 import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.base.BasePresenter;
 import udacity.com.core.util.ConstantsUtils;
-import udacity.com.core.util.ConsultaFipeUtil;
+import udacity.com.core.util.ConsultaFipeUtils;
 
 public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContract.View> implements VeiculoDetalheContract.Presenter {
 
@@ -53,7 +53,7 @@ public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContrac
                                 Veiculo v = new Veiculo();
                                 v.setMarca(response.getString("Marca"));
                                 v.setModelo(response.getString("Modelo"));
-                                if (ConsultaFipeUtil.isVeiculoNovo(response.getString("AnoModelo"))) {
+                                if (ConsultaFipeUtils.isVeiculoNovo(response.getString("AnoModelo"))) {
                                     v.setAnoModelo(ConstantsUtils.TipoVeiculo.VEICULO_ZERO_KM);
                                 } else {
                                     v.setAnoModelo(response.getString("AnoModelo"));

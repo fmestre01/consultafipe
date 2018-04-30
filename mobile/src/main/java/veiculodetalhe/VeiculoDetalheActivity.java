@@ -22,10 +22,9 @@ import udacity.com.core.model.Veiculo;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalheContract;
 import udacity.com.core.ui.veiculodetalhe.VeiculoDetalhePresenter;
 import udacity.com.core.util.ConstantsUtils;
-import udacity.com.core.util.ConsultaFipeUtil;
+import udacity.com.core.util.ConsultaFipeUtils;
 import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import util.ConsultaFipeUtils;
 import util.SnackbarUtils;
 
 public class VeiculoDetalheActivity extends AppCompatActivity implements VeiculoDetalheContract.View, VeiculoDetalheContract.OnItemClickListener {
@@ -139,7 +138,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
             jsonObject.put("codigoMarca", idMarca);
             jsonObject.put("codigoModelo", idModelo);
 
-            if (ConsultaFipeUtil.isVeiculoNovo(anoModelo)) {
+            if (ConsultaFipeUtils.isVeiculoNovo(anoModelo)) {
                 jsonObject.put("codigoTipoCombustivel", anoModelo.substring(6, 7));
                 jsonObject.put("anoModelo", anoModelo.substring(0, 4) + "0");
             } else {
@@ -165,7 +164,7 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         combustivelTextView.setText(veiculo.getCombustivel());
         anoModeloTextView.setText(veiculo.getAnoModelo());
         precoTextView.setText(veiculo.getValor());
-        tipoVeiculoTextView.setText(ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo));
+        tipoVeiculoTextView.setText(util.ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo));
     }
 
     @Override

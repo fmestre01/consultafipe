@@ -1,6 +1,6 @@
 package udacity.com.core.util;
 
-public class ConsultaFipeUtil {
+public class ConsultaFipeUtils {
 
     public static boolean isVeiculoNovo(String anoVeiculo) {
         if (anoVeiculo.substring(0, 4).equals(ConstantsUtils.TipoVeiculo.ZERO_KM)) {

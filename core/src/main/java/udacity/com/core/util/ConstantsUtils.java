@@ -7,6 +7,7 @@ public class ConstantsUtils {
         String SEL_ANO = "Selecione o ano";
         String INFO = "info";
         String UNAUTHORIZED = "Sem autorização para a transação";
+        String SOON = "Em breve...";
     }
 
     public interface Application {

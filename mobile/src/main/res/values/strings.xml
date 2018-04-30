@@ -12,5 +12,7 @@
     <string name="text_sem_resultados">Sem resultados</string>
     <string name="text_erro">Ops! algo estranho aconteceu, clique para tentar de novo...</string>
     <string name="key_admob">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="text_pesquisar">Pesquisar...</string>
+    <string name="text_ano_referencia">Ano Referência</string>
 
 </resources>

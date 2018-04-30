@@ -37,7 +37,7 @@ import udacity.com.core.model.VeiculoMarca;
 import udacity.com.core.ui.base.BasePresenter;
 import udacity.com.core.util.AlertUtils;
 import udacity.com.core.util.ConstantsUtils;
-import udacity.com.core.util.ConsultaFipeUtil;
+import udacity.com.core.util.ConsultaFipeUtils;
 
 public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.View> implements VeiculosMarcaContract.Presenter {
 
@@ -127,7 +127,7 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
 
                                 CombustivelModeloAno combustivelModeloAno = new CombustivelModeloAno();
                                 combustivelModeloAno.setId(id);
-                                if (ConsultaFipeUtil.isVeiculoNovo(name)) {
+                                if (ConsultaFipeUtils.isVeiculoNovo(name)) {
                                     combustivelModeloAno.setName(ConstantsUtils.TipoVeiculo.VEICULO_ZERO_KM);
                                 } else {
                                     combustivelModeloAno.setName(name);
