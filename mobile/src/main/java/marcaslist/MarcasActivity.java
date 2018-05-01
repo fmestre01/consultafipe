@@ -77,8 +77,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        refreshWidgetAutomatically();
-
         setContentView(R.layout.marcas_activity_list);
 
         FirebaseDatabase firebaseInstance = FirebaseDatabase.getInstance();
@@ -124,6 +122,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         );
 
         extras = getIntent().getExtras();
+
+        refreshWidgetAutomatically();
     }
 
     @Override
@@ -150,6 +150,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
             Application.codigoTabelaReferencia = Application.tabelasReferencias.get(0);
             marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
         }
+
+        refreshWidgetAutomatically();
     }
 
     @Override
