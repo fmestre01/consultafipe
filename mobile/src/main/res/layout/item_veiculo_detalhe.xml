@@ -21,10 +21,9 @@
         android:gravity="center"
         android:textAllCaps="true"
         android:textColor="#000"
-        android:textSize="14sp"
+        android:textSize="18sp"
         tools:ignore="MissingPrefix"
         tools:text="Veículos e utilitários pequenos" />
-
 
     <TextView
         android:id="@+id/marca"
@@ -34,9 +33,8 @@
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:gravity="center"
-        android:textAllCaps="true"
-        android:textColor="#000"
-        android:textSize="14sp"
+        android:textColor="#555"
+        android:textSize="16sp"
         tools:ignore="MissingPrefix"
         tools:text="Fiat" />
 
@@ -49,8 +47,9 @@
         android:ellipsize="end"
         android:gravity="center"
         android:textAllCaps="true"
-        android:textColor="#555"
-        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         tools:ignore="MissingPrefix"
         tools:text="Palio 1.0 ECONOMY Fire Flex 8V 4p" />
 
@@ -64,7 +63,7 @@
         android:gravity="center"
         android:maxLines="2"
         android:textColor="#555"
-        android:textSize="14sp"
+        android:textSize="16sp"
         tools:ignore="MissingPrefix"
         tools:text="Gasolina" />
 
@@ -75,10 +74,11 @@
         android:layout_below="@+id/combustivel"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:textColor="#555"
-        android:textSize="12sp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         tools:ignore="MissingPrefix"
-        tools:text="Ano: 1998" />
+        tools:text="1998" />
 
     <TextView
         android:id="@+id/labelPreco"
@@ -90,8 +90,7 @@
         android:gravity="center"
         android:text="@string/text_preco"
         android:textColor="#555"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         tools:ignore="MissingPrefix"
         tools:text="Preço" />
 
@@ -102,8 +101,8 @@
         android:layout_below="@+id/labelPreco"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:textColor="#555"
-        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         android:textStyle="bold"
         tools:ignore="MissingPrefix"
         tools:text="R$ 23.055,00" />
@@ -118,19 +117,21 @@
             android:id="@+id/btnCompartilhar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="compartilhar"
             android:text="@string/text_compartilhar"
+            android:textStyle="bold"
             android:theme="@style/PrimaryFlatButton"
-            tools:ignore="MissingPrefix" />
+            tools:ignore="MissingPrefix"
+            tools:text="compartilhar" />
 
         <Button
             android:id="@+id/btnFavorito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_add_favorito"
-            tools:text="add favorito"
+            android:textStyle="bold"
             android:theme="@style/PrimaryFlatButton"
-            tools:ignore="MissingPrefix" />
+            tools:ignore="MissingPrefix"
+            tools:text="add favorito" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package marcaslist;
 
 import android.app.SearchManager;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,6 +47,7 @@ import util.DeviceUtils;
 import util.SnackbarUtils;
 import util.SpacesItemDecorationUtils;
 import veiculosmarca.VeiculosMarcaActivity;
+import widget.CollectionWidget;
 
 public class MarcasActivity extends AppCompatActivity implements MarcasContract.View, MarcasContract.OnItemClickListener, SearchView.OnQueryTextListener {
 
@@ -73,6 +76,9 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        refreshWidgetAutomatically();
+
         setContentView(R.layout.marcas_activity_list);
 
         FirebaseDatabase firebaseInstance = FirebaseDatabase.getInstance();
@@ -104,7 +110,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
             if (Application.codigoTabelaReferencia != null) {
                 marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
             }
-
         }
 
         recyclerView.setAdapter(marcasAdapter);
@@ -119,7 +124,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         );
 
         extras = getIntent().getExtras();
-
     }
 
     @Override
@@ -350,5 +354,13 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                 Application.tabelasReferencias,
                 MarcasActivity.newMarcasActivity(getApplicationContext()),
                 Application.tabelasReferencias != null);
+    }
+
+    private void refreshWidgetAutomatically() {
+        Intent intent = new Intent(MarcasActivity.this, CollectionWidget.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), CollectionWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);
     }
 }

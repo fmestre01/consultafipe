@@ -180,11 +180,11 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @OnClick(R.id.btnCompartilhar)
     void clickShare() {
-        SnackbarUtils.showSnakbarTipoUm(this.marcaTextView, "Em breve...");
+        SnackbarUtils.showSnakbarTipoUm(this.marcaTextView, getString(R.string.text_soon));
     }
 
     @OnClick(R.id.btnFavorito)
     void addFavorite() {
-        SnackbarUtils.showSnakbarTipoUm(this.marcaTextView, "Em breve...");
+        SnackbarUtils.showSnakbarTipoUm(this.marcaTextView, getString(R.string.text_soon));
     }
 }

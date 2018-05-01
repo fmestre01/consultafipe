@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:contentDescription="@string/text_acess_consulta_fipe_app"
     android:orientation="horizontal"
     tools:context="marcaslist.MarcasActivity">
 
@@ -20,20 +21,21 @@
         android:layout_marginLeft="2dp"
         android:layout_marginStart="2dp"
         android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:focusable="true">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/emptyTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
+            android:contentDescription="@string/text_acess_error"
+            android:focusable="true"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="@string/text_erro"
-            android:textSize="24sp"
-            android:focusable="true" />
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -47,7 +49,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
-
 
 </RelativeLayout>
 

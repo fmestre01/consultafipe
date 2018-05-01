@@ -78,5 +78,4 @@ public class ConstantsUtils {
     public interface Firebase {
         String USUARIOS_FIREBASE = "usuarios";
     }
-
 }

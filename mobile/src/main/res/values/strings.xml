@@ -18,5 +18,13 @@
     <string name="text_add_favorito">add favorito</string>
     <string name="text_sel_ano">Selecionar ano</string>
     <string name="text_sel_todos_anos">Todos os anos</string>
+    <string name="text_soon">Em breve...</string>
+
+
+    <!-- Acessibilidade -->
+    <string name="text_acess_consulta_fipe_app">Bem vindo ao Consulta Fipe App</string>
+    <string name="text_acess_error">Erro ao recuperar dados...</string>
+    <string name="text_acess_card_marcas_veiculos">Cards de marcas de veículos, selecione a marca desejada</string>
+    <string name="text_acess_lista_veiculos_marca">Lista de veículos por marca</string>
 
 </resources>

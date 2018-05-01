@@ -40,27 +40,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    tools:text="AMAROK Hig.ULTIMATE CD 2.0"
                     android:textColor="#000"
                     android:textSize="18sp"
-                    tools:ignore="MissingPrefix" />
+                    tools:text="AMAROK Hig.ULTIMATE CD 2.0" />
 
                 <TextView
                     android:id="@+id/marcaVeiculo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="VW - VolksWagem"
                     android:paddingBottom="5dp"
                     android:textColor="#555"
-                    tools:ignore="MissingPrefix" />
+                    tools:text="VW - VolksWagem" />
 
                 <TextView
                     android:id="@+id/tipoVeiculo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="Carros e utilitários pequenos"
                     android:textColor="#555"
-                    tools:ignore="MissingPrefix" />
+                    tools:text="Carros e utilitários pequenos" />
             </LinearLayout>
 
             <LinearLayout
@@ -71,23 +68,23 @@
 
                 <Button
                     android:id="@+id/btnSelAnoVeiculo"
-                    fontPath="fonts/gtw.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Todos os anos"
                     android:text="@string/text_sel_todos_anos"
+                    android:textStyle="bold"
                     android:theme="@style/PrimaryFlatButton"
-                    tools:ignore="MissingPrefix" />
+                    tools:ignore="MissingPrefix"
+                    tools:text="Todos os anos" />
 
                 <Button
                     android:id="@+id/btnSelTodosAnos"
-                    fontPath="fonts/gtw.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Selecionar ano"
                     android:text="@string/text_sel_ano"
+                    android:textStyle="bold"
                     android:theme="@style/PrimaryFlatButton"
-                    tools:ignore="MissingPrefix" />
+                    tools:ignore="MissingPrefix"
+                    tools:text="Selecionar ano" />
             </LinearLayout>
 
         </LinearLayout>

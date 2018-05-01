@@ -121,7 +121,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     @Override
     public void clickLongItem(VeiculoMarca veiculoMarca) {
-        SnackbarUtils.showSnakbarTipoUm(this.recyclerView, "Em breve...");
+        SnackbarUtils.showSnakbarTipoUm(this.recyclerView, getString(R.string.text_soon));
     }
 
     @Override

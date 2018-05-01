@@ -1,17 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/frame_widget"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:background="@drawable/shape_widget"
     android:gravity="right"
     android:orientation="horizontal">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingLeft="26dp"
-        android:src="@mipmap/consulta_fipe_logo"
-        android:paddingStart="26dp" />
+        android:paddingStart="26dp"
+        android:src="@mipmap/consulta_fipe_logo" />
 
     <TextView
         android:id="@+id/widget_title"
@@ -20,7 +20,7 @@
         android:layout_gravity="center_vertical"
         android:paddingEnd="@dimen/widget_header_padding"
         android:paddingStart="@dimen/widget_header_padding"
-        android:singleLine="true"
+        android:singleLine="false"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white"
         android:textStyle="bold" />

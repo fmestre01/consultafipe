@@ -6,11 +6,14 @@ import java.util.List;
 
 public enum TipoVeiculoEnum {
 
-    CARROS_UTILITARIOS("1", "Carros e Utilitários Pequenos"),
+    CARROS_UTILITARIOS(ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS,
+            ConstantsUtils.TipoVeiculo.DESC_CARROS_UTILITARIOS_PEQUENOS),
 
-    MOTOS("2", "Motos"),
+    MOTOS(ConstantsUtils.TipoVeiculo.CODIGO_MOTOS,
+            ConstantsUtils.TipoVeiculo.DESC_CODIGO_MOTOS),
 
-    CAMINHOES_MICRO_ONIBUS("3", "Caminhões e micro ônibus");
+    CAMINHOES_MICRO_ONIBUS(ConstantsUtils.TipoVeiculo.CODIGO_CAMINHOES_MICRO_ONIBUS,
+            ConstantsUtils.TipoVeiculo.DESC_CODIGO_CAMINHOES_MICRO_ONIBUS);
 
     private static final List<String> IDS;
     private static final List<String> VALUES;
