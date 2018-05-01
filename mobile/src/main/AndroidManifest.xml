@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/consulta_fipe_logo"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_descriptor">
 
         <activity android:name="marcaslist.MarcasActivity">
             <intent-filter>
@@ -21,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="veiculosmarca.VeiculosMarcaActivity"></activity>
-        <activity android:name="veiculodetalhe.VeiculoDetalheActivity"></activity>
+        <activity android:name="veiculosmarca.VeiculosMarcaActivity" />
+        <activity android:name="veiculodetalhe.VeiculoDetalheActivity" />
 
         <!-- We'll need to add two entries to our manifest for our collection view widget -->
 

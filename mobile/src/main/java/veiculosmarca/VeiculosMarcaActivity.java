@@ -208,8 +208,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        TextView searchText = (TextView)
-                searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        TextView searchText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
         searchText.setTextColor(Color.parseColor("#FFFFFF"));
         searchText.setHintTextColor(Color.parseColor("#FFFFFF"));
@@ -227,7 +226,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
     public boolean onQueryTextChange(String newText) {
         final List<VeiculoMarca> filteredModelList = filter(veiculosMarca, newText);
         if (filteredModelList.size() > 0) {
-            veiculosMarcaAdapter.setFilter(filteredModelList);
+            veiculosMarcaAdapter.setFilter();
             return true;
         } else {
             Toast.makeText(VeiculosMarcaActivity.this, getResources().getString(R.string.text_sem_resultados), Toast.LENGTH_SHORT).show();

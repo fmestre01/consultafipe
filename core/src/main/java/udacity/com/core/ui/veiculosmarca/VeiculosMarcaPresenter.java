@@ -81,7 +81,6 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
 
                             if (response.length() == 0) {
                                 mView.showError(ConstantsUtils.ListLog.ERROR);
-                                return;
                             } else {
                                 mView.showVeiculosMarca(veiculosMarca);
                             }
@@ -139,7 +138,6 @@ public class VeiculosMarcaPresenter extends BasePresenter<VeiculosMarcaContract.
 
                             if (response.length() == 0) {
                                 mView.showError(ConstantsUtils.ListLog.ERROR);
-                                return;
                             } else {
                                 mView.showCombustivelAnoModelo(combustiveisModeloAno);
                             }

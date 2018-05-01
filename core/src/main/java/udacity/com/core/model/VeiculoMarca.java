@@ -20,7 +20,7 @@ public class VeiculoMarca implements Parcelable {
     public VeiculoMarca() {
     }
 
-    protected VeiculoMarca(Parcel in) {
+    private VeiculoMarca(Parcel in) {
         id = in.readString();
         name = in.readString();
     }
@@ -48,11 +48,12 @@ public class VeiculoMarca implements Parcelable {
         }
     };
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 

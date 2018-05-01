@@ -51,9 +51,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     private MarcasPresenter marcasPresenter;
     private MarcasAdapter marcasAdapter;
 
-    private DatabaseReference firebaseDatabase;
-    private FirebaseDatabase firebaseInstance;
-
     @BindView(R.id.emptyTextView)
     TextView emptyTextView;
 
@@ -69,11 +66,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     @BindView(R.id.layoutEmptyData)
     LinearLayout layoutTentarDeNovo;
 
-    private String searchString = "";
     private List<Marca> marcas = new ArrayList<>();
 
-    private List<TabelaReferencia> tabelaReferenciaAnos;
-    private TabelaReferencia tabelaReferenciaSelected;
     private Bundle extras;
 
     @Override
@@ -81,8 +75,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.marcas_activity_list);
 
-        firebaseInstance = FirebaseDatabase.getInstance();
-        firebaseDatabase = firebaseInstance.getReference(ConstantsUtils.Firebase.USUARIOS_FIREBASE);
+        FirebaseDatabase firebaseInstance = FirebaseDatabase.getInstance();
+        DatabaseReference firebaseDatabase = firebaseInstance.getReference(ConstantsUtils.Firebase.USUARIOS_FIREBASE);
 
         DeviceUtils.insertNewUsuarioFirebase(firebaseDatabase);
 
@@ -143,7 +137,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public void showTabelaReferencia(List<TabelaReferencia> tabelaReferenciaList) {
-        tabelaReferenciaAnos = tabelaReferenciaList;
         Application.tabelasReferencias = tabelaReferenciaList;
 
         if (Application.codigoTabelaReferencia != null && !Application.tabelasReferencias.isEmpty()) {
@@ -234,7 +227,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     public boolean onQueryTextChange(String newText) {
         final List<Marca> filteredModelList = filter(marcas, newText);
         if (filteredModelList.size() > 0) {
-            marcasAdapter.setFilter(filteredModelList);
+            marcasAdapter.setFilter();
             return true;
         } else {
             Toast.makeText(MarcasActivity.this, getResources().getString(R.string.text_sem_resultados), Toast.LENGTH_SHORT).show();
@@ -245,7 +238,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     private List<Marca> filter(List<Marca> marcas, String query) {
 
         query = query.toLowerCase();
-        this.searchString = query;
+        String searchString = query;
 
         final List<Marca> filteredModelList = new ArrayList<>();
         for (Marca marca : marcas) {
@@ -274,8 +267,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        TextView searchText = (TextView)
-                searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        TextView searchText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
         searchText.setTextColor(ContextCompat.getColor(this, R.color.colorSearchView));
         searchText.setHintTextColor(ContextCompat.getColor(this, R.color.colorSearchView));
@@ -286,8 +278,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
         if (extras != null) {
             if (extras.getParcelable("selectedAnoReferencia") != null) {
-                tabelaReferenciaSelected = extras.getParcelable("selectedAnoReferencia");
-                Application.codigoTabelaReferencia = tabelaReferenciaSelected;
+                Application.codigoTabelaReferencia = extras.getParcelable("selectedAnoReferencia");
             }
         }
 
@@ -318,9 +309,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         return super.onCreateOptionsMenu(menu);
     }
 
-    public static Intent newMarcasActivity(Context context) {
-        Intent intent = new Intent(context, MarcasActivity.class);
-        return intent;
+    private static Intent newMarcasActivity(Context context) {
+        return new Intent(context, MarcasActivity.class);
     }
 
     private JSONObject marcaJsonObject() {
@@ -348,11 +338,6 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     private void showAlertSelectAnoReferencia() {

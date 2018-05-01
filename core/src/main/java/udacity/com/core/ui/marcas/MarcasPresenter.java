@@ -28,9 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import timber.log.Timber;
@@ -75,14 +75,13 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
 
                             if (response.length() == 0) {
                                 mView.showError(ConstantsUtils.ListLog.ERROR);
-                                return;
                             } else {
                                 mView.showMarcas(marcas);
                             }
                         } catch (Exception e) {
                             if (!isViewAttached()) return;
                             mView.hideProgress();
-                            mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + e.getStackTrace());
+                            mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + Arrays.toString(e.getStackTrace()));
                             Timber.e(ConstantsUtils.InfoLog.ERROR, e.fillInStackTrace());
                         }
                     }
@@ -123,7 +122,7 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
             tabelaReferenciaAnos = new ArrayList<>();
 
             for (int i = 0; i < arrayAnoReferencia.length(); i++) {
-                JSONObject object = null;
+                JSONObject object;
                 try {
                     object = arrayAnoReferencia.getJSONObject(i);
                     String codigo = object.getString("Codigo");
@@ -139,8 +138,6 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
             }
             mView.showTabelaReferencia(tabelaReferenciaAnos);
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -173,14 +170,13 @@ public class MarcasPresenter extends BasePresenter<MarcasContract.View> implemen
 
                             if (response.length() == 0) {
                                 mView.showEmpty();
-                                return;
                             } else {
                                 mView.showTabelaReferencia(tabelaReferenciaAnos);
                             }
                         } catch (Exception e) {
                             if (!isViewAttached()) return;
                             mView.hideProgress();
-                            mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + e.getStackTrace());
+                            mView.showError(ConstantsUtils.InfoLog.ERROR + "-" + Arrays.toString(e.getStackTrace()));
                             Timber.e(ConstantsUtils.InfoLog.ERROR, e.fillInStackTrace());
                         }
                     }

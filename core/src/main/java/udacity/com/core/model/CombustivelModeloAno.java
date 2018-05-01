@@ -20,7 +20,7 @@ public class CombustivelModeloAno implements Parcelable {
     public CombustivelModeloAno() {
     }
 
-    protected CombustivelModeloAno(Parcel in) {
+    private CombustivelModeloAno(Parcel in) {
         id = in.readString();
         name = in.readString();
     }
@@ -48,11 +48,12 @@ public class CombustivelModeloAno implements Parcelable {
         }
     };
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 

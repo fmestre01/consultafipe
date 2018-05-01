@@ -17,7 +17,7 @@ public class TabelaReferencia implements Parcelable {
     @JsonProperty("mes")
     private String mes;
 
-    protected TabelaReferencia(Parcel in) {
+    private TabelaReferencia(Parcel in) {
         id = in.readString();
         mes = in.readString();
     }
@@ -45,11 +45,12 @@ public class TabelaReferencia implements Parcelable {
         parcel.writeString(mes);
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 

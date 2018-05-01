@@ -22,14 +22,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:layout_marginStart="15dp">
 
             <TextView
                 android:id="@+id/nomeMarca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:hint="GM - Chevrolet"
+                tools:text="GM - Chevrolet"
                 android:textColor="#000"
                 android:textSize="18sp"
                 tools:ignore="MissingPrefix" />
@@ -39,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:hint="Carros e utilitários pequenos"
+                tools:text="Carros e utilitários pequenos"
                 android:paddingBottom="8dp"
                 android:textColor="#555"
                 android:theme="@style/PrimaryFlatButton"
@@ -50,19 +51,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="27dp"
                 android:gravity="bottom|right"
-                android:hint="Ano referência: 2018"
+                tools:text="Ano referência: 2018"
                 android:textColor="#555"
                 android:theme="@style/PrimaryFlatButton"
                 tools:ignore="MissingPrefix" />
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView"
             android:layout_width="5dp"
             android:layout_height="100dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            card_view:srcCompat="@color/colorPrimary" />
+            card_view:srcCompat="@color/colorPrimary"
+            android:layout_marginLeft="10dp" />
 
         <!--
         <LinearLayout

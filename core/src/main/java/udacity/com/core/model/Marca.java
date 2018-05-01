@@ -20,7 +20,7 @@ public class Marca implements Parcelable {
     public Marca() {
     }
 
-    protected Marca(Parcel in) {
+    private Marca(Parcel in) {
         id = in.readString();
         name = in.readString();
     }
@@ -45,11 +45,12 @@ public class Marca implements Parcelable {
         this.name = name;
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -71,8 +72,7 @@ public class Marca implements Parcelable {
 
         Marca marca = (Marca) o;
 
-        if (!name.equals(marca.name)) return false;
-        return id.equals(marca.id);
+        return name.equals(marca.name) && id.equals(marca.id);
     }
 
     @Override

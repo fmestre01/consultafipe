@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
-        android:text="sem veículos"
+        android:text="@string/text_sem_resultados"
         android:textSize="24sp"
         android:visibility="gone"
         tools:visibility="visible" />

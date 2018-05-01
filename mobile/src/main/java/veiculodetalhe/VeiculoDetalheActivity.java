@@ -56,10 +56,6 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     private static String idModelo;
     private static String anoModelo;
     private static String codigoTipoCombustivel;
-    private static String tipoVeiculo;
-    private static String tipoConsulta;
-
-    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +73,11 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
             idMarca = getIntent().getExtras().getString("idMarca");
             idModelo = getIntent().getExtras().getString("idModelo");
             anoModelo = getIntent().getExtras().getString("anoModelo");
-            tipoConsulta = getIntent().getExtras().getString("tipoConsulta");
-            tipoVeiculo = getIntent().getExtras().getString("tipoVeiculo");
+            String tipoConsulta = getIntent().getExtras().getString("tipoConsulta");
+            String tipoVeiculo = getIntent().getExtras().getString("tipoVeiculo");
         }
 
-        mInterstitialAd = new InterstitialAd(this);
+        InterstitialAd mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getResources().getString(R.string.key_admob));
     }
 

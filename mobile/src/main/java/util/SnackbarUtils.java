@@ -40,15 +40,7 @@ public class SnackbarUtils {
                 })
                 .setActionTextColor(Color.CYAN)
                 .setCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        super.onDismissed(snackbar, event);
-                    }
 
-                    @Override
-                    public void onShown(Snackbar snackbar) {
-                        super.onShown(snackbar);
-                    }
                 })
                 .show();
 
@@ -69,15 +61,7 @@ public class SnackbarUtils {
                 })
                 .setActionTextColor(Color.CYAN)
                 .setCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        super.onDismissed(snackbar, event);
-                    }
 
-                    @Override
-                    public void onShown(Snackbar snackbar) {
-                        super.onShown(snackbar);
-                    }
                 })
                 .show();
 

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">core</string>
-    <string name="text_ok">ok</string>
+    <string name="text_ok">OK</string>
     <string name="text_cancelar">Cancelar</string>
-    <string name="check_box_todos_anos">Todos os anos</string>
 </resources>

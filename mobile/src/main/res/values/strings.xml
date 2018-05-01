@@ -1,18 +1,22 @@
 <resources>
     <string name="app_name">Consulta Fipe</string>
-    <string name="transaction_header">transactionHeader</string>
     <string name="text_periodo_referencia">Período de referência</string>
     <string name="text_tipo_veiculo">Tipo de veículo</string>
-    <string name="text_ok">ok</string>
+    <string name="text_ok">OK</string>
     <string name="text_cancelar">Cancelar</string>
     <string name="text_ano_veiculo">Ano veículo</string>
     <string name="text_selecione">Selecione:</string>
     <string name="text_digite_nome_veiculo">Qual veículo ?</string>
     <string name="text_digite_nome_marca">Qual marca ?</string>
     <string name="text_sem_resultados">Sem resultados</string>
-    <string name="text_erro">Ops! algo estranho aconteceu, clique para tentar de novo...</string>
+    <string name="text_erro">Ops! algo estranho aconteceu, clique para tentar de novo…</string>
     <string name="key_admob">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="text_pesquisar">Pesquisar...</string>
+    <string name="text_pesquisar">Pesquisar…</string>
     <string name="text_ano_referencia">Ano Referência</string>
+    <string name="text_preco">Preço</string>
+    <string name="text_compartilhar">Compartilhar</string>
+    <string name="text_add_favorito">add favorito</string>
+    <string name="text_sel_ano">Selecionar ano</string>
+    <string name="text_sel_todos_anos">Todos os anos</string>
 
 </resources>

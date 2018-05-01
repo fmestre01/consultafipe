@@ -2,6 +2,7 @@ package marcaslist;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
@@ -21,9 +22,8 @@ import udacity.com.core.ui.marcas.MarcasContract;
 public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder> {
 
     private List<Marca> marcasList;
-    private MarcasContract.OnItemClickListener mOnItemClickListener;
-    private Context context;
-    String searchString = "";
+    private final MarcasContract.OnItemClickListener mOnItemClickListener;
+    private final Context context;
     List<Marca> marcasPesquisa = new ArrayList<>();
     private String tipoVeiculo;
     private String anoReferencia;
@@ -45,14 +45,15 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
         this.anoReferencia = anoReferencia;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_marca, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.marca = marcasList.get(position);
         holder.nomeMarca.setText(marcasList.get(position).getName());
         holder.tipoVeiculo.setText(tipoVeiculo);
@@ -89,6 +90,7 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
 
         Marca marca = marcasList.get(position);
         String name = marca.getName().toLowerCase(Locale.getDefault());
+        String searchString = "";
         if (name.contains(searchString)) {
 
             int startPos = name.indexOf(searchString);
@@ -112,13 +114,13 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView nomeMarca;
-        public Marca marca;
-        public final TextView tipoVeiculo;
-        public final TextView anoReferencia;
+        final View mView;
+        final TextView nomeMarca;
+        Marca marca;
+        final TextView tipoVeiculo;
+        final TextView anoReferencia;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
             nomeMarca = view.findViewById(R.id.nomeMarca);
@@ -131,9 +133,7 @@ public class MarcasAdapter extends RecyclerView.Adapter<MarcasAdapter.ViewHolder
         return getItemCount() == 0;
     }
 
-    public void setFilter(List<Marca> marcas) {
-        marcas = new ArrayList<>();
-        marcas.addAll(marcas);
+    public void setFilter() {
         notifyDataSetChanged();
     }
 

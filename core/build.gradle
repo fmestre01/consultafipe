@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -25,17 +25,17 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    api 'com.android.support:appcompat-v7:26.1.0'
+    api 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // retrofit, gson
     api 'com.google.code.gson:gson:2.8.2'
     api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
     // recycler view
-    api 'com.android.support:recyclerview-v7:26.1.0'
+    api 'com.android.support:recyclerview-v7:27.1.1'
 
     //timber
     api 'com.jakewharton.timber:timber:4.5.1'
@@ -54,13 +54,13 @@ dependencies {
     api 'com.squareup.leakcanary:leakcanary-android:1.5'
 
     //Firebase
-    api 'com.google.firebase:firebase-core:11.8.0'
+    api 'com.google.firebase:firebase-core:15.0.0'
 
     //Add mob
-    api 'com.google.firebase:firebase-ads:11.8.0'
+    api 'com.google.firebase:firebase-ads:15.0.0'
 
     //Firebase Database
-    compile 'com.google.firebase:firebase-database:11.8.0'
+    compile 'com.google.firebase:firebase-database:15.0.0'
 }
 repositories {
     mavenCentral()

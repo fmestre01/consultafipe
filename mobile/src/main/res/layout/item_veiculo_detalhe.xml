@@ -16,9 +16,9 @@
         android:id="@+id/tipoVeiculo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
+        android:gravity="center"
         android:textAllCaps="true"
         android:textColor="#000"
         android:textSize="14sp"
@@ -30,10 +30,10 @@
         android:id="@+id/marca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_below="@id/tipoVeiculo"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
+        android:gravity="center"
         android:textAllCaps="true"
         android:textColor="#000"
         android:textSize="14sp"
@@ -75,11 +75,10 @@
         android:layout_below="@+id/combustivel"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="Ano: 1998"
         android:textColor="#555"
         android:textSize="12sp"
         tools:ignore="MissingPrefix"
-        tools:text="1998" />
+        tools:text="Ano: 1998" />
 
     <TextView
         android:id="@+id/labelPreco"
@@ -89,10 +88,10 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
+        android:text="@string/text_preco"
         android:textColor="#555"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Preço"
         tools:ignore="MissingPrefix"
         tools:text="Preço" />
 
@@ -119,8 +118,8 @@
             android:id="@+id/btnCompartilhar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/veiculo"
-            android:text="compartilhar"
+            tools:text="compartilhar"
+            android:text="@string/text_compartilhar"
             android:theme="@style/PrimaryFlatButton"
             tools:ignore="MissingPrefix" />
 
@@ -128,8 +127,8 @@
             android:id="@+id/btnFavorito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/veiculo"
-            android:text="add favorito"
+            android:text="@string/text_add_favorito"
+            tools:text="add favorito"
             android:theme="@style/PrimaryFlatButton"
             tools:ignore="MissingPrefix" />
     </LinearLayout>

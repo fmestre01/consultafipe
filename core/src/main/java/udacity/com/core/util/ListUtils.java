@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 
 public class ListUtils {
 
-    public static String readLocalJsonFile(InputStream in) throws IOException {
-        StringBuffer sb = new StringBuffer();
+    public static String readLocalJsonFile(InputStream in) {
+        StringBuilder sb = new StringBuilder();
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(in));

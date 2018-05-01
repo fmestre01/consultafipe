@@ -26,8 +26,8 @@ import udacity.com.core.model.TabelaReferencia;
 
 public class NumberPicker extends LinearLayout {
 
-    private float mItemBigHeight;
-    private float mItemSmallHeight;
+    private final float mItemBigHeight;
+    private final float mItemSmallHeight;
     private int mAllVerticalScroll;
     private final RecyclerView mRecyclerView;
     private ValuePickerAdapter mValuePickerAdapter;
@@ -35,7 +35,8 @@ public class NumberPicker extends LinearLayout {
     private float mTextSizeSelected;
     private int mTextColor;
     private int mTextColorSelected;
-    private boolean mAnimateTextSize, mTextFadeColor;
+    private final boolean mAnimateTextSize;
+    private final boolean mTextFadeColor;
     private OnValueChangeListener mOnValueChangeListener;
     private List<TabelaReferencia> values;
 
@@ -43,11 +44,11 @@ public class NumberPicker extends LinearLayout {
         this(context, null, values);
     }
 
-    public NumberPicker(Context context, AttributeSet attrs, List<TabelaReferencia> values) {
+    private NumberPicker(Context context, AttributeSet attrs, List<TabelaReferencia> values) {
         this(context, attrs, 0, values);
     }
 
-    public NumberPicker(Context context, AttributeSet attrs, int defStyleAttr, List<TabelaReferencia> values) {
+    private NumberPicker(Context context, AttributeSet attrs, int defStyleAttr, List<TabelaReferencia> values) {
         super(context, attrs, defStyleAttr);
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.np_ValuePicker, defStyleAttr, 0);
@@ -167,8 +168,8 @@ public class NumberPicker extends LinearLayout {
         scrollListToPosition(expectedPosition);
     }
 
-    private static int dp2px(Context context, int dp) {
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics()));
+    private static int dp2px(Context context) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, context.getResources().getDisplayMetrics()));
     }
 
     private void scrollListToPosition(int expectedPosition) {
@@ -199,7 +200,7 @@ public class NumberPicker extends LinearLayout {
         return getTextView(context, false, textSize, textSizeSelected);
     }
 
-    public static int getTextViewHeight(Context context, boolean isBig, float textSize, float textSizeSelected) {
+    private static int getTextViewHeight(Context context, boolean isBig, float textSize, float textSizeSelected) {
         TextView textView = getTextView(context, isBig, textSize, textSizeSelected);
         textView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
         return textView.getMeasuredHeight();
@@ -208,11 +209,11 @@ public class NumberPicker extends LinearLayout {
     private class ValuePickerAdapter extends RecyclerView.Adapter<ValuePickerAdapter.Holder> {
         private static final int VIEW_TYPE_PADDING = 0;
         private static final int VIEW_TYPE_ITEM = 1;
-        private Context mContext;
+        private final Context mContext;
         static final int POSITION_NONE = -1;
 
         private int selectedItemIndex = POSITION_NONE;
-        private List<TabelaReferencia> values = new ArrayList<>();
+        private final List<TabelaReferencia> values = new ArrayList<>();
 
         ValuePickerAdapter(Context context, List<TabelaReferencia> values) {
             this.mContext = context;
@@ -222,21 +223,22 @@ public class NumberPicker extends LinearLayout {
             }
         }
 
+        @NonNull
         @Override
-        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (viewType == VIEW_TYPE_ITEM) {
                 TextView number = getTextView(mContext, mTextSize, mTextSizeSelected);
                 return new ItemHolder(number);
             } else {
                 View paddingView = new View(mContext);
-                RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(dp2px(mContext, 1), (int) mItemSmallHeight);
+                RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(dp2px(mContext), (int) mItemSmallHeight);
                 paddingView.setLayoutParams(layoutParams);
                 return new PaddingHolder(paddingView);
             }
         }
 
         @Override
-        public void onBindViewHolder(Holder holder, int position) {
+        public void onBindViewHolder(@NonNull Holder holder, int position) {
 
             if (holder instanceof PaddingHolder) {
                 PaddingHolder paddingHolder = (PaddingHolder) holder;
@@ -332,7 +334,7 @@ public class NumberPicker extends LinearLayout {
         }
 
         private class ItemHolder extends Holder {
-            private TextView number;
+            private final TextView number;
 
             private ItemHolder(View itemView) {
                 super(itemView);

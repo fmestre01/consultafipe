@@ -18,9 +18,7 @@ public class CollectionWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        for (int j = 0; j < appWidgetIds.length; j++) {
-            int appWidgetId = appWidgetIds[j];
-
+        for (int appWidgetId : appWidgetIds) {
             try {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);

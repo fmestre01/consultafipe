@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:initialKeyguardLayout="@layout/consulta_fipe_widget"
     android:initialLayout="@layout/consulta_fipe_widget"
     android:minHeight="50dp"
@@ -7,6 +8,7 @@
     android:previewImage="@mipmap/consulta_fipe_logo"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen">
+    android:widgetCategory="home_screen"
+    tools:targetApi="jelly_bean_mr1">
 
 </appwidget-provider>

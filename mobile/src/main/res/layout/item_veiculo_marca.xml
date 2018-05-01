@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:hint="AMAROK Hig.ULTIMATE CD 2.0"
+                    tools:text="AMAROK Hig.ULTIMATE CD 2.0"
                     android:textColor="#000"
                     android:textSize="18sp"
                     tools:ignore="MissingPrefix" />
@@ -49,7 +49,7 @@
                     android:id="@+id/marcaVeiculo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="VW - VolksWagem"
+                    tools:text="VW - VolksWagem"
                     android:paddingBottom="5dp"
                     android:textColor="#555"
                     tools:ignore="MissingPrefix" />
@@ -58,9 +58,9 @@
                     android:id="@+id/tipoVeiculo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Carros e utilitários pequenos"
+                    tools:text="Carros e utilitários pequenos"
                     android:textColor="#555"
-                    tools:ignore="MissingPrefix" />-->
+                    tools:ignore="MissingPrefix" />
             </LinearLayout>
 
             <LinearLayout
@@ -74,7 +74,8 @@
                     fontPath="fonts/gtw.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Todos os anos"
+                    tools:text="Todos os anos"
+                    android:text="@string/text_sel_todos_anos"
                     android:theme="@style/PrimaryFlatButton"
                     tools:ignore="MissingPrefix" />
 
@@ -83,7 +84,8 @@
                     fontPath="fonts/gtw.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Selecionar ano"
+                    tools:text="Selecionar ano"
+                    android:text="@string/text_sel_ano"
                     android:theme="@style/PrimaryFlatButton"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>

@@ -48,7 +48,6 @@ public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContrac
 
                             if (response.length() == 0) {
                                 mView.showError(ConstantsUtils.ListLog.ERROR);
-                                return;
                             } else {
                                 Veiculo v = new Veiculo();
                                 v.setMarca(response.getString("Marca"));

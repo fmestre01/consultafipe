@@ -2,8 +2,6 @@ package udacity.com.core;
 
 import com.androidnetworking.AndroidNetworking;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.squareup.leakcanary.LeakCanary;
 

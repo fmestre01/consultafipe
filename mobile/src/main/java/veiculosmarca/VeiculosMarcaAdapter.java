@@ -2,6 +2,7 @@ package veiculosmarca;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
@@ -24,28 +25,26 @@ import util.ConsultaFipeUtils;
 public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdapter.ViewHolder> {
 
     private List<VeiculoMarca> veiculoMarcas;
-    private VeiculosMarcaContract.OnItemClickListener mOnItemClickListener;
-    private Context context;
-    String searchString = "";
-    String marcaVeiculo = "";
+    private final VeiculosMarcaContract.OnItemClickListener mOnItemClickListener;
+    private final String marcaVeiculo;
     List<VeiculoMarca> veiculosMarcaPesquisa = new ArrayList<>();
 
     public VeiculosMarcaAdapter(VeiculosMarcaContract.OnItemClickListener onItemClickListener, Context context, List<VeiculoMarca> veiculosMarcaPesquisa, String marcaVeiculo) {
         veiculoMarcas = new ArrayList<>();
         this.mOnItemClickListener = onItemClickListener;
-        this.context = context;
         this.veiculoMarcas = veiculosMarcaPesquisa;
         this.marcaVeiculo = marcaVeiculo;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_veiculo_marca, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.veiculoMarca = veiculoMarcas.get(position);
         holder.name.setText(veiculoMarcas.get(position).getName());
         holder.marca.setText(marcaVeiculo);
@@ -68,6 +67,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
 
         VeiculoMarca veiculoMarca = veiculoMarcas.get(position);
         String name = veiculoMarca.getName().toLowerCase(Locale.getDefault());
+        String searchString = "";
         if (name.contains(searchString)) {
 
             int startPos = name.indexOf(searchString);
@@ -91,15 +91,15 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView name;
-        public final TextView marca;
-        public final TextView tipoVeiculo;
-        public VeiculoMarca veiculoMarca;
-        Button btnSelVeiculoMarca;
-        Button btnSelTodosVeiculos;
+        final View mView;
+        final TextView name;
+        final TextView marca;
+        final TextView tipoVeiculo;
+        VeiculoMarca veiculoMarca;
+        final Button btnSelVeiculoMarca;
+        final Button btnSelTodosVeiculos;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
             name = view.findViewById(R.id.name);
@@ -114,9 +114,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
         return getItemCount() == 0;
     }
 
-    public void setFilter(List<VeiculoMarca> veiculosMarca) {
-        veiculosMarca = new ArrayList<>();
-        veiculosMarca.addAll(veiculosMarca);
+    public void setFilter() {
         notifyDataSetChanged();
     }
 }
