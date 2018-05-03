@@ -40,6 +40,8 @@ public class Application extends android.app.Application {
 
         Timber.tag(Application.class.getName()).i(ConstantsUtils.Application.INITAPPLICATION);
 
-        LeakCanary.install(this);
+        if (BuildConfig.DEBUG) {
+            LeakCanary.install(this);
+        }
     }
 }

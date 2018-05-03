@@ -60,6 +60,8 @@ public class VeiculoDetalhePresenter extends BasePresenter<VeiculoDetalheContrac
 
                                 v.setValor(response.getString("Valor"));
                                 v.setCombustivel(response.getString("Combustivel"));
+                                v.setDataConsulta(response.getString("DataConsulta"));
+                                v.setCodigoFipe(response.getString("CodigoFipe"));
                                 mView.showVeiculoDetalhe(v);
                             }
                         } catch (Exception e) {

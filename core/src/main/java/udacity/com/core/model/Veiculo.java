@@ -27,7 +27,14 @@ public class Veiculo implements Parcelable {
     @JsonProperty("mesReferencia")
     private String referencia;
 
+    @JsonProperty("DataConsulta")
+    private String dataConsulta;
+
+    @JsonProperty("CodigoFipe")
+    private String codigoFipe;
+
     public Veiculo() {
+
     }
 
     protected Veiculo(Parcel in) {
@@ -37,6 +44,8 @@ public class Veiculo implements Parcelable {
         valor = in.readString();
         combustivel = in.readString();
         referencia = in.readString();
+        dataConsulta = in.readString();
+        codigoFipe = in.readString();
     }
 
     public static final Creator<Veiculo> CREATOR = new Creator<Veiculo>() {
@@ -99,6 +108,22 @@ public class Veiculo implements Parcelable {
         this.referencia = referencia;
     }
 
+    public String getDataConsulta() {
+        return dataConsulta;
+    }
+
+    public void setDataConsulta(String dataConsulta) {
+        this.dataConsulta = dataConsulta;
+    }
+
+    public String getCodigoFipe() {
+        return codigoFipe;
+    }
+
+    public void setCodigoFipe(String codigoFipe) {
+        this.codigoFipe = codigoFipe;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -112,5 +137,7 @@ public class Veiculo implements Parcelable {
         parcel.writeString(valor);
         parcel.writeString(combustivel);
         parcel.writeString(referencia);
+        parcel.writeString(dataConsulta);
+        parcel.writeString(codigoFipe);
     }
 }

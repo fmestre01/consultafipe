@@ -19,6 +19,8 @@
     <string name="text_sel_ano">Selecionar ano</string>
     <string name="text_sel_todos_anos">Todos os anos</string>
     <string name="text_soon">Em breve...</string>
+    <string name="text_mes_referencia">Mês referência FIPE:</string>
+    <string name="text_codigo_fipe">Código FIPE:</string>
 
 
     <!-- Acessibilidade -->

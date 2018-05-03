@@ -52,6 +52,15 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     @BindView(R.id.preco)
     TextView precoTextView;
 
+    @BindView(R.id.mesReferencia)
+    TextView mesReferenciaTextView;
+
+    @BindView(R.id.codigoFipe)
+    TextView codigoFipeTextView;
+
+    @BindView(R.id.dataConsulta)
+    TextView dataConsultaTextView;
+
     private static String idMarca;
     private static String idModelo;
     private static String anoModelo;
@@ -161,6 +170,12 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
         anoModeloTextView.setText(veiculo.getAnoModelo());
         precoTextView.setText(veiculo.getValor());
         tipoVeiculoTextView.setText(util.ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo));
+        mesReferenciaTextView.setText(getResources().getString(R.string.text_mes_referencia) +
+                " " +
+                Application.codigoTabelaReferencia.getMes());
+        dataConsultaTextView.setText(veiculo.getDataConsulta());
+        codigoFipeTextView.setText(getResources().getString(R.string.text_codigo_fipe) +
+                " " + veiculo.getCodigoFipe());
     }
 
     @Override

@@ -97,32 +97,27 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         marcasPresenter = new MarcasPresenter();
         marcasPresenter.attachView(this);
 
-        if (Application.tabelasReferencias == null) {
-            marcasAdapter = new MarcasAdapter(this, getApplicationContext(), new ArrayList<Marca>());
-            marcasPresenter.onTabelaReferenciaRequestedFastNetworkingLibrary();
-        } else {
-            marcasAdapter = new MarcasAdapter(this, getApplicationContext(), marcas,
-                    ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo),
-                    Application.codigoTabelaReferencia.getMes());
-
-            if (Application.codigoTabelaReferencia != null) {
-                marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
-            }
-        }
-
-        recyclerView.setAdapter(marcasAdapter);
-
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
                         marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
                     }
-                }
-        );
+                });
+
+        marcasAdapter = new MarcasAdapter(this,
+                this,
+                new ArrayList<Marca>());
+
+        if (Application.tabelasReferencias == null) {
+            marcasPresenter.onTabelaReferenciaRequestedFastNetworkingLibrary();
+        } else {
+            marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+        }
+
+        recyclerView.setAdapter(marcasAdapter);
 
         extras = getIntent().getExtras();
-
         refreshWidgetAutomatically();
     }
 
@@ -134,24 +129,31 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public void showMarcas(List<Marca> marcaList) {
+        layoutTentarDeNovo.setVisibility(View.GONE);
         marcas = marcaList;
         marcasAdapter.setValues(marcaList);
-        layoutTentarDeNovo.setVisibility(View.GONE);
+
+        if (Application.codigoTipoVeiculo != null && Application.codigoTabelaReferencia != null) {
+            marcasAdapter = new MarcasAdapter(
+                    this,
+                    this,
+                    marcas,
+                    ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo),
+                    Application.codigoTabelaReferencia.getMes());
+        }
+        recyclerView.setAdapter(marcasAdapter);
     }
 
     @Override
     public void showTabelaReferencia(List<TabelaReferencia> tabelaReferenciaList) {
         Application.tabelasReferencias = tabelaReferenciaList;
 
-        if (Application.codigoTabelaReferencia != null && !Application.tabelasReferencias.isEmpty()) {
-            marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
-        } else if (!Application.tabelasReferencias.isEmpty()) {
+        if (Application.codigoTabelaReferencia == null) {
             Application.codigoTipoVeiculo = ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS;
-            Application.codigoTabelaReferencia = Application.tabelasReferencias.get(0);
+            Application.codigoTabelaReferencia = tabelaReferenciaList.get(0);
+            refreshWidgetAutomatically();
             marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
         }
-
-        refreshWidgetAutomatically();
     }
 
     @Override
@@ -253,9 +255,12 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                 filteredModelList.add(marca);
             }
         }
-        marcasAdapter = new MarcasAdapter(this,
-                getApplicationContext(),
-                filteredModelList);
+        marcasAdapter = new MarcasAdapter(
+                this,
+                this,
+                filteredModelList,
+                ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo),
+                Application.codigoTabelaReferencia.getMes());
         recyclerView.setLayoutManager(new LinearLayoutManager(MarcasActivity.this));
         recyclerView.setAdapter(marcasAdapter);
         marcasAdapter.notifyDataSetChanged();
@@ -325,9 +330,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
             marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TABELA_REFERENCIA,
                     Application.codigoTabelaReferencia.getId());
             marcaObject.put(ConstantsUtils.RequestParameters.CODIGO_TIPO_VEICULO,
-                    Application.codigoTipoVeiculo == null ?
-                            ConstantsUtils.TipoVeiculo.CODIGO_CARROS_UTILITARIOS_PEQUENOS :
-                            Application.codigoTipoVeiculo);
+                    Application.codigoTipoVeiculo);
 
         } catch (JSONException e) {
             e.printStackTrace();

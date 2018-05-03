@@ -20,21 +20,40 @@
         android:ellipsize="end"
         android:gravity="center"
         android:textAllCaps="true"
-        android:textColor="#000"
-        android:textSize="18sp"
+        android:textColor="#555"
+        android:textIsSelectable="true"
+        android:textSize="16sp"
+        android:textStyle="bold"
         tools:ignore="MissingPrefix"
         tools:text="Veículos e utilitários pequenos" />
 
     <TextView
-        android:id="@+id/marca"
+        android:id="@+id/mesReferencia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tipoVeiculo"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:gravity="center"
+        android:textAllCaps="true"
         android:textColor="#555"
-        android:textSize="16sp"
+        android:textIsSelectable="true"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:ignore="MissingPrefix"
+        tools:text="Mês referência FIPE: Maio / 2018" />
+
+    <TextView
+        android:id="@+id/marca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mesReferencia"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         tools:ignore="MissingPrefix"
         tools:text="Fiat" />
 
@@ -45,6 +64,7 @@
         android:layout_below="@id/marca"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
+        android:textIsSelectable="true"
         android:gravity="center"
         android:textAllCaps="true"
         android:textColor="@android:color/black"
@@ -64,6 +84,7 @@
         android:maxLines="2"
         android:textColor="#555"
         android:textSize="16sp"
+        android:textStyle="bold"
         tools:ignore="MissingPrefix"
         tools:text="Gasolina" />
 
@@ -90,7 +111,8 @@
         android:gravity="center"
         android:text="@string/text_preco"
         android:textColor="#555"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         tools:ignore="MissingPrefix"
         tools:text="Preço" />
 
@@ -107,10 +129,37 @@
         tools:ignore="MissingPrefix"
         tools:text="R$ 23.055,00" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/codigoFipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/preco"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textColor="#555"
+        android:textIsSelectable="true"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:ignore="MissingPrefix"
+        tools:text="Código Fipe: 002037-0" />
+
+    <TextView
+        android:id="@+id/dataConsulta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/codigoFipe"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textColor="#555"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:ignore="MissingPrefix"
+        tools:text="quinta-feira, 3 de maio de 2018 00:04" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dataConsulta"
         android:gravity="center">
 
         <Button
@@ -118,6 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_compartilhar"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
             android:theme="@style/PrimaryFlatButton"
             tools:ignore="MissingPrefix"
@@ -128,6 +178,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_add_favorito"
+            android:textColor="@color/colorPrimaryDark"
+            android:textIsSelectable="false"
             android:textStyle="bold"
             android:theme="@style/PrimaryFlatButton"
             tools:ignore="MissingPrefix"
