@@ -40,7 +40,7 @@ public class CollectionWidget extends AppWidgetProvider {
 
     private String complementoInformacao() {
         if (Application.codigoTipoVeiculo != null && Application.codigoTabelaReferencia != null) {
-            return " - " + ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo) + " - " +
+            return " - " + ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo) + " " +
                     Application.codigoTabelaReferencia.getMes();
         }
         return "";

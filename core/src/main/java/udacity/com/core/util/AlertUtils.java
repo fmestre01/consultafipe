@@ -161,9 +161,9 @@ public class AlertUtils {
         android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(TipoVeiculoEnum.getValues().size() - 1);
+        numberPicker.setMaxValue(2);
         numberPicker.setWrapSelectorWheel(true);
-        String[] array = TipoVeiculoEnum.getValues().toArray(new String[TipoVeiculoEnum.getValues().size()]);
+        String[] array = context.getResources().getStringArray(R.array.tipos_veiculos);
         numberPicker.setDisplayedValues(array);
 
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {

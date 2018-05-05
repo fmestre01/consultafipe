@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.google.** {*;}
+-dontwarn org.apache.http.params.*
+-dontwarn com.fasterxml.jackson.databind.ext**
+-dontwarn org.junit.internal**
+-dontwarn org.junit.rules.**
+-dontwarn android.test.**
+-dontnote android.net.http.*
+-dontnote org.apache.commons.codec.**
+-dontnote org.apache.http.**
+-dontnote junit.**
+-dontnote com.google.**
+-dontnote okhttp3.internal.**
+-dontnote udacity.com.core.util.numberpicker.**

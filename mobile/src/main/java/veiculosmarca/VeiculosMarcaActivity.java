@@ -27,7 +27,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import udacity.com.consultafipe.R;
 import udacity.com.core.Application;
 import udacity.com.core.model.CombustivelModeloAno;

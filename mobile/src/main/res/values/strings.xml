@@ -28,5 +28,7 @@
     <string name="text_acess_error">Erro ao recuperar dados...</string>
     <string name="text_acess_card_marcas_veiculos">Cards de marcas de veículos, selecione a marca desejada</string>
     <string name="text_acess_lista_veiculos_marca">Lista de veículos por marca</string>
+    <string name="text_acess_widget">Widget para acesso ao Consulta Fipe App</string>
+    <string name="text_acess_decoracao">Item decoração layout</string>
 
 </resources>

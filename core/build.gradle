@@ -44,10 +44,10 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 
     //Firebase
-    compile 'com.google.firebase:firebase-core:15.0.0'
+    compile 'com.google.firebase:firebase-core:15.0.2'
 
     //Firebase Database
-    compile 'com.google.firebase:firebase-database:15.0.0'
+    compile 'com.google.firebase:firebase-database:15.0.1'
 
     //LeakCanary
     compile 'com.squareup.leakcanary:leakcanary-android:1.5'
@@ -57,7 +57,7 @@ dependencies {
     compile 'com.amitshekhar.android:jackson-android-networking:1.0.1'
 
     //Add mob
-    compile 'com.google.firebase:firebase-ads:15.0.0'
+    compile 'com.google.firebase:firebase-ads:15.0.1'
 
     // recycler view
     compile 'com.android.support:recyclerview-v7:27.1.1'
