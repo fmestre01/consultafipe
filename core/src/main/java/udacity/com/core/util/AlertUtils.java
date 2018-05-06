@@ -119,7 +119,8 @@ public class AlertUtils {
 
             stringArr = label.toArray(new String[anosReferencia.size()]);
             android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
-            numberPicker.setOnLongPressUpdateInterval(100);
+            numberPicker.setWrapSelectorWheel(true);
+            numberPicker.setOnLongPressUpdateInterval(5000);
             numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
             numberPicker.setMinValue(0);
             numberPicker.setMaxValue(stringArr.length - 1);
@@ -161,6 +162,8 @@ public class AlertUtils {
                 });
 
         android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
+        numberPicker.setOnLongPressUpdateInterval(5000);
+        numberPicker.setWrapSelectorWheel(true);
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(2);

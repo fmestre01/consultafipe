@@ -107,7 +107,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
                 VeiculosMarcaActivity.this,
                 getResources().getString(R.string.text_ano_veiculo),
                 getResources().getString(R.string.text_selecione),
-                R.mipmap.ic_launcher_round,
+                R.mipmap.consulta_fipe_logo,
                 VeiculoDetalheActivity.newVeiculoDetalheActivity(this, marca.getId(),
                         veiculoMarcaObject.getId()),
                 R.layout.alert_filtro_veiculo,
