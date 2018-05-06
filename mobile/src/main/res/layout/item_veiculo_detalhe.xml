@@ -64,10 +64,10 @@
         android:layout_below="@id/marca"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
-        android:textIsSelectable="true"
         android:gravity="center"
         android:textAllCaps="true"
         android:textColor="@android:color/black"
+        android:textIsSelectable="true"
         android:textSize="18sp"
         android:textStyle="bold"
         tools:ignore="MissingPrefix"
@@ -113,6 +113,7 @@
         android:textColor="#555"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:visibility="gone"
         tools:ignore="MissingPrefix"
         tools:text="Preço" />
 
@@ -170,6 +171,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
             android:theme="@style/PrimaryFlatButton"
+            android:visibility="gone"
             tools:ignore="MissingPrefix"
             tools:text="compartilhar" />
 
@@ -182,6 +184,7 @@
             android:textIsSelectable="false"
             android:textStyle="bold"
             android:theme="@style/PrimaryFlatButton"
+            android:visibility="gone"
             tools:ignore="MissingPrefix"
             tools:text="add favorito" />
     </LinearLayout>

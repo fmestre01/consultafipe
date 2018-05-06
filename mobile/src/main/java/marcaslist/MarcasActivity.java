@@ -321,7 +321,9 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     }
 
     private static Intent newMarcasActivity(Context context) {
-        return new Intent(context, MarcasActivity.class);
+        return new Intent(context, MarcasActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     private JSONObject marcaJsonObject() {

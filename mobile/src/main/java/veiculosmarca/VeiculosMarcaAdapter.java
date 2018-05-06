@@ -28,6 +28,9 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
     private final VeiculosMarcaContract.OnItemClickListener mOnItemClickListener;
     private final String marcaVeiculo;
     List<VeiculoMarca> veiculosMarcaPesquisa = new ArrayList<>();
+    //prevent fast click
+    private long lastClickTime = System.currentTimeMillis();
+    private static final long CLICK_TIME_INTERVAL = 1000;
 
     public VeiculosMarcaAdapter(VeiculosMarcaContract.OnItemClickListener onItemClickListener, Context context, List<VeiculoMarca> veiculosMarcaPesquisa, String marcaVeiculo) {
         veiculoMarcas = new ArrayList<>();
@@ -53,6 +56,11 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long now = System.currentTimeMillis();
+                if (now - lastClickTime < CLICK_TIME_INTERVAL) {
+                    return;
+                }
+                lastClickTime = now;
                 mOnItemClickListener.clickItem(holder.veiculoMarca);
             }
         });

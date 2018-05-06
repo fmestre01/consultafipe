@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -52,6 +53,9 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
     @BindView(R.id.preco)
     TextView precoTextView;
 
+    @BindView(R.id.labelPreco)
+    TextView labelPrecoTextView;
+
     @BindView(R.id.mesReferencia)
     TextView mesReferenciaTextView;
 
@@ -60,6 +64,12 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @BindView(R.id.dataConsulta)
     TextView dataConsultaTextView;
+
+    @BindView(R.id.btnCompartilhar)
+    Button btnCompartilhar;
+
+    @BindView(R.id.btnFavorito)
+    Button btnFavorito;
 
     private static String idMarca;
     private static String idModelo;
@@ -164,6 +174,10 @@ public class VeiculoDetalheActivity extends AppCompatActivity implements Veiculo
 
     @Override
     public void showVeiculoDetalhe(Veiculo veiculo) {
+        labelPrecoTextView.setVisibility(View.VISIBLE);
+        btnCompartilhar.setVisibility(View.VISIBLE);
+        btnFavorito.setVisibility(View.VISIBLE);
+
         marcaTextView.setText(veiculo.getMarca());
         veiculoTextView.setText(veiculo.getModelo());
         combustivelTextView.setText(veiculo.getCombustivel());

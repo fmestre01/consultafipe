@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -264,5 +265,11 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d("ano", Application.codigoTabelaReferencia.getMes() + Application.codigoTipoVeiculo);
     }
 }

@@ -32,7 +32,7 @@ public class AlertUtils {
         final View view = factory.inflate(layout, null);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(context);
-        alert.setCancelable(false);
+        alert.setCancelable(true);
         alert.setIcon(icon).setTitle(title).setMessage(message).setView(view).setPositiveButton(context.getResources().getString(R.string.text_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
@@ -62,6 +62,7 @@ public class AlertUtils {
         stringArr = label.toArray(new String[anos.size()]);
         if (stringArr.length > 0) {
             android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
+            numberPicker.setOnLongPressUpdateInterval(100);
             numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
             numberPicker.setMinValue(0);
             numberPicker.setMaxValue(stringArr.length - 1);
@@ -106,7 +107,7 @@ public class AlertUtils {
                     }
                 });
 
-        alert.setCancelable(cancelable);
+        alert.setCancelable(true);
         label = new ArrayList<>();
         value = new ArrayList<>();
 
@@ -118,6 +119,7 @@ public class AlertUtils {
 
             stringArr = label.toArray(new String[anosReferencia.size()]);
             android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
+            numberPicker.setOnLongPressUpdateInterval(100);
             numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
             numberPicker.setMinValue(0);
             numberPicker.setMaxValue(stringArr.length - 1);
