@@ -32,3 +32,11 @@
 -dontnote com.google.**
 -dontnote okhttp3.internal.**
 -dontnote udacity.com.core.util.numberpicker.**
+-keepnames class com.fasterxml.jackson.** {
+*;
+}
+-keepnames interface com.fasterxml.jackson.** {
+    *;
+}
+-keep class android.support.v7.widget.SearchView { *; }
+-keep public class * extends util.DeviceUtils

@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:contentDescription="@string/text_acess_consulta_fipe_app"
     android:orientation="horizontal"
+    android:clickable="true"
+    android:id="@+id/layoutEmptyDataList"
     tools:context="marcaslist.MarcasActivity">
 
     <include
@@ -21,7 +23,6 @@
         android:layout_marginLeft="2dp"
         android:layout_marginStart="2dp"
         android:clickable="true"
-        android:focusable="true"
         android:orientation="vertical"
         android:visibility="gone">
 

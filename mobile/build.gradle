@@ -6,10 +6,11 @@ android {
         applicationId "udacity.com.consultafipe"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        setProperty("archivesBaseName", "consulta_fipe" + "-v" + versionCode + "(" + versionName + ")")
     }
 
     signingConfigs {
@@ -27,6 +28,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            versionNameSuffix ""
         }
     }
 }

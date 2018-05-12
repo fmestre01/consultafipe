@@ -72,6 +72,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     private List<Marca> marcas = new ArrayList<>();
 
     private Bundle extras;
+    private boolean invalidateMenuOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,46 +80,52 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
         setContentView(R.layout.marcas_activity_list);
 
-        FirebaseDatabase firebaseInstance = FirebaseDatabase.getInstance();
-        DatabaseReference firebaseDatabase = firebaseInstance.getReference(ConstantsUtils.Firebase.USUARIOS_FIREBASE);
+        createNewBlankAdapter();
 
-        DeviceUtils.insertNewUsuarioFirebase(firebaseDatabase);
-
-        TrackUtils.trackEvent(ConstantsUtils.TrackEvent.SCREEN_MARCA);
-
-        ButterKnife.bind(this);
-
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_cardview);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new SpacesItemDecorationUtils(spacingInPixels));
-
-        marcasPresenter = new MarcasPresenter();
-        marcasPresenter.attachView(this);
-
-        swipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
-                    }
-                });
-
-        marcasAdapter = new MarcasAdapter(this,
-                this,
-                new ArrayList<Marca>());
-
-        if (Application.tabelasReferencias == null) {
-            marcasPresenter.onTabelaReferenciaRequestedFastNetworkingLibrary();
+        if (!ConsultaFipeUtils.isNetworkConnectionOn(this)) {
+            invalidateMenuOptions = true;
+            Toast.makeText(this, getResources().getString(R.string.text_erro), Toast.LENGTH_SHORT).show();
+            finish();
         } else {
-            marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+            FirebaseDatabase firebaseInstance = FirebaseDatabase.getInstance();
+            DatabaseReference firebaseDatabase = firebaseInstance.getReference(ConstantsUtils.Firebase.USUARIOS_FIREBASE);
+
+            DeviceUtils.insertNewUsuarioFirebase(firebaseDatabase);
+
+            TrackUtils.trackEvent(ConstantsUtils.TrackEvent.SCREEN_MARCA);
+
+            ButterKnife.bind(this);
+
+            int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_cardview);
+
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.addItemDecoration(new SpacesItemDecorationUtils(spacingInPixels));
+
+            marcasPresenter = new MarcasPresenter();
+            marcasPresenter.attachView(this);
+
+            swipeRefreshLayout.setOnRefreshListener(
+                    new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+                            if (marcas != null && marcas.size() > 0 && ConsultaFipeUtils.isNetworkConnectionOn(getApplicationContext())) {
+                                marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+                            }
+                        }
+                    });
+
+            if (Application.tabelasReferencias == null) {
+                marcasPresenter.onTabelaReferenciaRequestedFastNetworkingLibrary();
+            } else {
+                marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+            }
+
+            recyclerView.setAdapter(marcasAdapter);
+
+            extras = getIntent().getExtras();
+            refreshWidgetAutomatically();
         }
-
-        recyclerView.setAdapter(marcasAdapter);
-
-        extras = getIntent().getExtras();
-        refreshWidgetAutomatically();
     }
 
     @Override
@@ -194,18 +201,20 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public void showEmpty() {
+        invalidateMenuOptions = true;
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showError(String errorMessage) {
-        SnackbarUtils.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
-        layoutTentarDeNovo.setVisibility(View.VISIBLE);
+        invalidateMenuOptions = true;
+        //SnackbarUtils.showSnakbarTipoUm(this.layoutTentarDeNovo, ConstantsUtils.InfoLog.ERROR);
         swipeRefreshLayout.setRefreshing(false);
+        layoutTentarDeNovo.setVisibility(View.VISIBLE);
         layoutTentarDeNovo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
+                marcasPresenter.onTabelaReferenciaRequestedFastNetworkingLibrary();
             }
         });
     }
@@ -233,14 +242,17 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        final List<Marca> filteredModelList = filter(marcas, newText);
-        if (filteredModelList.size() > 0) {
-            marcasAdapter.setFilter();
-            return true;
-        } else {
-            Toast.makeText(MarcasActivity.this, getResources().getString(R.string.text_sem_resultados), Toast.LENGTH_SHORT).show();
-            return false;
+        if (!invalidateMenuOptions) {
+            final List<Marca> filteredModelList = filter(marcas, newText);
+            if (filteredModelList.size() > 0) {
+                marcasAdapter.setFilter();
+                return true;
+            } else {
+                Toast.makeText(MarcasActivity.this, getResources().getString(R.string.text_sem_resultados), Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
+        return false;
     }
 
     private List<Marca> filter(List<Marca> marcas, String query) {
@@ -271,52 +283,53 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.list_menu, menu);
+        if (!invalidateMenuOptions) {
+            getMenuInflater().inflate(R.menu.list_menu, menu);
 
-        MenuItem searchitem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            MenuItem searchitem = menu.findItem(R.id.action_search);
+            SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
+            SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        TextView searchText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+            TextView searchText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
-        searchText.setTextColor(ContextCompat.getColor(this, R.color.colorSearchView));
-        searchText.setHintTextColor(ContextCompat.getColor(this, R.color.colorSearchView));
-        searchText.setHint(getResources().getString(R.string.text_digite_nome_marca));
-        searchView.setOnQueryTextListener(this);
+            searchText.setTextColor(ContextCompat.getColor(this, R.color.colorSearchView));
+            searchText.setHintTextColor(ContextCompat.getColor(this, R.color.colorSearchView));
+            searchText.setHint(getResources().getString(R.string.text_digite_nome_marca));
+            searchView.setOnQueryTextListener(this);
 
-        final MenuItem anoReferenciaItem = menu.findItem(R.id.action_ano_referencia);
+            final MenuItem anoReferenciaItem = menu.findItem(R.id.action_ano_referencia);
 
-        if (extras != null) {
-            if (extras.getParcelable("selectedAnoReferencia") != null) {
-                Application.codigoTabelaReferencia = extras.getParcelable("selectedAnoReferencia");
+            if (extras != null) {
+                if (extras.getParcelable("selectedAnoReferencia") != null) {
+                    Application.codigoTabelaReferencia = extras.getParcelable("selectedAnoReferencia");
+                }
             }
+
+            anoReferenciaItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    showAlertSelectAnoReferencia();
+                    return false;
+                }
+            });
+
+            final MenuItem tipoVeiculoItem = menu.findItem(R.id.action_tipo_veiculo);
+
+            tipoVeiculoItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    marcasPresenter.showAlertDialogTipoVeiculo(
+                            MarcasActivity.this,
+                            getResources().getString(R.string.text_tipo_veiculo),
+                            getResources().getString(R.string.text_selecione),
+                            R.mipmap.consulta_fipe_logo,
+                            R.layout.alert_view_generic,
+                            MarcasActivity.newMarcasActivity(getApplicationContext()));
+                    return false;
+                }
+            });
         }
-
-        anoReferenciaItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                showAlertSelectAnoReferencia();
-                return false;
-            }
-        });
-
-        final MenuItem tipoVeiculoItem = menu.findItem(R.id.action_tipo_veiculo);
-
-        tipoVeiculoItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                marcasPresenter.showAlertDialogTipoVeiculo(
-                        MarcasActivity.this,
-                        getResources().getString(R.string.text_tipo_veiculo),
-                        getResources().getString(R.string.text_selecione),
-                        R.mipmap.consulta_fipe_logo,
-                        R.layout.alert_view_generic,
-                        MarcasActivity.newMarcasActivity(getApplicationContext()));
-                return false;
-            }
-        });
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -343,7 +356,9 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        marcasPresenter.clearData();
+        if (marcasPresenter != null) {
+            marcasPresenter.clearData();
+        }
     }
 
     @Override
@@ -352,15 +367,17 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
     }
 
     private void showAlertSelectAnoReferencia() {
-        marcasPresenter.showAlertDialogPeriodoReferencia(
-                MarcasActivity.this,
-                getResources().getString(R.string.text_periodo_referencia),
-                getResources().getString(R.string.text_selecione),
-                R.mipmap.consulta_fipe_logo,
-                R.layout.alert_view_generic,
-                Application.tabelasReferencias,
-                MarcasActivity.newMarcasActivity(getApplicationContext()),
-                Application.tabelasReferencias != null);
+        if (!invalidateMenuOptions) {
+            marcasPresenter.showAlertDialogPeriodoReferencia(
+                    MarcasActivity.this,
+                    getResources().getString(R.string.text_periodo_referencia),
+                    getResources().getString(R.string.text_selecione),
+                    R.mipmap.consulta_fipe_logo,
+                    R.layout.alert_view_generic,
+                    Application.tabelasReferencias,
+                    MarcasActivity.newMarcasActivity(getApplicationContext()),
+                    Application.tabelasReferencias != null);
+        }
     }
 
     private void refreshWidgetAutomatically() {
@@ -369,5 +386,11 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), CollectionWidget.class));
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         sendBroadcast(intent);
+    }
+
+    private void createNewBlankAdapter() {
+        marcasAdapter = new MarcasAdapter(this,
+                this,
+                new ArrayList<Marca>());
     }
 }
