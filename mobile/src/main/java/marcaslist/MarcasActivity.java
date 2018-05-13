@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,7 +33,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import udacity.com.consultafipe.R;
 import udacity.com.core.Application;
 import udacity.com.core.model.Marca;
@@ -82,11 +82,9 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
         createNewBlankAdapter();
 
-        if (!ConsultaFipeUtils.isNetworkConnectionOn(this)) {
-            invalidateMenuOptions = true;
-            Toast.makeText(this, getResources().getString(R.string.text_erro), Toast.LENGTH_SHORT).show();
-            finish();
-        } else {
+        if (ConsultaFipeUtils.isNetworkConnectionOn(this)) {
+            AndroidNetworking.forceCancelAll();
+
             FirebaseDatabase firebaseInstance = FirebaseDatabase.getInstance();
             DatabaseReference firebaseDatabase = firebaseInstance.getReference(ConstantsUtils.Firebase.USUARIOS_FIREBASE);
 
@@ -125,6 +123,10 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
             extras = getIntent().getExtras();
             refreshWidgetAutomatically();
+        } else {
+            invalidateMenuOptions = true;
+            Toast.makeText(this, getResources().getString(R.string.text_erro), Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
@@ -136,6 +138,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     @Override
     public void showMarcas(List<Marca> marcaList) {
+        progressBar.setVisibility(View.GONE);
         layoutTentarDeNovo.setVisibility(View.GONE);
         marcas = marcaList;
         marcasAdapter.setValues(marcaList);
@@ -146,7 +149,8 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
                     this,
                     marcas,
                     ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo),
-                    Application.codigoTabelaReferencia.getMes());
+                    getResources().getString(R.string.text_referencia) + " " +
+                            Application.codigoTabelaReferencia.getMes());
         }
         recyclerView.setAdapter(marcasAdapter);
     }
@@ -210,13 +214,7 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
         invalidateMenuOptions = true;
         //SnackbarUtils.showSnakbarTipoUm(this.layoutTentarDeNovo, ConstantsUtils.InfoLog.ERROR);
         swipeRefreshLayout.setRefreshing(false);
-        layoutTentarDeNovo.setVisibility(View.VISIBLE);
-        layoutTentarDeNovo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                marcasPresenter.onTabelaReferenciaRequestedFastNetworkingLibrary();
-            }
-        });
+        tentarDeNovo();
     }
 
     @Override
@@ -224,15 +222,9 @@ public class MarcasActivity extends AppCompatActivity implements MarcasContract.
 
     }
 
-    @OnClick(R.id.layoutEmptyData)
     public void tentarDeNovo() {
         layoutTentarDeNovo.setVisibility(View.VISIBLE);
-        layoutTentarDeNovo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
-            }
-        });
+        marcasPresenter.onMarcasRequestedFastNetworkingLibrary(marcaJsonObject());
     }
 
     @Override

@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutEmptyDataList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:contentDescription="@string/text_acess_consulta_fipe_app"
-    android:orientation="horizontal"
     android:clickable="true"
-    android:id="@+id/layoutEmptyDataList"
+    android:contentDescription="@string/text_acess_consulta_fipe_app"
+    android:orientation="vertical"
     tools:context="marcaslist.MarcasActivity">
-
-    <include
-        layout="@layout/layout_content_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
 
     <LinearLayout
         android:id="@+id/layoutEmptyData"
@@ -22,7 +16,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="2dp"
         android:layout_marginStart="2dp"
-        android:clickable="true"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -32,11 +25,11 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:contentDescription="@string/text_acess_error"
-            android:focusable="true"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="@string/text_erro"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:visibility="visible" />
 
     </LinearLayout>
 
@@ -50,6 +43,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include
+        layout="@layout/layout_content_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
 

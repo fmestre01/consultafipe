@@ -5,27 +5,39 @@
     android:layout_height="match_parent"
     tools:context="veiculosmarca.VeiculosMarcaActivity">
 
-    <include
-        layout="@layout/layout_content_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
-
-    <TextView
-        android:id="@+id/emptyTextView"
+    <LinearLayout
+        android:id="@+id/layoutEmptyData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="sans-serif-condensed"
-        android:gravity="center"
-        android:text="@string/text_sem_resultados"
-        android:textSize="24sp"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/emptyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="@string/text_erro"
+            android:textSize="24sp"
+            tools:visibility="visible" />
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listVeiculosMarca"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
+    <include
+        layout="@layout/layout_content_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </android.support.design.widget.CoordinatorLayout>
 

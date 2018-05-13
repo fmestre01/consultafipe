@@ -86,6 +86,7 @@ public class AlertUtils {
         List<String> label;
         List<String> value;
         String[] stringArr;
+        final android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
 
         LayoutInflater factory = LayoutInflater.from(context);
 
@@ -97,7 +98,11 @@ public class AlertUtils {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
-                        intent.putExtra("selectedTabelaReferencia", selectedTabelaReferencia);
+
+                        if (!Application.codigoTabelaReferencia.equals(anosReferencia.get(numberPicker.getValue()))) {
+                            Application.codigoTabelaReferencia = anosReferencia.get(numberPicker.getValue());
+                        }
+
                         context.startActivity(intent);
                     }
                 }).setNegativeButton(context.getResources().getString(R.string.text_cancelar),
@@ -118,7 +123,7 @@ public class AlertUtils {
             }
 
             stringArr = label.toArray(new String[anosReferencia.size()]);
-            android.widget.NumberPicker numberPicker = new android.widget.NumberPicker(context);
+
             numberPicker.setWrapSelectorWheel(true);
             numberPicker.setOnLongPressUpdateInterval(5000);
             numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -133,6 +138,7 @@ public class AlertUtils {
                     Application.codigoTabelaReferencia = anosReferencia.get(i1);
                 }
             });
+
             alert.setView(numberPicker);
             alert.show();
         }
@@ -141,7 +147,6 @@ public class AlertUtils {
     public static void alertViewTipoVeiculo(final Context context, String title, String message, int icon, int layout, final Intent intent) {
         LayoutInflater factory = LayoutInflater.from(context);
 
-        Application.codigoTipoVeiculo = null;
         final String selectedTipoVeiculo = null;
         final View view = factory.inflate(layout, null);
 

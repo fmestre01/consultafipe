@@ -57,7 +57,7 @@
                 android:layout_height="27dp"
                 android:gravity="bottom|right"
                 android:textColor="@color/colorPrimaryDark"
-                tools:text="Ano referência: 2018" />
+                tools:text="Referência: Maio/2018" />
         </LinearLayout>
 
         <ImageView

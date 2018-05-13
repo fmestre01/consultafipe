@@ -38,10 +38,6 @@ public class ConstantsUtils {
         String CODIGO_TIPO_VEICULO = "codigoTipoVeiculo";
     }
 
-    public interface Data {
-        String SAVED_ANO_REFERENCIA = "ano_referencia_local";
-    }
-
     public interface TipoVeiculo {
         String CODIGO_CARROS_UTILITARIOS_PEQUENOS = "1";
         String CODIGO_MOTOS = "2";
@@ -68,11 +64,7 @@ public class ConstantsUtils {
 
     public interface Api {
         int HTTP_READ_TIMEOUT = 10;
-        int HTTP_CONNECT_TIMEOUT = 6;
-    }
-
-    public interface TimeoutSystem {
-        long CLICK_TIMEOUT_LAST_CLICK = 2000;
+        int HTTP_CONNECT_TIMEOUT = 20;
     }
 
     public interface Firebase {

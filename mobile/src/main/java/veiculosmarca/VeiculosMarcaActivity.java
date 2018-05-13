@@ -10,14 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
 import com.google.android.gms.ads.InterstitialAd;
 
 import org.json.JSONException;
@@ -38,6 +39,7 @@ import udacity.com.core.ui.veiculosmarca.VeiculosMarcaPresenter;
 import udacity.com.core.util.ConstantsUtils;
 import udacity.com.core.util.TrackUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import util.ConsultaFipeUtils;
 import util.SnackbarUtils;
 import veiculodetalhe.VeiculoDetalheActivity;
 
@@ -56,6 +58,9 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     @BindView(R.id.progress)
     ProgressBar progressBar;
+
+    @BindView(R.id.layoutEmptyData)
+    LinearLayout layoutTentarDeNovo;
 
     private Marca marca;
     private VeiculoMarca veiculoMarcaObject;
@@ -80,13 +85,21 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        veiculosMarcaAdapter = new VeiculosMarcaAdapter(this, getApplicationContext(), veiculosMarca, marca.getName());
+        veiculosMarcaAdapter = new VeiculosMarcaAdapter(this,
+                veiculosMarca,
+                marca.getName(), getResources().getString(R.string.text_referencia) + " " +
+                Application.codigoTabelaReferencia.getMes());
         recyclerView.setAdapter(veiculosMarcaAdapter);
 
         veiculosMarcaPresenter = new VeiculosMarcaPresenter();
 
         veiculosMarcaPresenter.attachView(this);
-        veiculosMarcaPresenter.onVeiculosMarcaFastNetworkingLibrary(marcaJsonObject());
+
+        if (ConsultaFipeUtils.isNetworkConnectionOn(this)) {
+            veiculosMarcaPresenter.onVeiculosMarcaFastNetworkingLibrary(marcaJsonObject());
+        } else {
+            tentarDeNovo();
+        }
     }
 
     @Override
@@ -97,6 +110,8 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     @Override
     public void showVeiculosMarca(List<VeiculoMarca> veiculoMarcaList) {
+        progressBar.setVisibility(View.GONE);
+        layoutTentarDeNovo.setVisibility(View.GONE);
         veiculosMarca = veiculoMarcaList;
         veiculosMarcaAdapter.setValues(veiculoMarcaList);
     }
@@ -147,9 +162,16 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     }
 
+    public void tentarDeNovo() {
+        progressBar.setVisibility(View.VISIBLE);
+        layoutTentarDeNovo.setVisibility(View.VISIBLE);
+        veiculosMarcaPresenter.onVeiculosMarcaFastNetworkingLibrary(marcaJsonObject());
+    }
+
     @Override
     public void showError(String errorMessage) {
-        SnackbarUtils.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
+        tentarDeNovo();
+        //SnackbarUtils.showSnakbarTipoUm(this.emptyTextView, ConstantsUtils.InfoLog.ERROR);
     }
 
     @Override
@@ -248,7 +270,11 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
                 filteredModelList.add(veiculoMarca);
             }
         }
-        veiculosMarcaAdapter = new VeiculosMarcaAdapter(this, getApplicationContext(), filteredModelList, marca.getName());
+        veiculosMarcaAdapter = new VeiculosMarcaAdapter(this,
+                filteredModelList,
+                marca.getName(),
+                getResources().getString(R.string.text_referencia) + " " +
+                        Application.codigoTabelaReferencia.getMes());
         recyclerView.setLayoutManager(new LinearLayoutManager(VeiculosMarcaActivity.this));
         recyclerView.setAdapter(veiculosMarcaAdapter);
         veiculosMarcaAdapter.notifyDataSetChanged();
@@ -269,7 +295,7 @@ public class VeiculosMarcaActivity extends AppCompatActivity implements Veiculos
 
     @Override
     public void onBackPressed() {
+        AndroidNetworking.forceCancelAll();
         super.onBackPressed();
-        Log.d("ano", Application.codigoTabelaReferencia.getMes() + Application.codigoTipoVeiculo);
     }
 }

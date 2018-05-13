@@ -31,12 +31,16 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
     //prevent fast click
     private long lastClickTime = System.currentTimeMillis();
     private static final long CLICK_TIME_INTERVAL = 1000;
+    private String anoReferencia;
 
-    public VeiculosMarcaAdapter(VeiculosMarcaContract.OnItemClickListener onItemClickListener, Context context, List<VeiculoMarca> veiculosMarcaPesquisa, String marcaVeiculo) {
+    public VeiculosMarcaAdapter(VeiculosMarcaContract.OnItemClickListener onItemClickListener,
+                                List<VeiculoMarca> veiculosMarcaPesquisa,
+                                String marcaVeiculo, String anoReferencia) {
         veiculoMarcas = new ArrayList<>();
         this.mOnItemClickListener = onItemClickListener;
         this.veiculoMarcas = veiculosMarcaPesquisa;
         this.marcaVeiculo = marcaVeiculo;
+        this.anoReferencia = anoReferencia;
     }
 
     @NonNull
@@ -52,6 +56,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
         holder.name.setText(veiculoMarcas.get(position).getName());
         holder.marca.setText(marcaVeiculo);
         holder.tipoVeiculo.setText(ConsultaFipeUtils.selectTipoVeiculoName(Application.codigoTipoVeiculo));
+        holder.anoReferencia.setText(anoReferencia);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +111,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
         VeiculoMarca veiculoMarca;
         final Button btnSelVeiculoMarca;
         final Button btnSelTodosVeiculos;
+        final TextView anoReferencia;
 
         ViewHolder(View view) {
             super(view);
@@ -115,6 +121,7 @@ public class VeiculosMarcaAdapter extends RecyclerView.Adapter<VeiculosMarcaAdap
             tipoVeiculo = view.findViewById(R.id.tipoVeiculo);
             btnSelVeiculoMarca = view.findViewById(R.id.btnSelAnoVeiculo);
             btnSelTodosVeiculos = view.findViewById(R.id.btnSelTodosAnos);
+            anoReferencia = view.findViewById(R.id.tabelaReferencia);
         }
     }
 

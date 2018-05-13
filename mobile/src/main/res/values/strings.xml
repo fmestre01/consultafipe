@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Consulta Fipe</string>
-    <string name="text_periodo_referencia">Período de referência</string>
+    <string name="text_periodo_referencia">Mês / Ano referência</string>
     <string name="text_tipo_veiculo">Tipo de veículo</string>
     <string name="text_ok">OK</string>
     <string name="text_cancelar">Cancelar</string>
@@ -9,7 +9,7 @@
     <string name="text_digite_nome_veiculo">Qual veículo ?</string>
     <string name="text_digite_nome_marca">Qual marca ?</string>
     <string name="text_sem_resultados">Sem resultados</string>
-    <string name="text_erro">Problemas na conexão, tente novamente em breve...</string>
+    <string name="text_erro">Ops! problemas...se preferir aguarde, o app se reconecta automaticamente...</string>
     <string name="key_admob">ca-app-pub-3940256099942544/1033173712</string>
     <string name="text_pesquisar">Pesquisar…</string>
     <string name="text_ano_referencia">Ano Referência</string>
@@ -23,6 +23,7 @@
     <string name="text_mes_referencia">Mês referência FIPE:</string>
     <string name="text_codigo_fipe">Código FIPE:</string>
     <string name="text_error_conexao">Eita...aparentemente tivemos problemas na conexão...</string>
+    <string name="text_referencia">Referência:</string>
 
 
     <!-- Acessibilidade -->
